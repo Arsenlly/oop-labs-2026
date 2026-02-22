@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+#include "error.h"
+#include "transform.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -23,6 +26,10 @@ private slots:
     void on_buttonMove_clicked();
     void on_buttonChooseFile_clicked();
 private:
+    err_t draw();
+    void read_move_data(move_t &move);
+    void read_scale_data(scale_t &scale);
+    void read_rotate_data(rotate_t &rotate);
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1101</width>
-    <height>721</height>
+    <width>1613</width>
+    <height>954</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>800</x>
+      <x>1260</x>
       <y>0</y>
-      <width>291</width>
-      <height>488</height>
+      <width>341</width>
+      <height>621</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -63,13 +63,13 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+             <widget class="QDoubleSpinBox" name="move_x"/>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_5"/>
+             <widget class="QDoubleSpinBox" name="move_y"/>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_6"/>
+             <widget class="QDoubleSpinBox" name="move_z"/>
             </item>
            </layout>
           </item>
@@ -124,13 +124,13 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_7"/>
+             <widget class="QDoubleSpinBox" name="rotate_x"/>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_8"/>
+             <widget class="QDoubleSpinBox" name="rotate_y"/>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_9"/>
+             <widget class="QDoubleSpinBox" name="rotate_z"/>
             </item>
            </layout>
           </item>
@@ -191,13 +191,13 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+             <widget class="QDoubleSpinBox" name="scale_x"/>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+             <widget class="QDoubleSpinBox" name="scale_y"/>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
+             <widget class="QDoubleSpinBox" name="scale_z"/>
             </item>
            </layout>
           </item>
@@ -225,10 +225,10 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>0</y>
-      <width>791</width>
-      <height>691</height>
+      <width>1241</width>
+      <height>911</height>
      </rect>
     </property>
    </widget>
@@ -238,7 +238,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1101</width>
+     <width>1613</width>
      <height>23</height>
     </rect>
    </property>
