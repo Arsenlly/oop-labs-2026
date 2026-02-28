@@ -16,13 +16,11 @@ void free_edges(edges_arr_t &edges)
     init_edges(edges);
 }
 
-err_t allocate_edges_arr(edges_arr_t &edges, int n_edges)
+err_t allocate_edges_arr(edge_t *&arr_edges, const int n_edges)
 {
-    edges.arr = (edge_t *)malloc(sizeof(edge_t) * n_edges);
-    if (!edges.arr)
+    arr_edges = (edge_t *)malloc(sizeof(edge_t) * n_edges);
+    if (!arr_edges)
         return ERR_MEMORY;
-
-    edges.len = n_edges;
 
     return ERR_OK;
 }
@@ -34,25 +32,37 @@ err_t read_edge(edge_t &edge, FILE *file)
     return ERR_OK;
 }
 
+err_t read_n_edges(int &n_edges, FILE *file)
+{
+    err_t rc = ERR_OK;
+    if (fscanf(file, "%d", &n_edges) != 1)
+        rc = ERR_READ_FILE;
+    else
+    {
+        if (n_edges <= 0)
+            rc = ERR_RANGE_N_EDGES;
+    }
+    return rc;
+}
+
 err_t read_edges(edges_arr_t &edges, FILE *file)
 {
-    int n_edges;
+    err_t rc = ERR_OK;
 
-    if (fscanf(file, "%d", &n_edges) != 1)
-        return ERR_READ_FILE;
-    if (n_edges <= 0)
-        return ERR_READ_FILE;
-
-    err_t rc = allocate_edges_arr(edges, n_edges);
-    if (rc)
-        return rc;
-
-    for (int i = 0;!rc && i < n_edges;i++)
+    rc = read_n_edges(edges.len, file);
+    if (!rc)
     {
-        rc = read_edge(edges.arr[i], file);
+        rc= allocate_edges_arr(edges.arr, edges.len);
+        if (!rc)
+        {
+            for (int i = 0;!rc && i < edges.len;i++)
+            {
+                rc = read_edge(edges.arr[i], file);
+            }
+            if (rc)
+                free_edges(edges);
+        }
     }
-    if (rc)
-        free_edges(edges);
 
     return rc;
 }

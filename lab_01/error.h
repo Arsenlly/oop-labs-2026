@@ -8,7 +8,11 @@ enum err_t
     ERR_FILEOPEN,
     ERR_MEMORY,
     ERR_READ_FILE,
-    ERR_NO_DATA
+    ERR_NO_EDGES,
+    ERR_NO_POINTS,
+    ERR_RANGE_N_POINTS,
+    ERR_RANGE_N_EDGES,
+    ERR_NO_SCENE
 };
 
 void error_message(err_t rc);

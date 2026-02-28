@@ -31,49 +31,43 @@ void free_model(model_t &model)
 err_t read_model(model_t &model, FILE *file)
 {
     init_model(model);
-
     err_t rc = ERR_OK;
 
     rc = read_points(model.points, file);
-
-    if (rc)
-        return rc;
-
-    rc = read_edges(model.edges, file);
-
-    if (rc)
+    if (!rc)
     {
-        free_points(model.points);
-        return rc;
+        rc = read_edges(model.edges, file);
+        if (rc)
+            free_points(model.points);
     }
-
-    rc = calc_center(model.center, model.points);
-    if (rc)
-        free_model(model);
-
     return rc;
 }
 
 err_t load_model(model_t &model, const char *filename)
 {
     FILE *file = fopen(filename, "r");
+    err_t rc = ERR_OK;
 
     if (!file)
-        return ERR_FILEOPEN;
-
-    model_t tmp_model;
-    init_model(tmp_model);
-
-    err_t rc = read_model(tmp_model, file);
-
-    fclose(file);
-
-    if (rc)
-        free_model(tmp_model);
+    {
+        rc = ERR_FILEOPEN;
+    }
     else
     {
-        free_model(model);
-        model = tmp_model;
+        model_t tmp_model;
+        rc = read_model(tmp_model, file);
+
+        fclose(file);
+
+        if (!rc)
+        {
+            rc = calc_center(tmp_model.center, tmp_model.points);
+            if (!rc)
+            {
+                free_model(model);
+                model = tmp_model;
+            }
+        }
     }
     return rc;
 }
@@ -82,7 +76,8 @@ err_t move_model(model_t &model, const move_t &move)
 {
     err_t rc = ERR_OK;
     rc = move_points(model.points, move);
-    move_point(model.center, move);
+    if (!rc)
+        move_point(model.center, move);
     return rc;
 }
 

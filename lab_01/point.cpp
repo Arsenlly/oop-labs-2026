@@ -25,28 +25,26 @@ void free_points(points_arr_t &points)
     init_points(points);
 }
 
-double x_point(point_t &point)
+double x_point(const point_t &point)
 {
     return point.x;
 }
 
-double y_point(point_t &point)
+double y_point(const point_t &point)
 {
     return point.y;
 }
 
-double z_point(point_t &point)
+double z_point(const point_t &point)
 {
     return point.z;
 }
 
-err_t allocate_points_arr(points_arr_t &points, int n_points)
+err_t allocate_points_arr(point_t *&arr_points, const int n_points)
 {
-    points.arr = (point_t *)malloc(sizeof(point_t) * n_points);
-    if (!points.arr)
+    arr_points = (point_t *)malloc(sizeof(point_t) * n_points);
+    if (!arr_points)
         return ERR_MEMORY;
-
-    points.len = n_points;
 
     return ERR_OK;
 }
@@ -58,33 +56,44 @@ err_t read_point(point_t &point, FILE *file)
     return ERR_OK;
 }
 
+err_t read_n_points(int &n_points, FILE *file)
+{
+    err_t rc = ERR_OK;
+    if (fscanf(file, "%d", &n_points) != 1)
+        rc = ERR_READ_FILE;
+    else
+    {
+        if (n_points <= 0)
+            rc = ERR_RANGE_N_POINTS;
+    }
+    return rc;
+}
+
 err_t read_points(points_arr_t &points, FILE *file)
 {
-    int n_points;
+    err_t rc = ERR_OK;
 
-    if (fscanf(file, "%d", &n_points) != 1)
-        return ERR_READ_FILE;
-    if (n_points <= 0)
-        return ERR_READ_FILE;
-
-    err_t rc = allocate_points_arr(points, n_points);
-    if (rc)
-        return rc;
-
-    for (int i = 0;!rc && i < n_points;i++)
+    rc = read_n_points(points.len, file);
+    if (!rc)
     {
-        rc = read_point(points.arr[i], file);
+        rc = allocate_points_arr(points.arr, points.len);
+        if (!rc)
+        {
+            for (int i = 0;!rc && i < points.len;i++)
+            {
+                rc = read_point(points.arr[i], file);
+            }
+            if (rc)
+                free_points(points);
+        }
     }
-    if (rc)
-        free_points(points);
-
     return rc;
 }
 
 err_t calc_center(point_t &center, points_arr_t &points)
 {
     if (!points.arr || points.len == 0)
-        return ERR_NO_DATA;
+        return ERR_NO_POINTS;
 
     init_point(center);
     for (int i = 0;i < points.len;i++)
@@ -152,7 +161,7 @@ void rotate_point(point_t &point, const point_t center, const rotate_t rotate)
 err_t move_points(points_arr_t &points, const move_t &move)
 {
     if (!points.arr || points.len == 0)
-        return ERR_NO_DATA;
+        return ERR_NO_POINTS;
 
     for (int i = 0;i < points.len;i++)
         move_point(points.arr[i], move);
@@ -163,7 +172,7 @@ err_t move_points(points_arr_t &points, const move_t &move)
 err_t scale_points(points_arr_t &points, const point_t center, const scale_t &scale)
 {
     if (!points.arr || points.len == 0)
-        return ERR_NO_DATA;
+        return ERR_NO_POINTS;
 
     for (int i = 0;i < points.len;i++)
         scale_point(points.arr[i], center, scale);
@@ -174,7 +183,7 @@ err_t scale_points(points_arr_t &points, const point_t center, const scale_t &sc
 err_t rotate_points(points_arr_t &points, const point_t center, const rotate_t &rotate)
 {
     if (!points.arr || points.len == 0)
-        return ERR_NO_DATA;
+        return ERR_NO_POINTS;
 
     for (int i = 0;i < points.len;i++)
         rotate_point(points.arr[i], center, rotate);

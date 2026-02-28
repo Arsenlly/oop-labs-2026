@@ -17,8 +17,20 @@ void error_message(err_t rc)
     case ERR_MEMORY:
         QMessageBox::critical(NULL, "Ошибка", "Ошибка выделения памяти!");
         break;
-    case ERR_NO_DATA:
+    case ERR_NO_POINTS:
         QMessageBox::critical(NULL, "Ошибка", "Модель не загружена!");
+        break;
+    case ERR_NO_EDGES:
+        QMessageBox::critical(NULL, "Ошибка", "Модель не загружена!");
+        break;
+    case ERR_NO_SCENE:
+        QMessageBox::critical(NULL, "Ошибка", "Сцена не загружена!");
+        break;
+    case ERR_RANGE_N_POINTS:
+        QMessageBox::critical(NULL, "Ошибка", "Количество точек должно быть больше нуля!");
+        break;
+    case ERR_RANGE_N_EDGES:
+        QMessageBox::critical(NULL, "Ошибка", "Количество рёбер должно быть больше нуля!");
         break;
     default:
         QMessageBox::critical(NULL, "Ошибка", "Неизвестная ошибка!");
