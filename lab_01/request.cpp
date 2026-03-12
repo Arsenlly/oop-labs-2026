@@ -28,7 +28,7 @@ err_t handle_request(const request_t &request)
         break;
 
     case DRAW:
-        rc = draw_model(model, request.scene);
+        rc = draw_model(model, request.draw_field);
         break;
 
     case EXIT:

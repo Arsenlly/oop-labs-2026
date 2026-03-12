@@ -19,10 +19,9 @@ void init_points(points_arr_t &points)
     points.len = 0;
 }
 
-void free_points(points_arr_t &points)
+void free_points(point_t *points_arr)
 {
-    free(points.arr);
-    init_points(points);
+    free(points_arr);
 }
 
 double x_point(const point_t &point)
@@ -84,7 +83,7 @@ err_t read_points(points_arr_t &points, FILE *file)
                 rc = read_point(points.arr[i], file);
             }
             if (rc)
-                free_points(points);
+                free_points(points.arr);
         }
     }
     return rc;
@@ -98,9 +97,8 @@ err_t calc_center(point_t &center, points_arr_t &points)
     init_point(center);
     for (int i = 0;i < points.len;i++)
     {
-        center.x += x_point(points.arr[i]);
-        center.y += y_point(points.arr[i]);
-        center.z += z_point(points.arr[i]);
+        move_t move = {x_point(points.arr[i]), y_point(points.arr[i]), z_point(points.arr[i])};
+        move_point(center, move);
     }
 
     center.x = center.x / points.len;
@@ -117,38 +115,109 @@ void move_point(point_t &point, const move_t move)
     point.z += move.dz;
 }
 
+// void scale_point(point_t &point, const point_t center, const scale_t scale)
+// {
+//     point.x = center.x + scale.kx * (point.x - center.x);
+//     point.y = center.y + scale.ky * (point.y - center.y);
+//     point.z = center.z + scale.kz * (point.z - center.z);
+// }
+
+void scale_coord(point_t &point, const scale_t scale)
+{
+    point.x *= scale.kx;
+    point.y *= scale.ky;
+    point.z *= scale.kz;
+}
+
 void scale_point(point_t &point, const point_t center, const scale_t scale)
 {
-    point.x = center.x + scale.kx * (point.x - center.x);
-    point.y = center.y + scale.ky * (point.y - center.y);
-    point.z = center.z + scale.kz * (point.z - center.z);
+    move_t to_center = {-center.x, -center.y, -center.z};
+    move_t from_center = {center.x, center.y, center.z};
+
+    move_point(point, to_center);
+    scale_coord(point, scale);
+    move_point(point, from_center);
+}
+
+// void rotate_point_x(point_t &point, const point_t center, const double angle)
+// {
+//     double y_dif = point.y - center.y;
+//     double z_dif = point.z - center.z;
+
+//     point.y = center.y + y_dif * cos(angle) - z_dif * sin(angle);
+//     point.z = center.z + y_dif * sin(angle) + z_dif * cos(angle);
+// }
+
+// void rotate_point_y(point_t &point, const point_t center, const double angle)
+// {
+//     double x_dif = point.x - center.x;
+//     double z_dif = point.z - center.z;
+
+//     point.x = center.x + x_dif * cos(angle) - z_dif * sin(angle);
+//     point.z = center.z + x_dif * sin(angle) + z_dif * cos(angle);
+// }
+
+// void rotate_point_z(point_t &point, const point_t center, const double angle)
+// {
+//     double x_dif = point.x - center.x;
+//     double y_dif = point.y - center.y;
+
+//     point.x = center.x + x_dif * cos(angle) - y_dif * sin(angle);
+//     point.y = center.y + x_dif * sin(angle) + y_dif * cos(angle);
+// }
+
+void rotate_coord_x(point_t &point, const double angle)
+{
+    double y = point.y;
+    double z = point.z;
+    point.y = y * cos(angle) - z * sin(angle);
+    point.z = y * sin(angle) + z * cos(angle);
+}
+
+void rotate_coord_y(point_t &point, const double angle)
+{
+    double x = point.x;
+    double y = point.y;
+    point.x = x * cos(angle) - y * sin(angle);
+    point.y = x * sin(angle) + y * cos(angle);
+}
+
+void rotate_coord_z(point_t &point, const double angle)
+{
+    double x = point.x;
+    double z = point.z;
+    point.x = x * cos(angle) - z * sin(angle);
+    point.z = x * sin(angle) + z * cos(angle);
 }
 
 void rotate_point_x(point_t &point, const point_t center, const double angle)
 {
-    double y_dif = point.y - center.y;
-    double z_dif = point.z - center.z;
+    move_t to_center = {-center.x, -center.y, -center.z};
+    move_t from_center = {center.x, center.y, center.z};
 
-    point.y = center.y + y_dif * cos(angle) - z_dif * sin(angle);
-    point.z = center.z + y_dif * sin(angle) + z_dif * cos(angle);
+    move_point(point, to_center);
+    rotate_coord_x(point, angle);
+    move_point(point, from_center);
 }
 
 void rotate_point_y(point_t &point, const point_t center, const double angle)
 {
-    double x_dif = point.x - center.x;
-    double z_dif = point.z - center.z;
+    move_t to_center = {-center.x, -center.y, -center.z};
+    move_t from_center = {center.x, center.y, center.z};
 
-    point.x = center.x + x_dif * cos(angle) + z_dif * sin(angle);
-    point.z = center.z - x_dif * sin(angle) + z_dif * cos(angle);
+    move_point(point, to_center);
+    rotate_coord_y(point, angle);
+    move_point(point, from_center);
 }
 
 void rotate_point_z(point_t &point, const point_t center, const double angle)
 {
-    double x_dif = point.x - center.x;
-    double y_dif = point.y - center.y;
+    move_t to_center = {-center.x, -center.y, -center.z};
+    move_t from_center = {center.x, center.y, center.z};
 
-    point.x = center.x + x_dif * cos(angle) - y_dif * sin(angle);
-    point.y = center.y + x_dif * sin(angle) + y_dif * cos(angle);
+    move_point(point, to_center);
+    rotate_coord_z(point, angle);
+    move_point(point, from_center);
 }
 
 void rotate_point(point_t &point, const point_t center, const rotate_t rotate)

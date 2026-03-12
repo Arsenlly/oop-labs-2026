@@ -5,6 +5,7 @@
 #include "request.h"
 #include "error.h"
 #include "math_utils.h"
+#include "qt_draw.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,7 +32,8 @@ err_t MainWindow::draw()
 {
     request_t request;
     request.type_request = DRAW;
-    request.scene = ui->graphicsView->scene();
+
+    init_draw_field(request.draw_field, ui->graphicsView->scene());
 
     err_t rc = handle_request(request);
     return rc;

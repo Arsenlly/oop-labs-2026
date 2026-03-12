@@ -21,7 +21,7 @@ struct points_arr_t
 
 void init_point(point_t &point);
 void init_points(points_arr_t &points);
-void free_points(points_arr_t &points);
+void free_points(point_t *points_arr);
 err_t read_points(points_arr_t &points, FILE *file);
 err_t calc_center(point_t &center, points_arr_t &points);
 err_t move_points(points_arr_t &points, const move_t &move);

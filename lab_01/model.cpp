@@ -5,7 +5,6 @@
 #include "point.h"
 #include "edge.h"
 
-#include <iostream>
 
 void init_model(model_t &model)
 {
@@ -24,8 +23,19 @@ model_t create_model()
 void free_model(model_t &model)
 {
     init_point(model.center);
-    free_points(model.points);
+    free_points(model.points.arr);
     free_edges(model.edges);
+}
+
+err_t calc_model(model_t &model)
+{
+    err_t rc = calc_center(model.center, model.points);
+    return rc;
+}
+
+void copy_model(model_t &model_dst, model_t &model_src)
+{
+    model_dst = model_src;
 }
 
 err_t read_model(model_t &model, FILE *file)
@@ -38,7 +48,7 @@ err_t read_model(model_t &model, FILE *file)
     {
         rc = read_edges(model.edges, file);
         if (rc)
-            free_points(model.points);
+            free_points(model.points.arr);
     }
     return rc;
 }
@@ -61,11 +71,15 @@ err_t load_model(model_t &model, const char *filename)
 
         if (!rc)
         {
-            rc = calc_center(tmp_model.center, tmp_model.points);
-            if (!rc)
+            rc = calc_model(tmp_model);
+            if (rc)
+            {
+                free_model(tmp_model);
+            }
+            else
             {
                 free_model(model);
-                model = tmp_model;
+                copy_model(model, tmp_model);
             }
         }
     }

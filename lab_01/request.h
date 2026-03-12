@@ -3,6 +3,7 @@
 
 #include <QGraphicsScene>
 #include "error.h"
+#include "qt_draw.h"
 #include "transform.h"
 
 enum type_request_t
@@ -20,7 +21,7 @@ struct request_t
     type_request_t type_request;
     union
     {
-        QGraphicsScene *scene;
+        draw_field_t draw_field;
         const char *filename;
         scale_t scale;
         rotate_t rotate;
