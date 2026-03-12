@@ -1,0 +1,56 @@
+#include "draw.h"
+#include "qt_draw.h"
+#include "point.h"
+#include "edge.h"
+#include "error.h"
+
+err_t draw_edge(const edge_t &edge, const points_arr_t &points, const draw_field_t &draw_field)
+{
+    if (!points.arr || points.len == 0)
+        return ERR_NO_POINTS;
+    else if (!draw_field.scene)
+        return ERR_NO_SCENE;
+
+    point_t point_start = points.arr[edge.start_ind];
+    point_t point_end = points.arr[edge.end_ind];
+
+    line_t line;
+    init_line(line, point_start, point_end);
+
+    err_t rc = ERR_OK;
+    rc = draw_line(line, draw_field);
+    return rc;
+}
+
+err_t draw_edges(const edges_arr_t &edges, const points_arr_t &points, const draw_field_t &draw_field)
+{
+    if (!edges.arr || edges.len == 0)
+        return ERR_NO_EDGES;
+    else if (!points.arr || points.len == 0)
+        return ERR_NO_POINTS;
+    else if (!draw_field.scene)
+        return ERR_NO_SCENE;
+
+    err_t rc = ERR_OK;
+    for (int i = 0;!rc && i < edges.len;i++)
+    {
+        rc = draw_edge(edges.arr[i], points, draw_field);
+    }
+
+    return rc;
+}
+
+err_t draw_model(const model_t &model, const draw_field_t &draw_field)
+{
+    if (!draw_field.scene)
+        return ERR_NO_SCENE;
+
+    clear_scene(draw_field);
+
+    err_t rc = draw_edges(model.edges, model.points, draw_field);
+
+    if (rc)
+        clear_scene(draw_field);
+
+    return rc;
+}
