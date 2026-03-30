@@ -4,6 +4,14 @@
 
 class BaseList
 {
+    public:
+        
+    protected:
+        BaseList() = default;
+        virtual ~BaseList() = default;
+
+    private:
+
 };
 
 #endif
