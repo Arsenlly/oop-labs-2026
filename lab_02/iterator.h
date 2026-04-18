@@ -11,6 +11,12 @@ template<typename T>
 class Iterator: public BaseIterator<T>
 {
     public:
+        using difference_type = std::ptrdiff_t;
+        using value_type = T;
+        using pointer = std::shared_ptr<T>;
+        using reference = T&;
+        using iterator_category = std::forward_iterator_tag;
+    public:
         Iterator() = default;
         Iterator(const std::shared_ptr<typename List<T>::Node>& node);
         Iterator(const Iterator<T> &it);

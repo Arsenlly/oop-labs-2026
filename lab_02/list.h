@@ -44,7 +44,8 @@ class List:public BaseContainer
         template<ConvertibleContainer<T> C>
         List(const C& cont);
 
-
+        template<typename I>
+        List(const I& beg_it, const I& end_it);
 
     #pragma endregion
 
