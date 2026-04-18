@@ -2,68 +2,136 @@
 
 #define LIST_H__
 
+#include <initializer_list>
 #include <memory>
 #include <ranges>
-#include <initializer_list>
+#include <algorithm>
 
 #include "base_container.h"
+#include "iterator.h"
+#include "const_iterator.h"
+#include "concepts.h"
+#include "list_exception.h"
 
-template <typename T>
-class List final: public BaseContainer
+template<typename T>
+class List:public BaseContainer
 {
     public:
 
-        // Конструкторы
+    #pragma region Aliases
+
+        using value_type = T;
+        using reference = T&;
+        using const_reference = const T&;
+        using iterator = Iterator<T>;
+        using const_iterator = ConstIterator<T>;
+        using difference_type = std::ptrdiff_t;
+        using size_type = std::size_t;
+    
+    #pragma endregion
+    
+    public:
+
+    #pragma region Constructors
+
         List();
-        List(const List& l);
-        List(List&& l);
-        List(std::initializer_list<T> l);
-        
-        // Деструктор
-        ~List();
+        List(const List<T>& l);
+        List(const List<T>&& l);
 
-        // Очистка
-        void clear();
+        template<Convertible<T> U>
+        List(std::initializer_list<U> l);
 
-        // Добавление
-        void push_front(const T& el);
-        void push_back(const T& el);
+        template<ConvertibleContainer<T> C>
+        List(const C& cont);
 
-        // Удаление
-        T& pop_front();
-        T& pop_back();
 
-        // Получение первого и последнего
-        T& front();
+
+    #pragma endregion
+
+    #pragma region Add
+
+        void push_back(const T& value);
+        void push_front(const T& value);
+
+    #pragma endregion
+
+    #pragma region ReturnElements
+
         T& back();
+        T& front();
 
-        // Проверка на пустоту
-        bool is_empty();
+    #pragma endregion    
 
+    #pragma region Remove
 
-        List<T>& operator=(const List<T>& l);
-        List<T>& operator=(const List<T>&& l);
+        T pop_back();
+        T pop_front();
+
+    #pragma endregion
+
+    #pragma region Operators
+
+    List<T>& operator+=(const T& el);
+    List<T>& operator+=(const List<T>& l);
+    
+    List<T> operator+(const T& el);
+    List<T> operator+(const List<T>& l);
+
+    bool operator==(const List<T>& l);
+
+    #pragma endregion
+
+    virtual bool empty();
+    virtual void clear();
+    virtual size_t size();
+
+    #pragma region Iterators
+        Iterator<T> begin();
+        Iterator<T> end();
+
+        ConstIterator<T> begin() const;
+        ConstIterator<T> end() const;
+
+        ConstIterator<T> cbegin();
+        ConstIterator<T> cend();
+    #pragma endregion
 
     protected:
+
+    #pragma region ClassNode
+
         class Node
         {
             public:
                 Node();
+                Node(const Node& value);
+                Node(Node&& value);
                 Node(const T& value);
 
-                void setValue(const T& value);
-                void setNext(std::shared_ptr<Node>& node);
+                std::shared_ptr<Node> getNext();
+                void setNext(std::shared_ptr<Node>& next);
+
                 T& getValue();
-
-
+                void setValue(const T& value);
 
             private:
                 T value;
                 std::shared_ptr<Node> next;
         };
 
+    #pragma endregion
+
+    #pragma region Friends
+
+        friend class BaseIterator<T>;
+        friend class Iterator<T>;
+        friend class ConstIterator<T>;
+
+    #pragma endregion
+
     private:
         std::shared_ptr<Node> head;
+        std::shared_ptr<Node> tail;
 };
 
 #include "list.hpp"

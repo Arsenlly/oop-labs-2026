@@ -4,37 +4,55 @@
 
 #include "list.h"
 
-#include <iostream>
-
 template<typename T>
 List<T>::Node::Node()
 {
-    this->next = nullptr;
+    next = nullptr;
+}
+
+template<typename T>
+List<T>::Node::Node(const Node& node)
+{
+    next = node.next;
+    value = node.value;
+}
+
+template<typename T>
+List<T>::Node::Node(Node&& node)
+{
+    next = node.next;
+    value = node.value;
 }
 
 template<typename T>
 List<T>::Node::Node(const T& value)
 {
-    this->value = value;
-    this->next = nullptr;
-}
-
-template <typename T>
-void List<T>::Node::setValue(const T& value)
-{
+    next = nullptr;
     this->value = value;
 }
 
-template <typename T>
-void List<T>::Node::setNext(std::shared_ptr<Node>& node)
+template<typename T>
+std::shared_ptr<typename List<T>::Node> List<T>::Node::getNext()
 {
-    next = node;
+    return next;
 }
 
-template <typename T>
+template<typename T>
+void List<T>::Node::setNext(std::shared_ptr<typename List<T>::Node>& next)
+{
+    this->next = next;
+}
+
+template<typename T>
 T& List<T>::Node::getValue()
 {
     return value;
+}
+
+template<typename T>
+void List<T>::Node::setValue(const T& value)
+{
+    this->value = value;
 }
 
 #endif

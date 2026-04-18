@@ -4,16 +4,16 @@
 
 #include <cstddef>
 
-class BaseСontainer
+class BaseContainer
 {
     public:
-        virtual bool is_empty() = 0;
+        virtual bool empty() = 0;
         virtual void clear() = 0;
-        virtual size_t get_size() = 0;
-        virtual ~BaseСontainer() = default;    
+        virtual size_t size() = 0;
+        virtual ~BaseContainer() = default;    
     
     protected:
-        size_t size = 0;
+        size_t _size = 0;
 };
 
 #endif

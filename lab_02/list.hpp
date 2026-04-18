@@ -6,114 +6,207 @@
 
 #include <iostream>
 
-// Конструктор
-template <typename T>
+template<typename T>
 List<T>::List()
 {
     head = nullptr;
+    tail = nullptr;
 }
 
-// Конструктор копирования
-template <typename T>
+template<typename T>
 List<T>::List(const List<T>& l)
 {
+    for (const auto& el : l)
+    {
+        push_back(el);
+    }
+
+    // std::ranges::for_each(l, [this](const T& el){this->push_back(el);});
 }
 
-// Конструктор переноса
-template <typename T>
-List<T>::List(List<T>&& l)
+template<typename T>
+List<T>::List(const List<T>&& l)
 {
-    clear();
     head = l.head;
-    l.clear();
-    std::cout << "a\n";
+    tail = l.tail;
+    l.clean();
 }
 
-template <typename T>
-List<T>::List(std::initializer_list<T> l)
+template<typename T>
+template<Convertible<T> U>
+List<T>::List(std::initializer_list<U> l)
 {
-    for (T el : l)
+    std::ranges::for_each(l, [this](const T& el){this->push_back(el);});
+}
+
+template<typename T>
+template<ConvertibleContainer<T> C>
+List<T>::List(const C& cont)
+{
+    for (auto el : cont)
     {
         push_back(el);
     }
 }
 
-// Деструктор
-template <typename T>
-List<T>::~List()
+template<typename T>
+void List<T>::push_back(const T& value)
 {
-    head.reset();
+    std::shared_ptr<Node> new_node = std::make_shared<Node>(value);
+    if(tail != nullptr)
+        tail->setNext(new_node);
+    tail = new_node;
+    if(head == nullptr)
+        head = tail;
+    ++this->_size;
 }
 
-// Оператор копирования
-template <typename T>
-List<T>& List<T>::operator=(const List<T>& l)
+template<typename T>
+void List<T>::push_front(const T& value)
 {
-
+    try
+    {
+        std::shared_ptr<Node> old_head = head;
+        head = std::make_shared<Node>(value);
+        head->setNext(old_head);
+        if (tail == nullptr)
+            tail = head;
+        ++this->_size;
+    }
+    catch(std::bad_alloc &ex)
+    {
+        throw ListAllocateError(__FILE__, typeid(*this).name(), __LINE__, "Allocate error");
+    }
+    
 }
 
-// Оператор переноса
-template <typename T>
-List<T>& List<T>::operator=(const List<T>&& l)
+template<typename T>
+T& List<T>::back()
 {
-    head = l.head;
-    l.clear();
+    if (empty())
+        throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
+
+    return tail->getValue();
+}
+
+template<typename T>
+T& List<T>::front()
+{
+    if (empty())
+        throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
+    return head->getValue();
+}
+
+template<typename T>
+T List<T>::pop_back()
+{
+    T value = tail->getValue();
+    // TODO
+    this->_size--;
+    return value;
+}
+
+template<typename T>
+T List<T>::pop_front()
+{
+    T value = head->getValue();
+    head = head->getNext();
+    this->_size--;
+    return value;
+}
+
+template<typename T>
+Iterator<T> List<T>::begin()
+{
+    return Iterator<T>(head);
+}
+
+template<typename T>
+Iterator<T> List<T>::end()
+{
+    return Iterator<T>();
+}
+
+template<typename T>
+ConstIterator<T> List<T>::begin() const
+{
+    return ConstIterator<T>(head);
+}
+
+template<typename T>
+ConstIterator<T> List<T>::end() const
+{
+    return ConstIterator<T>();
+}
+
+template<typename T>
+ConstIterator<T> List<T>::cbegin()
+{
+    return ConstIterator<T>(head);
+}
+
+template<typename T>
+ConstIterator<T> List<T>::cend()
+{
+    return ConstIterator<T>();
+}
+
+template<typename T>
+List<T>& List<T>::operator+=(const T& el)
+{
+    this->push_back(el);
     return *this;
 }
 
-
-// Очистка
-template <typename T>
-void List<T>::clear()
+template<typename T>
+List<T>& List<T>::operator+=(const List<T>& l)
 {
-    head.reset();
-}   
-
-// Добавление
-template <typename T>
-void List<T>::push_front(const T& el)
-{
-    auto old_head = head;
-    head = std::make_shared<Node>(el);
-    head->setNext(old_head);
+    for(auto el : l)
+        this->push_back(el);
+    return *this;
 }
 
-template <typename T>
-void List<T>::push_back(const T& el)
+template<typename T>
+List<T> List<T>::operator+(const T& el)
 {
+    List<T> res(*this);
+    res.push_back(el);
+    return res;
 }
 
-// Удаление
-template <typename T>
-T& List<T>::pop_front()
+template<typename T>
+List<T> List<T>::operator+(const List<T>& l)
+{
+    List<T> res(*this);
+    for (auto el : l)
+        res.push_back(el);
+    return res;
+}
+
+template<typename T>
+bool List<T>::operator==(const List<T>& l)
 {
     
 }
 
-template <typename T>
-T& List<T>::pop_back()
+template<typename T>
+bool List<T>::empty()
 {
+    return size() == 0;
 }
 
-// Получение первого и последнего
-template <typename T>
-T& List<T>::front()
+template<typename T>
+void List<T>::clear()
 {
-    return head->getValue();
+    head.reset();
+    tail.reset();
+    this->_size = 0;
 }
-
-template <typename T>
-T& List<T>::back()
+    
+template<typename T>
+size_t List<T>::size()
 {
-
-}
-
-template <typename T>
-bool List<T>::is_empty()
-{
-    if (head == nullptr)
-        return true;
-    return false;
+    return this->_size;
 }
 
 #endif
