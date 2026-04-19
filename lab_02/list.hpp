@@ -25,7 +25,7 @@ List<T>::List(const List<T>& l)
 }
 
 template<typename T>
-List<T>::List(const List<T>&& l)
+List<T>::List(List<T>&& l)
 {
     head = l.head;
     tail = l.tail;
@@ -54,10 +54,45 @@ List<T>::List(const size_t size, const U *array)
 }
 
 template<typename T>
-template<typename I>
-List<T>::List(const I& beg_it, const I& end_it)
+template<ConvertibleIterator<T> It, Sentinel<It> S>
+List<T>::List(const It& beg_it, const S& end_it)
 {
     std::ranges::for_each(beg_it, end_it, [this](const T& el){push_back(el);});
+}
+
+template<typename T>
+List<T> &List<T>::operator=(const List<T>& l)
+{
+    for (const auto& el : l)
+    {
+        push_back(el);
+    }
+    return *this;
+}
+
+template<typename T>
+List<T> &List<T>::operator=(List<T>&& l)
+{
+    head = l.head;
+    tail = l.tail;
+    l.clean();
+    return *this;
+}
+
+template<typename T>
+template<ConvertibleContainer<T> C>
+List<T> &List<T>::operator=(const C& cont)
+{
+    std::ranges::for_each(cont, [this](const T& el){push_back(el);});
+    return *this;
+}
+
+template<typename T>
+template<Convertible<T> U>
+List<T> &List<T>::operator=(std::initializer_list<U> l)
+{
+    std::ranges::for_each(l, [this](const T& el){this->push_back(el);});
+    return *this;
 }
 
 template<typename T>

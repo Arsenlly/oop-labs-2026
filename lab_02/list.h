@@ -36,7 +36,7 @@ class List:public BaseContainer
 
         List();
         List(const List<T>& l);
-        List(const List<T>&& l);
+        List(List<T>&& l);
 
         template<Convertible<T> U>
         List(std::initializer_list<U> l);
@@ -44,11 +44,24 @@ class List:public BaseContainer
         template<ConvertibleContainer<T> C>
         List(const C& cont);
 
-        template<typename I>
-        List(const I& beg_it, const I& end_it);
+        template<ConvertibleIterator<T> It, Sentinel<It> S>
+        List(const It& beg_it, const S& end_it);
 
         template<Convertible<T> U>
         List(const size_t size, const U *array);
+
+    #pragma endregion
+
+    #pragma region Assign
+
+    List<T> &operator=(const List<T>& l);
+    List<T> &operator=(List<T>&& l);
+
+    template<ConvertibleContainer<T> C>
+    List<T> &operator=(const C& cont);
+
+    template<Convertible<T> U>
+    List<T> &operator=(std::initializer_list<U> l);
 
     #pragma endregion
 

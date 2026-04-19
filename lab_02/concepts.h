@@ -34,4 +34,10 @@ template<typename C, typename T>
 concept ConvertibleContainer = 
     !IsList<C> && Container<C> && Convertible<typename std::remove_reference_t<C>::value_type, T>;
 
+template<typename It, typename T>
+concept ConvertibleIterator = std::input_iterator<It> && Convertible<typename It::value_type, T>;
+
+template<typename S, typename It>
+concept Sentinel = std::sentinel_for<S, It>;
+
 #endif
