@@ -47,6 +47,9 @@ class List:public BaseContainer
         template<typename I>
         List(const I& beg_it, const I& end_it);
 
+        template<Convertible<T> U>
+        List(const size_t size, const U *array);
+
     #pragma endregion
 
     #pragma region Add
@@ -63,7 +66,7 @@ class List:public BaseContainer
 
     #pragma endregion    
 
-    #pragma region Remove
+    #pragma region RemoveElements
 
         T pop_back();
         T pop_front();
@@ -93,8 +96,8 @@ class List:public BaseContainer
         ConstIterator<T> begin() const;
         ConstIterator<T> end() const;
 
-        ConstIterator<T> cbegin();
-        ConstIterator<T> cend();
+        ConstIterator<T> cbegin() const;
+        ConstIterator<T> cend() const;
     #pragma endregion
 
     protected:

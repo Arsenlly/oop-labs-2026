@@ -43,10 +43,14 @@ template<typename T>
 template<ConvertibleContainer<T> C>
 List<T>::List(const C& cont)
 {
-    for (auto el : cont)
-    {
-        push_back(el);
-    }
+    std::ranges::for_each(cont, [this](const T& el){push_back(el);});
+}
+
+template<typename T>
+template<Convertible<T> U>
+List<T>::List(const size_t size, const U *array)
+{
+    std::ranges::for_each(array, array + size, [this](const T& el){this->push_back(el);});
 }
 
 template<typename T>
@@ -122,6 +126,8 @@ T List<T>::pop_front()
     return value;
 }
 
+#pragma region Iteartors
+
 template<typename T>
 Iterator<T> List<T>::begin()
 {
@@ -147,16 +153,18 @@ ConstIterator<T> List<T>::end() const
 }
 
 template<typename T>
-ConstIterator<T> List<T>::cbegin()
+ConstIterator<T> List<T>::cbegin() const
 {
     return ConstIterator<T>(head);
 }
 
 template<typename T>
-ConstIterator<T> List<T>::cend()
+ConstIterator<T> List<T>::cend() const
 {
     return ConstIterator<T>();
 }
+
+#pragma endregion
 
 template<typename T>
 List<T>& List<T>::operator+=(const T& el)

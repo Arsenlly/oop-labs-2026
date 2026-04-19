@@ -3,6 +3,7 @@
 #define ITERATOR_H__
 
 #include "base_iterator.h"
+#include "iterator_exception.h"
 
 template<typename T>
 class List;
@@ -11,27 +12,48 @@ template<typename T>
 class Iterator: public BaseIterator<T>
 {
     public:
+
+    #pragma region Aliases
+
         using difference_type = std::ptrdiff_t;
         using value_type = T;
-        using pointer = std::shared_ptr<T>;
-        using reference = T&;
+        using pointer = std::shared_ptr<value_type>;
+        using reference = value_type&;
         using iterator_category = std::forward_iterator_tag;
+    
+    #pragma endregion
+
     public:
+
+    #pragma region Constructors
+
         Iterator() = default;
         Iterator(const std::shared_ptr<typename List<T>::Node>& node);
         Iterator(const Iterator<T> &it);
+        Iterator(Iterator<T> &&it);
 
-        ~Iterator() override = default;
+    #pragma endregion
+
+    ~Iterator() override = default;
+
+    #pragma region Operators
+        Iterator<T>& operator=(const Iterator<T>& it);
+        Iterator<T>& operator=(Iterator<T>&& it);
 
         Iterator<T>& operator++();
         Iterator<T>& operator++(int);
 
         T& operator*();
+        
+        std::shared_ptr<T>& operator->();
+        
+        operator bool() const noexcept;
+        
+        bool operator==(const Iterator<T> &it) const noexcept;
+        bool operator!=(const Iterator<T> &it) const noexcept;
 
-        operator bool();
+    #pragma endregion
 
-        bool operator==(const Iterator<T> &it);
-        bool operator!=(const Iterator<T> &it);
 };
 
 #include "iterator.hpp"

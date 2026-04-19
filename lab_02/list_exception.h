@@ -7,13 +7,13 @@
 class ListAllocateError: public BaseException
 {
     public:
-        ListAllocateError(const char *filename, const char *classname, int line, const char *err_info);
+        ListAllocateError(const char *filename, const char *classname, int line, const char *err_info) noexcept;
 };
 
 class ListIsEmptyError: public BaseException
 {
     public:
-        ListIsEmptyError(const char *filename, const char *classname, int line, const char *err_info);
+        ListIsEmptyError(const char *filename, const char *classname, int line, const char *err_info) noexcept;
 };
 
 #include "list_exception.hpp"
