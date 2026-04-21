@@ -39,10 +39,16 @@ class List:public BaseContainer
         List(List<T>&& l);
 
         template<Convertible<T> U>
+        List(const List<U>& l);
+
+        template<Convertible<T> U>
+        List(List<U>&& l);
+
+        template<Convertible<T> U>
         List(std::initializer_list<U> l);
 
         template<ConvertibleContainer<T> C>
-        List(const C& cont);
+        explicit List(const C& cont);
 
         template<ConvertibleIterator<T> It, Sentinel<It> S>
         List(const It& beg_it, const S& end_it);
@@ -52,10 +58,16 @@ class List:public BaseContainer
 
     #pragma endregion
 
-    #pragma region Assign
+    #pragma region AssignOperators
 
     List<T> &operator=(const List<T>& l);
     List<T> &operator=(List<T>&& l);
+
+    template<Convertible<T> U>
+    List<T> &operator=(const List<U>& l);
+
+    template<Convertible<T> U>
+    List<T> &operator=(List<U>&& l);
 
     template<ConvertibleContainer<T> C>
     List<T> &operator=(const C& cont);
@@ -67,8 +79,14 @@ class List:public BaseContainer
 
     #pragma region Add
 
-        void push_back(const T& value);
-        void push_front(const T& value);
+        template<Convertible<T> U>
+        void push_back(const U& value);
+
+        template<Convertible<T> U>
+        void push_front(const U& value);
+
+        template<Convertible<T> U>
+        void insert_after(Iterator<T> &pos, const U& value);
 
     #pragma endregion
 
@@ -84,12 +102,17 @@ class List:public BaseContainer
     template<Convertible<T> U>
     bool has(const U &value) const;
 
+    virtual bool empty();
+    virtual void clear();
+    virtual size_t size();
+
     #pragma endregion
 
     #pragma region RemoveElements
 
         T pop_back();
         T pop_front();
+        void remove(const T& value);
 
     #pragma endregion
 
@@ -106,10 +129,6 @@ class List:public BaseContainer
     operator bool() const noexcept;
 
     #pragma endregion
-
-    virtual bool empty();
-    virtual void clear();
-    virtual size_t size();
 
     #pragma region Iterators
         Iterator<T> begin();
@@ -135,7 +154,7 @@ class List:public BaseContainer
                 Node(const T& value);
 
                 std::shared_ptr<Node> getNext();
-                void setNext(std::shared_ptr<Node>& next);
+                void setNext(const std::shared_ptr<Node>& next);
 
                 T& getValue();
                 void setValue(const T& value);

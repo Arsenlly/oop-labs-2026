@@ -92,6 +92,12 @@ bool Iterator<T>::operator!=(const Iterator<T> &it) const noexcept
     return (this->curr).lock() != (it.curr).lock();
 }
 
+template<ListType T>
+std::shared_ptr<typename List<T>::Node> Iterator<T>::getNode()
+{
+    return this->curr.lock();
+}
+
 #pragma endregion
 
 #endif

@@ -38,7 +38,7 @@ std::shared_ptr<typename List<T>::Node> List<T>::Node::getNext()
 }
 
 template<ListType T>
-void List<T>::Node::setNext(std::shared_ptr<typename List<T>::Node>& next)
+void List<T>::Node::setNext(const std::shared_ptr<typename List<T>::Node>& next)
 {
     this->next = next;
 }

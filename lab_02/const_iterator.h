@@ -52,6 +52,9 @@ class ConstIterator: public BaseIterator<T>
         bool operator!=(const ConstIterator<T> &it) const noexcept;
 
     #pragma endregion
+
+    std::shared_ptr<const typename List<T>::Node> getNode() const;
+
 };
 
 #include "const_iterator.hpp"

@@ -52,8 +52,10 @@ class Iterator: public BaseIterator<T>
         bool operator==(const Iterator<T> &it) const noexcept;
         bool operator!=(const Iterator<T> &it) const noexcept;
 
+        
     #pragma endregion
-
+        
+        std::shared_ptr<typename List<T>::Node> getNode();
 };
 
 #include "iterator.hpp"

@@ -6,11 +6,29 @@
 
 #include <iostream>
 
+#pragma region Constructors
+
 template<ListType T>
 List<T>::List()
 {
     head = nullptr;
     tail = nullptr;
+}
+
+template<ListType T>
+template<Convertible<T> U>
+List<T>::List(const List<U>& l)
+{
+    std::ranges::for_each(l, [this](const T& el){this->push_back(el);});
+}
+
+template<ListType T>
+template<Convertible<T> U>
+List<T>::List(List<U>&& l)
+{
+    head = l.head;
+    tail = l.tail;
+    l.clear();
 }
 
 template<ListType T>
@@ -22,7 +40,6 @@ List<T>::List(const List<T>& l)
 template<ListType T>
 List<T>::List(List<T>&& l)
 {
-    std::cout << "move\n";
     head = l.head;
     tail = l.tail;
     l.clear();
@@ -56,6 +73,10 @@ List<T>::List(const It& beg_it, const S& end_it)
     std::ranges::for_each(beg_it, end_it, [this](const T& el){push_back(el);});
 }
 
+#pragma endregion
+
+#pragma region AssignOperators
+
 template<ListType T>
 List<T> &List<T>::operator=(const List<T>& l)
 {
@@ -88,8 +109,13 @@ List<T> &List<T>::operator=(std::initializer_list<U> l)
     return *this;
 }
 
+#pragma endregion
+
+#pragma region Add
+
 template<ListType T>
-void List<T>::push_back(const T& value)
+template<Convertible<T> U>
+void List<T>::push_back(const U& value)
 {
     std::shared_ptr<Node> new_node = std::make_shared<Node>(value);
     if(tail != nullptr)
@@ -101,7 +127,8 @@ void List<T>::push_back(const T& value)
 }
 
 template<ListType T>
-void List<T>::push_front(const T& value)
+template<Convertible<T> U>
+void List<T>::push_front(const U& value)
 {
     try
     {
@@ -119,6 +146,27 @@ void List<T>::push_front(const T& value)
 }
 
 template<ListType T>
+template<Convertible<T> U>
+void List<T>::insert_after(Iterator<T> &pos, const U& value)
+{
+    try
+    {
+        std::shared_ptr<Node> new_node = std::make_shared<Node>(value);
+        new_node->setNext(pos.getNode()->getNext());
+        pos.getNode()->setNext(new_node);
+        ++this->_size;
+    }
+    catch(std::bad_alloc &ex)
+    {
+        throw ListAllocateError(__FILE__, typeid(*this).name(), __LINE__, "Allocate error");
+    }
+}
+
+#pragma endregion
+
+#pragma region ReturnElements
+
+template<ListType T>
 T& List<T>::back()
 {
     if (empty())
@@ -134,6 +182,10 @@ T& List<T>::front()
         throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
     return head->getValue();
 }
+
+#pragma endregion
+
+#pragma region Remove
 
 template<ListType T>
 T List<T>::pop_back()
@@ -154,11 +206,38 @@ T List<T>::pop_front()
 }
 
 template<ListType T>
-template<Convertible<T> U>
-bool List<T>::has(const U &value) const
+void List<T>::remove(const T& value)
 {
-    return std::ranges::any_of(*this, [value](const T &el){return el == value;});
+    if (empty())
+        throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
+    
+    std::shared_ptr<Node> prev = nullptr;
+    std::shared_ptr<Node> cur = head;
+
+    while(cur != nullptr)
+    {
+        if (cur->getValue() == value)
+        {
+            if (prev == nullptr)
+            {
+                head = cur->getNext();
+            }
+            else
+            {
+                prev->setNext(cur->getNext());
+            }
+            cur = cur->getNext();
+            _size--;
+        }
+        else
+        { 
+            prev = cur;
+            cur = cur->getNext();
+        }
+    }
 }
+
+#pragma endregion
 
 #pragma region Iteartors
 
@@ -199,6 +278,39 @@ ConstIterator<T> List<T>::cend() const
 }
 
 #pragma endregion
+
+#pragma region CheckList
+
+template<ListType T>
+template<Convertible<T> U>
+bool List<T>::has(const U &value) const
+{
+    return std::ranges::any_of(*this, [value](const T &el){return el == value;});
+}
+
+template<ListType T>
+bool List<T>::empty()
+{
+    return size() == 0;
+}
+
+template<ListType T>
+void List<T>::clear()
+{
+    head.reset();
+    tail.reset();
+    this->_size = 0;
+}
+    
+template<ListType T>
+size_t List<T>::size()
+{
+    return this->_size;
+}
+
+#pragma endregion
+
+#pragma region Operators
 
 template<ListType T>
 List<T>& List<T>::operator+=(const T& el)
@@ -244,24 +356,6 @@ List<T>::operator bool() const noexcept
     return _size != 0;
 }
 
-template<ListType T>
-bool List<T>::empty()
-{
-    return size() == 0;
-}
-
-template<ListType T>
-void List<T>::clear()
-{
-    head.reset();
-    tail.reset();
-    this->_size = 0;
-}
-    
-template<ListType T>
-size_t List<T>::size()
-{
-    return this->_size;
-}
+#pragma endregion
 
 #endif

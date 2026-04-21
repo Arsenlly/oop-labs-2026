@@ -92,4 +92,10 @@ bool ConstIterator<T>::operator!=(const ConstIterator<T> &it) const noexcept
     return (this->curr).lock() != (it.curr).lock();
 }
 
+template<ListType T>
+std::shared_ptr<const typename List<T>::Node> ConstIterator<T>::getNode() const
+{
+    return this->curr.lock();
+}
+
 #endif
