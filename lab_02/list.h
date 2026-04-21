@@ -7,13 +7,13 @@
 #include <ranges>
 #include <algorithm>
 
+#include "concepts.h"
 #include "base_container.h"
 #include "iterator.h"
 #include "const_iterator.h"
-#include "concepts.h"
 #include "list_exception.h"
 
-template<typename T>
+template<ListType T>
 class List:public BaseContainer
 {
     public:
@@ -79,6 +79,13 @@ class List:public BaseContainer
 
     #pragma endregion    
 
+    #pragma region CheckList
+
+    template<Convertible<T> U>
+    bool has(const U &value) const;
+
+    #pragma endregion
+
     #pragma region RemoveElements
 
         T pop_back();
@@ -95,6 +102,8 @@ class List:public BaseContainer
     List<T> operator+(const List<T>& l);
 
     bool operator==(const List<T>& l);
+
+    operator bool() const noexcept;
 
     #pragma endregion
 

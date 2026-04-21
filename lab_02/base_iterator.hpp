@@ -4,7 +4,7 @@
 
 #include "base_iterator.h"
 
-template<typename T>
+template<ListType T>
 BaseIterator<T>::~BaseIterator() {}
 
 

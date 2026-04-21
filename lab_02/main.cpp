@@ -9,43 +9,21 @@ int main(void)
 {
     List<int> l1 = {100,2,3,4,5,6,7,8,9};
 
-    auto it = l1.cbegin();
-    it++;
+    // List<int> l2(l1);
 
-    List<int> l2(it, l1.cend());
-
-    // auto it = l1.begin();
-
-    // try
+    // for(auto el : l2)
     // {
-    //     std::cout << *it << "\n";
+    //     std::cout << el << "\n";
     // }
-    // catch(const std::exception& e)
-    // {
-    //     std::cout << "2\n";
-    //     std::cerr << e.what() << '\n';
-    // }
-    
-    // l1.pop_front();
 
-    // try
-    // {
-    //     std::cout << *it << "\n";
-    // }
-    // catch(const std::exception& e)
-    // {
-    //     std::cout << "2\n";
-    //     std::cerr << e.what() << '\n';
-    // }
-    
-    // int a[] = {1,2,3,4,5,6,7,8,9};
-    
-    // List<int> l(9, a);
+    // std::cout << l1.has(300) << "\n";
 
-    for(auto el : l2)
-    {
-        std::cout << el << "\n";
-    }
+    l1.clear();
+
+    if (l1)
+        std::cout << "positive\n";
+    else
+        std::cout << "negative\n";
 
     return 0;
 }

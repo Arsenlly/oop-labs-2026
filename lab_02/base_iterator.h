@@ -4,10 +4,10 @@
 
 #include <memory>
 
-template<typename T>
+template<ListType T>
 class List;
 
-template<typename T>
+template<ListType T>
 class BaseIterator
 {   
     public:

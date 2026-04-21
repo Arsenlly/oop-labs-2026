@@ -6,19 +6,19 @@
 
 #pragma region Constructors
 
-template<typename T>
+template<ListType T>
 ConstIterator<T>::ConstIterator(const std::shared_ptr<typename List<T>::Node>& node)
 {
     this->curr = node;
 }
 
-template<typename T>
+template<ListType T>
 ConstIterator<T>::ConstIterator(const ConstIterator<T> &it)
 {
     this->curr = it.curr.lock();
 }
 
-template<typename T>
+template<ListType T>
 ConstIterator<T>::ConstIterator(ConstIterator<T> &&it)
 {
     this->curr = it.curr;
@@ -29,14 +29,14 @@ ConstIterator<T>::ConstIterator(ConstIterator<T> &&it)
 
 #pragma region Operators
 
-template<typename T>
+template<ListType T>
 ConstIterator<T>& ConstIterator<T>::operator=(const ConstIterator<T>& it)
 {
     this->curr = it.curr.lock();
     return *this;
 }
 
-template<typename T>
+template<ListType T>
 ConstIterator<T>& ConstIterator<T>::operator=(ConstIterator<T>&& it)
 {
     this->curr = it.curr.lock();
@@ -44,21 +44,21 @@ ConstIterator<T>& ConstIterator<T>::operator=(ConstIterator<T>&& it)
     return *this;
 }
 
-template<typename T>
+template<ListType T>
 ConstIterator<T>& ConstIterator<T>::operator++()
 {
     this->curr = (this->curr).lock()->getNext();
     return *this;
 }
 
-template<typename T>
+template<ListType T>
 ConstIterator<T>& ConstIterator<T>::operator++(int)
 {
     ++(*this);
     return *this;
 }
 
-template<typename T>
+template<ListType T>
 const T& ConstIterator<T>::operator*() const
 {
     if (this->curr.expired())
@@ -66,7 +66,7 @@ const T& ConstIterator<T>::operator*() const
     return (this->curr).lock()->getValue();
 }
 
-template<typename T>
+template<ListType T>
 const std::shared_ptr<T>& ConstIterator<T>::operator->() const
 {
     if (this->curr.expired())
@@ -74,19 +74,19 @@ const std::shared_ptr<T>& ConstIterator<T>::operator->() const
     return &(operator*);
 }
 
-template<typename T>
+template<ListType T>
 ConstIterator<T>::operator bool() const noexcept
 {
     return ((this->curr).lock() != nullptr);
 }
 
-template<typename T>
+template<ListType T>
 bool ConstIterator<T>::operator==(const ConstIterator<T> &it) const noexcept
 {
     return this->curr.lock() == it.curr.lock();
 }
 
-template<typename T>
+template<ListType T>
 bool ConstIterator<T>::operator!=(const ConstIterator<T> &it) const noexcept
 {
     return (this->curr).lock() != (it.curr).lock();

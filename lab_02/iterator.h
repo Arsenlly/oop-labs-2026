@@ -5,10 +5,10 @@
 #include "base_iterator.h"
 #include "iterator_exception.h"
 
-template<typename T>
+template<ListType T>
 class List;
 
-template<typename T>
+template<ListType T>
 class Iterator: public BaseIterator<T>
 {
     public:

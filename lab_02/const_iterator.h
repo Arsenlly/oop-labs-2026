@@ -4,10 +4,10 @@
 
 #include "base_iterator.h"
 
-template<typename T>
+template<ListType T>
 class List;
 
-template<typename T>
+template<ListType T>
 class ConstIterator: public BaseIterator<T>
 {
     public:

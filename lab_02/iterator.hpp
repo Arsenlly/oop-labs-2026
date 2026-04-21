@@ -6,19 +6,19 @@
 
 #pragma region Constructors
 
-template<typename T>
+template<ListType T>
 Iterator<T>::Iterator(const std::shared_ptr<typename List<T>::Node>& node)
 {
     this->curr = node;
 }
 
-template<typename T>
+template<ListType T>
 Iterator<T>::Iterator(const Iterator<T> &it)
 {
     this->curr = it.curr.lock();
 }
 
-template<typename T>
+template<ListType T>
 Iterator<T>::Iterator(Iterator<T> &&it)
 {
     this->curr = it.curr();
@@ -29,14 +29,14 @@ Iterator<T>::Iterator(Iterator<T> &&it)
 
 #pragma region Operators
 
-template<typename T>
+template<ListType T>
 Iterator<T>& Iterator<T>::operator=(const Iterator<T>& it)
 {
     this->curr = it.curr.lock();
     return *this;
 }
 
-template<typename T>
+template<ListType T>
 Iterator<T>& Iterator<T>::operator=(Iterator<T>&& it)
 {
     this->curr = it.curr.lock();
@@ -44,21 +44,21 @@ Iterator<T>& Iterator<T>::operator=(Iterator<T>&& it)
     return *this;
 }
 
-template<typename T>
+template<ListType T>
 Iterator<T>& Iterator<T>::operator++()
 {
     this->curr = (this->curr).lock()->getNext();
     return *this;
 }
 
-template<typename T>
+template<ListType T>
 Iterator<T>& Iterator<T>::operator++(int)
 {
     ++(*this);
     return *this;
 }
 
-template<typename T>
+template<ListType T>
 T& Iterator<T>::operator*()
 {
     if (this->curr.expired())
@@ -66,7 +66,7 @@ T& Iterator<T>::operator*()
     return (this->curr).lock()->getValue();
 }
 
-template<typename T>
+template<ListType T>
 std::shared_ptr<T>& Iterator<T>::operator->()
 {
     if (this->curr.expired())
@@ -74,19 +74,19 @@ std::shared_ptr<T>& Iterator<T>::operator->()
     return &(operator*);
 }
 
-template<typename T>
+template<ListType T>
 Iterator<T>::operator bool() const noexcept
 {
     return ((this->curr).lock() != nullptr);
 }
 
-template<typename T>
+template<ListType T>
 bool Iterator<T>::operator==(const Iterator<T> &it) const noexcept
 {
     return this->curr.lock() == it.curr.lock();
 }
 
-template<typename T>
+template<ListType T>
 bool Iterator<T>::operator!=(const Iterator<T> &it) const noexcept
 {
     return (this->curr).lock() != (it.curr).lock();
