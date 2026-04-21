@@ -59,7 +59,7 @@ Iterator<T>& Iterator<T>::operator++(int)
 }
 
 template<ListType T>
-T& Iterator<T>::operator*()
+T& Iterator<T>::operator*() const
 {
     if (this->curr.expired())
         throw IteratorExpiredError(__FILE__, typeid(*this).name(), __LINE__, "Iterator expired");
@@ -67,7 +67,7 @@ T& Iterator<T>::operator*()
 }
 
 template<ListType T>
-std::shared_ptr<T>& Iterator<T>::operator->()
+std::shared_ptr<T>& Iterator<T>::operator->() const
 {
     if (this->curr.expired())
         throw IteratorExpiredError(__FILE__, typeid(*this).name(), __LINE__, "Iterator expired");
@@ -92,12 +92,12 @@ bool Iterator<T>::operator!=(const Iterator<T> &it) const noexcept
     return (this->curr).lock() != (it.curr).lock();
 }
 
+#pragma endregion
+
 template<ListType T>
 std::shared_ptr<typename List<T>::Node> Iterator<T>::getNode()
 {
     return this->curr.lock();
 }
-
-#pragma endregion
 
 #endif

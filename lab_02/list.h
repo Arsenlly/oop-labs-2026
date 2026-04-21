@@ -36,13 +36,13 @@ class List:public BaseContainer
 
         List();
         List(const List<T>& l);
-        List(List<T>&& l);
+        List(List<T>&& l) noexcept;
 
         template<Convertible<T> U>
         List(const List<U>& l);
 
         template<Convertible<T> U>
-        List(List<U>&& l);
+        List(List<U>&& l) noexcept;
 
         template<Convertible<T> U>
         List(std::initializer_list<U> l);
@@ -61,13 +61,13 @@ class List:public BaseContainer
     #pragma region AssignOperators
 
     List<T> &operator=(const List<T>& l);
-    List<T> &operator=(List<T>&& l);
+    List<T> &operator=(List<T>&& l) noexcept;
 
     template<Convertible<T> U>
     List<T> &operator=(const List<U>& l);
 
     template<Convertible<T> U>
-    List<T> &operator=(List<U>&& l);
+    List<T> &operator=(List<U>&& l) noexcept;
 
     template<ConvertibleContainer<T> C>
     List<T> &operator=(const C& cont);
@@ -92,8 +92,8 @@ class List:public BaseContainer
 
     #pragma region ReturnElements
 
-        T& back();
-        T& front();
+        T& back() const;
+        T& front() const;
 
     #pragma endregion    
 
@@ -102,9 +102,8 @@ class List:public BaseContainer
     template<Convertible<T> U>
     bool has(const U &value) const;
 
-    virtual bool empty();
-    virtual void clear();
-    virtual size_t size();
+    virtual bool empty() const noexcept;
+    virtual size_t size() const noexcept;
 
     #pragma endregion
 
@@ -113,6 +112,8 @@ class List:public BaseContainer
         T pop_back();
         T pop_front();
         void remove(const T& value);
+
+        virtual void clear() noexcept;
 
     #pragma endregion
 
@@ -124,21 +125,21 @@ class List:public BaseContainer
     List<T> operator+(const T& el);
     List<T> operator+(const List<T>& l);
 
-    bool operator==(const List<T>& l);
+    bool operator==(const List<T>& l) const;
 
     operator bool() const noexcept;
 
     #pragma endregion
 
     #pragma region Iterators
-        Iterator<T> begin();
-        Iterator<T> end();
+        Iterator<T> begin() noexcept;
+        Iterator<T> end() noexcept;
 
-        ConstIterator<T> begin() const;
-        ConstIterator<T> end() const;
+        ConstIterator<T> begin() const noexcept;
+        ConstIterator<T> end() const noexcept;
 
-        ConstIterator<T> cbegin() const;
-        ConstIterator<T> cend() const;
+        ConstIterator<T> cbegin() const noexcept;
+        ConstIterator<T> cend() const noexcept;
     #pragma endregion
 
     protected:

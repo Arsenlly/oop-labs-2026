@@ -43,9 +43,9 @@ class Iterator: public BaseIterator<T>
         Iterator<T>& operator++();
         Iterator<T>& operator++(int);
 
-        T& operator*();
+        T& operator*() const;
         
-        std::shared_ptr<T>& operator->();
+        std::shared_ptr<T>& operator->() const;
         
         operator bool() const noexcept;
         

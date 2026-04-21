@@ -24,7 +24,7 @@ List<T>::List(const List<U>& l)
 
 template<ListType T>
 template<Convertible<T> U>
-List<T>::List(List<U>&& l)
+List<T>::List(List<U>&& l) noexcept
 {
     head = l.head;
     tail = l.tail;
@@ -38,7 +38,7 @@ List<T>::List(const List<T>& l)
 }
 
 template<ListType T>
-List<T>::List(List<T>&& l)
+List<T>::List(List<T>&& l) noexcept
 {
     head = l.head;
     tail = l.tail;
@@ -85,7 +85,7 @@ List<T> &List<T>::operator=(const List<T>& l)
 }
 
 template<ListType T>
-List<T> &List<T>::operator=(List<T>&& l)
+List<T> &List<T>::operator=(List<T>&& l) noexcept
 {
     head = l.head;
     tail = l.tail;
@@ -167,7 +167,7 @@ void List<T>::insert_after(Iterator<T> &pos, const U& value)
 #pragma region ReturnElements
 
 template<ListType T>
-T& List<T>::back()
+T& List<T>::back() const
 {
     if (empty())
         throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
@@ -176,7 +176,7 @@ T& List<T>::back()
 }
 
 template<ListType T>
-T& List<T>::front()
+T& List<T>::front() const
 {
     if (empty())
         throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
@@ -185,7 +185,7 @@ T& List<T>::front()
 
 #pragma endregion
 
-#pragma region Remove
+#pragma region RemoveElements
 
 template<ListType T>
 T List<T>::pop_back()
@@ -237,42 +237,50 @@ void List<T>::remove(const T& value)
     }
 }
 
+template<ListType T>
+void List<T>::clear() noexcept
+{
+    head.reset();
+    tail.reset();
+    this->_size = 0;
+}
+
 #pragma endregion
 
 #pragma region Iteartors
 
 template<ListType T>
-Iterator<T> List<T>::begin()
+Iterator<T> List<T>::begin() noexcept
 {
     return Iterator<T>(head);
 }
 
 template<ListType T>
-Iterator<T> List<T>::end()
+Iterator<T> List<T>::end() noexcept
 {
     return Iterator<T>();
 }
 
 template<ListType T>
-ConstIterator<T> List<T>::begin() const
+ConstIterator<T> List<T>::begin() const noexcept
 {
     return ConstIterator<T>(head);
 }
 
 template<ListType T>
-ConstIterator<T> List<T>::end() const
+ConstIterator<T> List<T>::end() const noexcept
 {
     return ConstIterator<T>();
 }
 
 template<ListType T>
-ConstIterator<T> List<T>::cbegin() const
+ConstIterator<T> List<T>::cbegin() const noexcept
 {
     return ConstIterator<T>(head);
 }
 
 template<ListType T>
-ConstIterator<T> List<T>::cend() const
+ConstIterator<T> List<T>::cend() const noexcept
 {
     return ConstIterator<T>();
 }
@@ -289,21 +297,13 @@ bool List<T>::has(const U &value) const
 }
 
 template<ListType T>
-bool List<T>::empty()
+bool List<T>::empty() const noexcept
 {
     return size() == 0;
 }
-
-template<ListType T>
-void List<T>::clear()
-{
-    head.reset();
-    tail.reset();
-    this->_size = 0;
-}
     
 template<ListType T>
-size_t List<T>::size()
+size_t List<T>::size() const noexcept
 {
     return this->_size;
 }
@@ -345,9 +345,24 @@ List<T> List<T>::operator+(const List<T>& l)
 }
 
 template<ListType T>
-bool List<T>::operator==(const List<T>& l)
+bool List<T>::operator==(const List<T>& l) const
 {
-    return 0;
+    if (_size != l.size())
+    {
+        return false;
+    }
+    else
+    {
+        auto it_beg_this = cbegin();
+        auto it_end_this = cend();
+        auto it_beg_l = l.cbegin();
+        for(;it_beg_this != it_end_this;it_beg_l++, it_beg_this++)
+        {
+            if (*it_beg_l != *it_beg_this)
+                return false;
+        }
+    }
+    return true;
 }
 
 template<ListType T>
