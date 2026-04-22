@@ -29,15 +29,17 @@ class ConstIterator: public BaseIterator<T>
         ConstIterator() = default;
         ConstIterator(const std::shared_ptr<typename List<T>::Node>& node);
         ConstIterator(const ConstIterator<T> &it);
-        ConstIterator(ConstIterator<T> &&it);
 
     #pragma endregion
 
+    #pragma region Destructor
+
     ~ConstIterator() override = default;
+
+    #pragma endregion
 
     #pragma region Operators
         ConstIterator<T>& operator=(const ConstIterator<T>& it);
-        ConstIterator<T>& operator=(ConstIterator<T>&& it);
 
         ConstIterator<T>& operator++();
         ConstIterator<T>& operator++(int);

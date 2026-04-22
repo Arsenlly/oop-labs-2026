@@ -7,5 +7,4 @@
 template<ListType T>
 BaseIterator<T>::~BaseIterator() {}
 
-
 #endif

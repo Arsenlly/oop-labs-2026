@@ -6,6 +6,7 @@
 #include <memory>
 #include <ranges>
 #include <algorithm>
+#include <ostream>
 
 #include "concepts.h"
 #include "base_container.h"
@@ -96,14 +97,14 @@ class List:public BaseContainer
 
     #pragma endregion
 
-    #pragma region ReturnElements
+    #pragma region ReturnElements // OK
 
         T& back() const;
         T& front() const;
 
     #pragma endregion    
 
-    #pragma region CheckList
+    #pragma region CheckList // OK
 
     template<Convertible<T> U>
     bool has(const U &value) const;
@@ -113,23 +114,37 @@ class List:public BaseContainer
 
     #pragma endregion
 
-    #pragma region RemoveElements
+    #pragma region RemoveElements // OK
 
         T pop_back();
         T pop_front();
         void remove(const T& value);
 
+        void remove_after(Iterator<T> &pos);
+
         virtual void clear() noexcept;
 
     #pragma endregion
 
-    #pragma region Operators
+    #pragma region Operators // OK
 
-    List<T>& operator+=(const T& el);
-    List<T>& operator+=(const List<T>& l);
+    template<Convertible<T> U>
+    List<T>& operator+=(const U& el);
+
+    template<Convertible<T> U>
+    List<T>& operator+=(const List<U>& l);
     
-    List<T> operator+(const T& el);
-    List<T> operator+(const List<T>& l);
+    template<ConvertibleContainer<T> C>
+    List<T>& operator+=(const C& cont);
+
+    template<ConvertibleContainer<T> C>
+    List<T> operator+(const C& cont) const;
+
+    template<Convertible<T> U>
+    List<T> operator+(const U& el) const;
+    
+    template<Convertible<T> U>
+    List<T> operator+(const List<U>& l) const;
 
     bool operator==(const List<T>& l) const;
 
@@ -137,7 +152,7 @@ class List:public BaseContainer
 
     #pragma endregion
 
-    #pragma region Iterators
+    #pragma region Iterators // OK
         Iterator<T> begin() noexcept;
         Iterator<T> end() noexcept;
 
@@ -187,6 +202,9 @@ class List:public BaseContainer
         std::shared_ptr<Node> head;
         std::shared_ptr<Node> tail;
 };
+
+template<ListType T>
+std::ostream &operator<<(std::ostream &os, const List<T> &l);
 
 #include "list.hpp"
 #include "node.hpp"

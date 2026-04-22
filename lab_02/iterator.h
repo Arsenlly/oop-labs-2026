@@ -30,15 +30,17 @@ class Iterator: public BaseIterator<T>
         Iterator() = default;
         Iterator(const std::shared_ptr<typename List<T>::Node>& node);
         Iterator(const Iterator<T> &it);
-        Iterator(Iterator<T> &&it);
 
     #pragma endregion
 
+    #pragma region Destructor
+
     ~Iterator() override = default;
+
+    #pragma endregion
 
     #pragma region Operators
         Iterator<T>& operator=(const Iterator<T>& it);
-        Iterator<T>& operator=(Iterator<T>&& it);
 
         Iterator<T>& operator++();
         Iterator<T>& operator++(int);
@@ -52,7 +54,6 @@ class Iterator: public BaseIterator<T>
         bool operator==(const Iterator<T> &it) const noexcept;
         bool operator!=(const Iterator<T> &it) const noexcept;
 
-        
     #pragma endregion
         
         std::shared_ptr<typename List<T>::Node> getNode();

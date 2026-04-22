@@ -49,7 +49,7 @@ template<ListType T>
 template<Convertible<T> U>
 List<T>::List(std::initializer_list<U> l)
 {
-    std::ranges::for_each(l, [this](const T& el){this->push_back(el);});
+    std::ranges::for_each(l, [this](const U& el){this->push_back(el);});
 }
 
 template<ListType T>
@@ -90,6 +90,7 @@ List<T>::~List()
 template<ListType T>
 List<T> &List<T>::operator=(const List<T>& l)
 {
+    clear();
     std::ranges::for_each(l, [this](const T& el){this->push_back(el);});
     return *this;
 }
@@ -97,6 +98,7 @@ List<T> &List<T>::operator=(const List<T>& l)
 template<ListType T>
 List<T> &List<T>::operator=(List<T>&& l) noexcept
 {
+    clear();
     head = l.head;
     tail = l.tail;
     l.clean();
@@ -107,6 +109,7 @@ template<ListType T>
 template<ConvertibleContainer<T> C>
 List<T> &List<T>::operator=(const C& cont)
 {
+    clear();
     std::ranges::for_each(cont, [this](const T& el){push_back(el);});
     return *this;
 }
@@ -115,7 +118,8 @@ template<ListType T>
 template<Convertible<T> U>
 List<T> &List<T>::operator=(std::initializer_list<U> l)
 {
-    std::ranges::for_each(l, [this](const T& el){this->push_back(el);});
+    clear();
+    std::ranges::for_each(l, [this](const U& el){this->push_back(el);});
     return *this;
 }
 
@@ -200,8 +204,26 @@ T& List<T>::front() const
 template<ListType T>
 T List<T>::pop_back()
 {
+    if (empty())
+        throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
+
     T value = tail->getValue();
-    // TODO
+
+    std::shared_ptr<Node> prev = nullptr;
+    std::shared_ptr<Node> cur = head;
+
+    for(;cur != tail;prev = cur, cur = cur->getNext());
+
+    if (prev == nullptr)
+    {
+        head = nullptr;
+        tail = nullptr;
+    }
+    else
+    {
+        prev->setNext(nullptr);
+    }
+
     this->_size--;
     return value;
 }
@@ -209,6 +231,9 @@ T List<T>::pop_back()
 template<ListType T>
 T List<T>::pop_front()
 {
+    if (empty())
+        throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
+
     T value = head->getValue();
     head = head->getNext();
     this->_size--;
@@ -253,6 +278,15 @@ void List<T>::clear() noexcept
     head.reset();
     tail.reset();
     this->_size = 0;
+}
+
+template<ListType T>
+void List<T>::remove_after(Iterator<T> &pos)
+{
+    if (pos.getNode()->getNext() != nullptr)
+    {
+        pos.getNode()->setNext(pos.getNode()->getNext()->getNext());
+    }
 }
 
 #pragma endregion
@@ -323,14 +357,16 @@ size_t List<T>::size() const noexcept
 #pragma region Operators
 
 template<ListType T>
-List<T>& List<T>::operator+=(const T& el)
+template<Convertible<T> U>
+List<T>& List<T>::operator+=(const U& el)
 {
     this->push_back(el);
     return *this;
 }
 
 template<ListType T>
-List<T>& List<T>::operator+=(const List<T>& l)
+template<Convertible<T> U>
+List<T>& List<T>::operator+=(const List<U>& l)
 {
     for(auto el : l)
         this->push_back(el);
@@ -338,7 +374,27 @@ List<T>& List<T>::operator+=(const List<T>& l)
 }
 
 template<ListType T>
-List<T> List<T>::operator+(const T& el)
+template<ConvertibleContainer<T> C>
+List<T>& List<T>::operator+=(const C& cont)
+{
+    for(auto el : cont)
+        this->push_back(el);
+    return *this;
+}
+
+template<ListType T>
+template<ConvertibleContainer<T> C>
+List<T> List<T>::operator+(const C& cont) const
+{
+    List<T> res(*this);
+    for (auto el : cont)
+        res.push_back(el);
+    return res;
+}
+
+template<ListType T>
+template<Convertible<T> U>
+List<T> List<T>::operator+(const U& el) const
 {
     List<T> res(*this);
     res.push_back(el);
@@ -346,7 +402,8 @@ List<T> List<T>::operator+(const T& el)
 }
 
 template<ListType T>
-List<T> List<T>::operator+(const List<T>& l)
+template<Convertible<T> U>
+List<T> List<T>::operator+(const List<U>& l) const
 {
     List<T> res(*this);
     for (auto el : l)
@@ -379,6 +436,24 @@ template<ListType T>
 List<T>::operator bool() const noexcept
 {
     return _size != 0;
+}
+
+template<ListType T>
+std::ostream &operator<<(std::ostream &os, const List<T> &l)
+{
+    os << '[';
+
+    bool first_flag = true;
+    for(const auto &el : l)
+    {
+        if (!first_flag)
+            os << ", ";
+        os << el;
+        first_flag = false;
+    }
+
+    os << ']';
+    return os;
 }
 
 #pragma endregion

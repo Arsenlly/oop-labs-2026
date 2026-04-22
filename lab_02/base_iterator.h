@@ -16,7 +16,6 @@ class BaseIterator
 
     protected:
         std::weak_ptr<typename List<T>::Node> curr;
-
 };
 
 #include "base_iterator.hpp"

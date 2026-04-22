@@ -18,13 +18,6 @@ ConstIterator<T>::ConstIterator(const ConstIterator<T> &it)
     this->curr = it.curr.lock();
 }
 
-template<ListType T>
-ConstIterator<T>::ConstIterator(ConstIterator<T> &&it)
-{
-    this->curr = it.curr;
-    it.curr.reset();
-}
-
 #pragma endregion
 
 #pragma region Operators
@@ -33,14 +26,6 @@ template<ListType T>
 ConstIterator<T>& ConstIterator<T>::operator=(const ConstIterator<T>& it)
 {
     this->curr = it.curr.lock();
-    return *this;
-}
-
-template<ListType T>
-ConstIterator<T>& ConstIterator<T>::operator=(ConstIterator<T>&& it)
-{
-    this->curr = it.curr.lock();
-    it.curr.reset();
     return *this;
 }
 
