@@ -51,10 +51,16 @@ class List:public BaseContainer
         explicit List(const C& cont);
 
         template<ConvertibleIterator<T> It, Sentinel<It> S>
-        List(const It& beg_it, const S& end_it);
+        explicit List(const It& beg_it, const S& end_it);
 
         template<Convertible<T> U>
         List(const size_t size, const U *array);
+
+    #pragma endregion
+
+    #pragma region Destructor
+
+    ~List() override;
 
     #pragma endregion
 
@@ -150,15 +156,17 @@ class List:public BaseContainer
         {
             public:
                 Node();
-                Node(const Node& value);
-                Node(Node&& value);
+                Node(const Node& value) = delete;
+                Node(Node&& value) = delete;
                 Node(const T& value);
 
-                std::shared_ptr<Node> getNext();
-                void setNext(const std::shared_ptr<Node>& next);
+                ~Node() = default;
 
-                T& getValue();
-                void setValue(const T& value);
+                std::shared_ptr<Node> getNext() const noexcept;
+                void setNext(const std::shared_ptr<Node>& next) noexcept;
+
+                T& getValue() noexcept;
+                void setValue(const T& value) noexcept;
 
             private:
                 T value;

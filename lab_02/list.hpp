@@ -75,6 +75,16 @@ List<T>::List(const It& beg_it, const S& end_it)
 
 #pragma endregion
 
+#pragma region Destructor
+
+template<ListType T>
+List<T>::~List()
+{
+    clear();
+}
+
+#pragma endregion
+
 #pragma region AssignOperators
 
 template<ListType T>

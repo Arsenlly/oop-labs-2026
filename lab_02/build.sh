@@ -1,0 +1,1 @@
+g++ -std=c++20 -Wpedantic -Wall -Werror main.cpp -o app.exe

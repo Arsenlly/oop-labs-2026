@@ -11,20 +11,6 @@ List<T>::Node::Node()
 }
 
 template<ListType T>
-List<T>::Node::Node(const Node& node)
-{
-    next = node.next;
-    value = node.value;
-}
-
-template<ListType T>
-List<T>::Node::Node(Node&& node)
-{
-    next = node.next;
-    value = node.value;
-}
-
-template<ListType T>
 List<T>::Node::Node(const T& value)
 {
     next = nullptr;
@@ -32,25 +18,25 @@ List<T>::Node::Node(const T& value)
 }
 
 template<ListType T>
-std::shared_ptr<typename List<T>::Node> List<T>::Node::getNext()
+std::shared_ptr<typename List<T>::Node> List<T>::Node::getNext() const noexcept
 {
     return next;
 }
 
 template<ListType T>
-void List<T>::Node::setNext(const std::shared_ptr<typename List<T>::Node>& next)
+void List<T>::Node::setNext(const std::shared_ptr<typename List<T>::Node>& next) noexcept
 {
     this->next = next;
 }
 
 template<ListType T>
-T& List<T>::Node::getValue()
+T& List<T>::Node::getValue() noexcept
 {
     return value;
 }
 
 template<ListType T>
-void List<T>::Node::setValue(const T& value)
+void List<T>::Node::setValue(const T& value) noexcept
 {
     this->value = value;
 }
