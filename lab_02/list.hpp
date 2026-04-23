@@ -9,7 +9,7 @@
 #pragma region Constructors
 
 template<ListType T>
-List<T>::List()
+List<T>::List() noexcept
 {
     head = nullptr;
     tail = nullptr;
@@ -28,6 +28,7 @@ List<T>::List(List<U>&& l) noexcept
 {
     head = l.head;
     tail = l.tail;
+    _size = l.size();
     l.clear();
 }
 
@@ -42,6 +43,7 @@ List<T>::List(List<T>&& l) noexcept
 {
     head = l.head;
     tail = l.tail;
+    _size = l.size();
     l.clear();
 }
 
@@ -176,12 +178,34 @@ void List<T>::insert_after(Iterator<T> &pos, const U& value)
     }
 }
 
+template<ListType T>
+template<Convertible<T> U>
+void List<T>::insert_after(Iterator<T> &pos, const List<U> &l)
+{
+    for(const auto& el : l)
+    {
+        insert_after(pos, el);
+        pos++;
+    }
+}
+
+template<ListType T>
+template<ConvertibleContainer<T> C>
+void List<T>::insert_after(Iterator<T> &pos, const C &cont)
+{
+    for(const auto& el : cont)
+    {
+        insert_after(pos, el);
+        pos++;
+    }
+}
+
 #pragma endregion
 
 #pragma region ReturnElements
 
 template<ListType T>
-T& List<T>::back() const
+T& List<T>::back()
 {
     if (empty())
         throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
@@ -190,7 +214,7 @@ T& List<T>::back() const
 }
 
 template<ListType T>
-T& List<T>::front() const
+T& List<T>::front()
 {
     if (empty())
         throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
@@ -283,9 +307,13 @@ void List<T>::clear() noexcept
 template<ListType T>
 void List<T>::remove_after(Iterator<T> &pos)
 {
+    if (empty())
+        throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
+    
     if (pos.getNode()->getNext() != nullptr)
     {
         pos.getNode()->setNext(pos.getNode()->getNext()->getNext());
+        _size--;
     }
 }
 
@@ -337,7 +365,7 @@ template<ListType T>
 template<Convertible<T> U>
 bool List<T>::has(const U &value) const
 {
-    return std::ranges::any_of(*this, [value](const T &el){return el == value;});
+    return std::ranges::any_of(*this, [&value](const T &el){return el == value;});
 }
 
 template<ListType T>
@@ -437,6 +465,10 @@ List<T>::operator bool() const noexcept
 {
     return _size != 0;
 }
+
+#pragma endregion
+
+#pragma region StreamOperator
 
 template<ListType T>
 std::ostream &operator<<(std::ostream &os, const List<T> &l)

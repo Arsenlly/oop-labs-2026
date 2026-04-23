@@ -77,10 +77,16 @@ bool ConstIterator<T>::operator!=(const ConstIterator<T> &it) const noexcept
     return (this->curr).lock() != (it.curr).lock();
 }
 
+#pragma endregion
+
+#pragma region getNode
+
 template<ListType T>
 std::shared_ptr<const typename List<T>::Node> ConstIterator<T>::getNode() const
 {
     return this->curr.lock();
 }
+
+#pragma endregion
 
 #endif

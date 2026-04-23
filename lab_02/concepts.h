@@ -5,11 +5,13 @@
 #include <compare>
 #include <concepts>
 
-template<typename T>
-concept EqualTo = requires(T a, T b)
+template<typename T, typename U>
+concept EqualTo = requires(T a, U b)
 {
     {a == b} -> std::same_as<bool>;
     {a != b} -> std::same_as<bool>;
+    {b == a} -> std::same_as<bool>;
+    {b != a} -> std::same_as<bool>;
 };
 
 template<typename T>
@@ -19,7 +21,7 @@ concept Assignable = requires(T t1, T t2)
 };
 
 template<typename T>
-concept ListType = EqualTo<T> && Assignable<T>;
+concept ListType = EqualTo<T, T> && Assignable<T>;
 
 template<typename From, typename To>
 concept Convertible = std::same_as<From, To> || std::convertible_to<From, To>;

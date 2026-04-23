@@ -35,7 +35,7 @@ class List:public BaseContainer
 
     #pragma region Constructors
 
-        List();
+        List() noexcept;
         List(const List<T>& l);
         List(List<T>&& l) noexcept;
 
@@ -95,16 +95,22 @@ class List:public BaseContainer
         template<Convertible<T> U>
         void insert_after(Iterator<T> &pos, const U& value);
 
+        template<Convertible<T> U>
+        void insert_after(Iterator<T> &pos, const List<U> &l);
+
+        template<ConvertibleContainer<T> C>
+        void insert_after(Iterator<T> &pos, const C &cont);
+
     #pragma endregion
 
-    #pragma region ReturnElements // OK
+    #pragma region ReturnElements
 
-        T& back() const;
-        T& front() const;
+        T& back();
+        T& front();
 
     #pragma endregion    
 
-    #pragma region CheckList // OK
+    #pragma region CheckList
 
     template<Convertible<T> U>
     bool has(const U &value) const;
@@ -114,7 +120,7 @@ class List:public BaseContainer
 
     #pragma endregion
 
-    #pragma region RemoveElements // OK
+    #pragma region RemoveElements
 
         T pop_back();
         T pop_front();
@@ -126,7 +132,7 @@ class List:public BaseContainer
 
     #pragma endregion
 
-    #pragma region Operators // OK
+    #pragma region Operators
 
     template<Convertible<T> U>
     List<T>& operator+=(const U& el);
@@ -152,7 +158,7 @@ class List:public BaseContainer
 
     #pragma endregion
 
-    #pragma region Iterators // OK
+    #pragma region Iterators
         Iterator<T> begin() noexcept;
         Iterator<T> end() noexcept;
 

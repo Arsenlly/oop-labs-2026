@@ -79,10 +79,14 @@ bool Iterator<T>::operator!=(const Iterator<T> &it) const noexcept
 
 #pragma endregion
 
+#pragma region getNode
+
 template<ListType T>
 std::shared_ptr<typename List<T>::Node> Iterator<T>::getNode()
 {
     return this->curr.lock();
 }
+
+#pragma endregion
 
 #endif
