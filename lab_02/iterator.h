@@ -28,8 +28,8 @@ class Iterator: public BaseIterator<T>
     #pragma region Constructors
 
         Iterator() = default;
-        Iterator(const std::shared_ptr<typename List<T>::Node>& node);
-        Iterator(const Iterator<T> &it);
+        Iterator(const std::shared_ptr<typename List<value_type>::Node>& node);
+        Iterator(const Iterator<value_type> &it);
 
     #pragma endregion
 
@@ -40,23 +40,27 @@ class Iterator: public BaseIterator<T>
     #pragma endregion
 
     #pragma region Operators
-        Iterator<T>& operator=(const Iterator<T>& it);
+        Iterator<T>& operator=(const Iterator<value_type>& it);
 
-        Iterator<T>& operator++();
-        Iterator<T>& operator++(int);
+        Iterator<value_type>& operator++();
+        Iterator<value_type>& operator++(int);
 
-        T& operator*() const;
+        reference operator*() const;
         
-        std::shared_ptr<T> operator->() const;
+        pointer operator->() const;
         
         operator bool() const noexcept;
         
-        bool operator==(const Iterator<T> &it) const noexcept;
-        bool operator!=(const Iterator<T> &it) const noexcept;
+        bool operator==(const Iterator<value_type> &it) const noexcept;
+        bool operator!=(const Iterator<value_type> &it) const noexcept;
 
     #pragma endregion
         
+    #pragma region GetNode
+
         std::shared_ptr<typename List<T>::Node> getNode();
+
+    #pragma endregion
 };
 
 #include "iterator.hpp"

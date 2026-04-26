@@ -27,8 +27,8 @@ class ConstIterator: public BaseIterator<T>
     #pragma region Constructors
 
         ConstIterator() = default;
-        ConstIterator(const std::shared_ptr<typename List<T>::Node>& node);
-        ConstIterator(const ConstIterator<T> &it);
+        ConstIterator(const std::shared_ptr<typename List<value_type>::Node>& node);
+        ConstIterator(const ConstIterator<value_type> &it);
 
     #pragma endregion
 
@@ -39,23 +39,28 @@ class ConstIterator: public BaseIterator<T>
     #pragma endregion
 
     #pragma region Operators
-        ConstIterator<T>& operator=(const ConstIterator<T>& it);
+        ConstIterator<value_type>& operator=(const ConstIterator<value_type>& it);
 
-        ConstIterator<T>& operator++();
-        ConstIterator<T>& operator++(int);
+        ConstIterator<value_type>& operator++();
+        ConstIterator<value_type>& operator++(int);
 
-        const T& operator*() const;
+        reference operator*() const;
         
-        const std::shared_ptr<T> operator->() const;
+        pointer operator->() const;
         
         operator bool() const noexcept;
         
-        bool operator==(const ConstIterator<T> &it) const noexcept;
-        bool operator!=(const ConstIterator<T> &it) const noexcept;
+        bool operator==(const ConstIterator<value_type> &it) const noexcept;
+        bool operator!=(const ConstIterator<value_type> &it) const noexcept;
 
     #pragma endregion
 
+    #pragma region GetNode
+
     std::shared_ptr<const typename List<T>::Node> getNode() const;
+
+    #pragma endregion
+
 };
 
 #include "const_iterator.hpp"

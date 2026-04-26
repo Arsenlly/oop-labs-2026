@@ -67,7 +67,7 @@ class List:public BaseList
 
     #pragma endregion
 
-    #pragma region AssignOperators
+    #pragma region Assign
 
     List<value_type> &operator=(const List<value_type>& l);
     List<value_type> &operator=(List<value_type>&& l) noexcept;
@@ -104,10 +104,32 @@ class List:public BaseList
         void insert_after(Iterator<value_type> &pos, const C &cont);
 
         template<Convertible<value_type> U>
-        List<value_type> merge(const List<U>& l) const;
+        List<value_type>& operator+=(const U& el);
 
+        template<Convertible<value_type> U>
+        List<value_type>& operator+=(const List<U>& l);
+    
         template<ConvertibleContainer<value_type> C>
-        List<value_type> merge(const C& cont) const;
+        List<value_type>& operator+=(const C& cont);
+
+    #pragma endregion
+
+    #pragma region Megre
+
+    template<Convertible<value_type> U>
+    List<value_type> merge(const List<U>& l) const;
+
+    template<ConvertibleContainer<value_type> C>
+    List<value_type> merge(const C& cont) const;
+
+    template<ConvertibleContainer<value_type> C>
+    List<value_type> operator+(const C& cont) const;
+
+    template<Convertible<value_type> U>
+    List<value_type> operator+(const U& el) const;
+    
+    template<Convertible<value_type> U>
+    List<value_type> operator+(const List<U>& l) const;
 
     #pragma endregion
 
@@ -126,13 +148,15 @@ class List:public BaseList
     virtual bool empty() const noexcept;
     virtual size_type size() const noexcept;
 
+    operator bool() const noexcept;
+
     #pragma endregion
 
     #pragma region RemoveElements
 
         value_type pop_back();
         value_type pop_front();
-        void remove(const reference value);
+        void remove(const_reference value);
 
         void remove_after(Iterator<value_type> &pos);
 
@@ -140,29 +164,9 @@ class List:public BaseList
 
     #pragma endregion
 
-    #pragma region Operators
-
-    template<Convertible<value_type> U>
-    List<value_type>& operator+=(const U& el);
-
-    template<Convertible<value_type> U>
-    List<value_type>& operator+=(const List<U>& l);
-    
-    template<ConvertibleContainer<value_type> C>
-    List<value_type>& operator+=(const C& cont);
-
-    template<ConvertibleContainer<value_type> C>
-    List<value_type> operator+(const C& cont) const;
-
-    template<Convertible<value_type> U>
-    List<value_type> operator+(const U& el) const;
-    
-    template<Convertible<value_type> U>
-    List<value_type> operator+(const List<U>& l) const;
+    #pragma region Comparate
 
     bool operator==(const List<value_type>& l) const;
-
-    operator bool() const noexcept;
 
     #pragma endregion
 
@@ -186,7 +190,7 @@ class List:public BaseList
             public:
                 Node(const Node& value) = delete;
                 Node(Node&& value) = delete;
-                Node(const reference value, std::shared_ptr<Node> next = nullptr);
+                Node(const_reference value, std::shared_ptr<Node> next = nullptr);
 
                 ~Node() = default;
 
@@ -194,7 +198,7 @@ class List:public BaseList
                 void setNext(const std::shared_ptr<Node>& next) noexcept;
 
                 reference getValue() noexcept;
-                void setValue(const reference value) noexcept;
+                void setValue(const_reference value) noexcept;
 
             private:
                 value_type value;
@@ -216,8 +220,12 @@ class List:public BaseList
         std::shared_ptr<Node> tail;
 };
 
+#pragma region StreamOperator
+
 template<ListType T>
 std::ostream &operator<<(std::ostream &os, const List<T> &l);
+
+#pragma endregion
 
 #include "list.hpp"
 #include "node.hpp"

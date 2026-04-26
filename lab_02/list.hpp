@@ -94,7 +94,7 @@ List<T>::~List()
 
 #pragma endregion
 
-#pragma region AssignOperators
+#pragma region Assign
 
 template<ListType T>
 List<T> &List<T>::operator=(const List<T>& l)
@@ -209,6 +209,36 @@ void List<T>::insert_after(Iterator<T> &pos, const C &cont)
 
 template<ListType T>
 template<Convertible<T> U>
+List<T>& List<T>::operator+=(const U& el)
+{
+    this->push_back(el);
+    return *this;
+}
+
+template<ListType T>
+template<Convertible<T> U>
+List<T>& List<T>::operator+=(const List<U>& l)
+{
+    for(auto el : l)
+        this->push_back(el);
+    return *this;
+}
+
+template<ListType T>
+template<ConvertibleContainer<T> C>
+List<T>& List<T>::operator+=(const C& cont)
+{
+    for(auto el : cont)
+        this->push_back(el);
+    return *this;
+}
+
+#pragma endregion
+
+#pragma region Merge
+
+template<ListType T>
+template<Convertible<T> U>
 List<T> List<T>::merge(const List<U>& l) const
 {
     List<T> res(*this);
@@ -223,6 +253,35 @@ List<T> List<T>::merge(const C& cont) const
 {
     List<T> res(*this);
     for (auto el : cont)
+        res.push_back(el);
+    return res;
+}
+
+template<ListType T>
+template<ConvertibleContainer<T> C>
+List<T> List<T>::operator+(const C& cont) const
+{
+    List<T> res(*this);
+    for (auto el : cont)
+        res.push_back(el);
+    return res;
+}
+
+template<ListType T>
+template<Convertible<T> U>
+List<T> List<T>::operator+(const U& el) const
+{
+    List<T> res(*this);
+    res.push_back(el);
+    return res;
+}
+
+template<ListType T>
+template<Convertible<T> U>
+List<T> List<T>::operator+(const List<U>& l) const
+{
+    List<T> res(*this);
+    for (auto el : l)
         res.push_back(el);
     return res;
 }
@@ -407,64 +466,15 @@ size_t List<T>::size() const noexcept
     return this->_size;
 }
 
+template<ListType T>
+List<T>::operator bool() const noexcept
+{
+    return _size != 0;
+}
+
 #pragma endregion
 
-#pragma region Operators
-
-template<ListType T>
-template<Convertible<T> U>
-List<T>& List<T>::operator+=(const U& el)
-{
-    this->push_back(el);
-    return *this;
-}
-
-template<ListType T>
-template<Convertible<T> U>
-List<T>& List<T>::operator+=(const List<U>& l)
-{
-    for(auto el : l)
-        this->push_back(el);
-    return *this;
-}
-
-template<ListType T>
-template<ConvertibleContainer<T> C>
-List<T>& List<T>::operator+=(const C& cont)
-{
-    for(auto el : cont)
-        this->push_back(el);
-    return *this;
-}
-
-template<ListType T>
-template<ConvertibleContainer<T> C>
-List<T> List<T>::operator+(const C& cont) const
-{
-    List<T> res(*this);
-    for (auto el : cont)
-        res.push_back(el);
-    return res;
-}
-
-template<ListType T>
-template<Convertible<T> U>
-List<T> List<T>::operator+(const U& el) const
-{
-    List<T> res(*this);
-    res.push_back(el);
-    return res;
-}
-
-template<ListType T>
-template<Convertible<T> U>
-List<T> List<T>::operator+(const List<U>& l) const
-{
-    List<T> res(*this);
-    for (auto el : l)
-        res.push_back(el);
-    return res;
-}
+#pragma region Comparate
 
 template<ListType T>
 bool List<T>::operator==(const List<T>& l) const
@@ -485,12 +495,6 @@ bool List<T>::operator==(const List<T>& l) const
         }
     }
     return true;
-}
-
-template<ListType T>
-List<T>::operator bool() const noexcept
-{
-    return _size != 0;
 }
 
 #pragma endregion
