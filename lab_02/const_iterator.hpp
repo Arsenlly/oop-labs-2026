@@ -32,6 +32,8 @@ ConstIterator<T>& ConstIterator<T>::operator=(const ConstIterator<T>& it)
 template<ListType T>
 ConstIterator<T>& ConstIterator<T>::operator++()
 {
+    if (this->curr.lock() == nullptr)
+        throw IteratorOutOfListError(__FILE__, typeid(*this).name(), __LINE__, "Iterator out of list");
     this->curr = (this->curr).lock()->getNext();
     return *this;
 }
@@ -52,7 +54,7 @@ const T& ConstIterator<T>::operator*() const
 }
 
 template<ListType T>
-const std::shared_ptr<T>& ConstIterator<T>::operator->() const
+const std::shared_ptr<T> ConstIterator<T>::operator->() const
 {
     if (this->curr.expired())
         throw IteratorExpiredError(__FILE__, typeid(*this).name(), __LINE__, "Iterator expired");

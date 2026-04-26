@@ -9,13 +9,13 @@
 #include <ostream>
 
 #include "concepts.h"
-#include "base_container.h"
+#include "base_list.h"
 #include "iterator.h"
 #include "const_iterator.h"
 #include "list_exception.h"
 
 template<ListType T>
-class List:public BaseContainer
+class List:public BaseList
 {
     public:
 
@@ -26,7 +26,6 @@ class List:public BaseContainer
         using const_reference = const T&;
         using iterator = Iterator<T>;
         using const_iterator = ConstIterator<T>;
-        using difference_type = std::ptrdiff_t;
         using size_type = std::size_t;
     
     #pragma endregion
@@ -36,26 +35,29 @@ class List:public BaseContainer
     #pragma region Constructors
 
         List() noexcept;
-        List(const List<T>& l);
-        List(List<T>&& l) noexcept;
+        List(const List<value_type>& l);
+        List(List<value_type>&& l) noexcept;
 
-        template<Convertible<T> U>
+        template<Convertible<value_type> U>
         List(const List<U>& l);
 
-        template<Convertible<T> U>
+        template<Convertible<value_type> U>
         List(List<U>&& l) noexcept;
 
-        template<Convertible<T> U>
+        template<Convertible<value_type> U>
         List(std::initializer_list<U> l);
 
-        template<ConvertibleContainer<T> C>
+        template<ConvertibleContainer<value_type> C>
         explicit List(const C& cont);
 
-        template<ConvertibleIterator<T> It, Sentinel<It> S>
+        template<ConvertibleIterator<value_type> It, Sentinel<It> S>
         explicit List(const It& beg_it, const S& end_it);
 
-        template<Convertible<T> U>
-        List(const size_t size, const U *array);
+        template<Convertible<value_type> U>
+        List(const size_type size, const U *array);
+
+        template<Convertible<value_type> U>
+        List(const size_type n, const U& el);
 
     #pragma endregion
 
@@ -67,66 +69,72 @@ class List:public BaseContainer
 
     #pragma region AssignOperators
 
-    List<T> &operator=(const List<T>& l);
-    List<T> &operator=(List<T>&& l) noexcept;
+    List<value_type> &operator=(const List<value_type>& l);
+    List<value_type> &operator=(List<value_type>&& l) noexcept;
 
-    template<Convertible<T> U>
-    List<T> &operator=(const List<U>& l);
+    template<Convertible<value_type> U>
+    List<value_type> &operator=(const List<U>& l);
 
-    template<Convertible<T> U>
-    List<T> &operator=(List<U>&& l) noexcept;
+    template<Convertible<value_type> U>
+    List<value_type> &operator=(List<U>&& l) noexcept;
 
-    template<ConvertibleContainer<T> C>
-    List<T> &operator=(const C& cont);
+    template<ConvertibleContainer<value_type> C>
+    List<value_type> &operator=(const C& cont);
 
-    template<Convertible<T> U>
-    List<T> &operator=(std::initializer_list<U> l);
+    template<Convertible<value_type> U>
+    List<value_type> &operator=(std::initializer_list<U> l);
 
     #pragma endregion
 
     #pragma region Add
 
-        template<Convertible<T> U>
+        template<Convertible<value_type> U>
         void push_back(const U& value);
 
-        template<Convertible<T> U>
+        template<Convertible<value_type> U>
         void push_front(const U& value);
 
-        template<Convertible<T> U>
-        void insert_after(Iterator<T> &pos, const U& value);
+        template<Convertible<value_type> U>
+        void insert_after(Iterator<value_type> &pos, const U& value);
 
-        template<Convertible<T> U>
-        void insert_after(Iterator<T> &pos, const List<U> &l);
+        template<Convertible<value_type> U>
+        void insert_after(Iterator<value_type> &pos, const List<U> &l);
 
-        template<ConvertibleContainer<T> C>
-        void insert_after(Iterator<T> &pos, const C &cont);
+        template<ConvertibleContainer<value_type> C>
+        void insert_after(Iterator<value_type> &pos, const C &cont);
+
+        template<Convertible<value_type> U>
+        List<value_type> merge(const List<U>& l) const;
+
+        template<ConvertibleContainer<value_type> C>
+        List<value_type> merge(const C& cont) const;
 
     #pragma endregion
 
     #pragma region ReturnElements
 
-        T& back();
-        T& front();
+        reference back();
+        reference front();
 
     #pragma endregion    
 
     #pragma region CheckList
 
-    template<Convertible<T> U>
+    template<Convertible<value_type> U>
     bool has(const U &value) const;
 
     virtual bool empty() const noexcept;
-    virtual size_t size() const noexcept;
+    virtual size_type size() const noexcept;
 
     #pragma endregion
 
     #pragma region RemoveElements
 
-        T pop_back();
-        T pop_front();
-        void remove(const T& value);
+        value_type pop_back();
+        value_type pop_front();
+        void remove(const reference value);
 
-        void remove_after(Iterator<T> &pos);
+        void remove_after(Iterator<value_type> &pos);
 
         virtual void clear() noexcept;
 
@@ -134,39 +142,39 @@ class List:public BaseContainer
 
     #pragma region Operators
 
-    template<Convertible<T> U>
-    List<T>& operator+=(const U& el);
+    template<Convertible<value_type> U>
+    List<value_type>& operator+=(const U& el);
 
-    template<Convertible<T> U>
-    List<T>& operator+=(const List<U>& l);
+    template<Convertible<value_type> U>
+    List<value_type>& operator+=(const List<U>& l);
     
-    template<ConvertibleContainer<T> C>
-    List<T>& operator+=(const C& cont);
+    template<ConvertibleContainer<value_type> C>
+    List<value_type>& operator+=(const C& cont);
 
-    template<ConvertibleContainer<T> C>
-    List<T> operator+(const C& cont) const;
+    template<ConvertibleContainer<value_type> C>
+    List<value_type> operator+(const C& cont) const;
 
-    template<Convertible<T> U>
-    List<T> operator+(const U& el) const;
+    template<Convertible<value_type> U>
+    List<value_type> operator+(const U& el) const;
     
-    template<Convertible<T> U>
-    List<T> operator+(const List<U>& l) const;
+    template<Convertible<value_type> U>
+    List<value_type> operator+(const List<U>& l) const;
 
-    bool operator==(const List<T>& l) const;
+    bool operator==(const List<value_type>& l) const;
 
     operator bool() const noexcept;
 
     #pragma endregion
 
     #pragma region Iterators
-        Iterator<T> begin() noexcept;
-        Iterator<T> end() noexcept;
+        iterator begin() noexcept;
+        iterator end() noexcept;
 
-        ConstIterator<T> begin() const noexcept;
-        ConstIterator<T> end() const noexcept;
+        const_iterator begin() const noexcept;
+        const_iterator end() const noexcept;
 
-        ConstIterator<T> cbegin() const noexcept;
-        ConstIterator<T> cend() const noexcept;
+        const_iterator cbegin() const noexcept;
+        const_iterator cend() const noexcept;
     #pragma endregion
 
     protected:
@@ -176,21 +184,20 @@ class List:public BaseContainer
         class Node
         {
             public:
-                Node();
                 Node(const Node& value) = delete;
                 Node(Node&& value) = delete;
-                Node(const T& value);
+                Node(const reference value, std::shared_ptr<Node> next = nullptr);
 
                 ~Node() = default;
 
                 std::shared_ptr<Node> getNext() const noexcept;
                 void setNext(const std::shared_ptr<Node>& next) noexcept;
 
-                T& getValue() noexcept;
-                void setValue(const T& value) noexcept;
+                reference getValue() noexcept;
+                void setValue(const reference value) noexcept;
 
             private:
-                T value;
+                value_type value;
                 std::shared_ptr<Node> next;
         };
 

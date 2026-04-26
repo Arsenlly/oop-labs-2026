@@ -46,7 +46,7 @@ class ConstIterator: public BaseIterator<T>
 
         const T& operator*() const;
         
-        const std::shared_ptr<T>& operator->() const;
+        const std::shared_ptr<T> operator->() const;
         
         operator bool() const noexcept;
         
@@ -56,7 +56,6 @@ class ConstIterator: public BaseIterator<T>
     #pragma endregion
 
     std::shared_ptr<const typename List<T>::Node> getNode() const;
-
 };
 
 #include "const_iterator.hpp"

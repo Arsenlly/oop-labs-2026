@@ -5,15 +5,9 @@
 #include "list.h"
 
 template<ListType T>
-List<T>::Node::Node()
+List<T>::Node::Node(const T& value, std::shared_ptr<typename List<T>::Node> next)
 {
-    next = nullptr;
-}
-
-template<ListType T>
-List<T>::Node::Node(const T& value)
-{
-    next = nullptr;
+    this->next = next;
     this->value = value;
 }
 

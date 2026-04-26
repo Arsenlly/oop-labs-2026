@@ -75,6 +75,14 @@ TEST(Constructors, list_from_iterators)
     ASSERT_EQ(l1, answer);
 }
 
+TEST(Constructors, list_from_repeat_value)
+{
+    List<int> l1(9,9);
+    List<int> answer = {9,9,9,9,9,9,9,9,9};
+
+    ASSERT_EQ(l1, answer);
+}
+
 TEST(Get_elements, front)
 {
     List<int> l = {1,2,3,4,5,6,7,8,9};
@@ -180,7 +188,48 @@ TEST(Add, insert_after_vector)
     ASSERT_EQ(l, answer);
 }
 
+TEST(Operators, comparate)
+{
+    List<int> l1 = {1,2,3,4,5,6,7,8,9};
+    List<int> l2 = {1,2,3,4,7,6,7,8,9,15};
+    List<int> l3 = {1,2,3,4,5,6,7,8,9};
 
+    ASSERT_EQ(l1 == l3, 1);
+    ASSERT_EQ(l1 != l2, 1);
+    ASSERT_EQ(l1 == l2, 0);
+    ASSERT_EQ(l1 != l3, 0);
+}
+
+TEST(Operators, add_operators)
+{
+    List<int> l1 = {1,2,3,4,5,6,7,8,9};
+    List<int> l2 = {1,2,3,4,5,6,7,8,9,10};
+    List<int> l3 = {10,11,12,13};
+    List<int> l4 = {1,2,3,4,5,6,7,8,9,10,11,12,13};
+    List<int> l5;
+    std::vector vec = {10,11,12,13};
+
+    l1 += 10;
+    ASSERT_EQ(l1, l2);
+    l1 = {1,2,3,4,5,6,7,8,9};
+    l1 += l3;
+    ASSERT_EQ(l1, l4);
+    l1 = {1,2,3,4,5,6,7,8,9};
+    l1 += vec;
+    ASSERT_EQ(l1, l4);
+
+    l1 = {1,2,3,4,5,6,7,8,9};
+
+    // l5.clear();
+    // l5 = l1 + 10;
+    // ASSERT_EQ(l5, l2);
+    // l5.clear();
+    // l5 = l1 + l3;
+    // ASSERT_EQ(l5, l4);
+    // l5.clear();
+    // l5 = l1 + vec;
+    // ASSERT_EQ(l5, l4);
+}
 
 int main(int argc, char **argv)
 {

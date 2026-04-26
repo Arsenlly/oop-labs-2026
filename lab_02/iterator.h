@@ -47,7 +47,7 @@ class Iterator: public BaseIterator<T>
 
         T& operator*() const;
         
-        std::shared_ptr<T>& operator->() const;
+        std::shared_ptr<T> operator->() const;
         
         operator bool() const noexcept;
         

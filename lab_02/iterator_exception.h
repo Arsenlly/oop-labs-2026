@@ -10,6 +10,12 @@ class IteratorExpiredError: public BaseException
         IteratorExpiredError(const char *filename, const char *classname, int line, const char *err_info) noexcept;
 };
 
+class IteratorOutOfListError: public BaseException
+{
+    public:
+        IteratorOutOfListError(const char *filename, const char *classname, int line, const char *err_info) noexcept;
+};
+
 #include "iterator_exception.hpp"
 
 #endif

@@ -4,8 +4,6 @@
 
 #include "list.h"
 
-#include <iostream>
-
 #pragma region Constructors
 
 template<ListType T>
@@ -13,6 +11,7 @@ List<T>::List() noexcept
 {
     head = nullptr;
     tail = nullptr;
+    _size = 0;
 }
 
 template<ListType T>
@@ -75,6 +74,14 @@ List<T>::List(const It& beg_it, const S& end_it)
     std::ranges::for_each(beg_it, end_it, [this](const T& el){push_back(el);});
 }
 
+template<ListType T>
+template<Convertible<T> U>
+List<T>::List(const size_t n, const U& el)
+{
+    for (size_t i = 0;i < n;i++)
+        push_back(el);
+}
+
 #pragma endregion
 
 #pragma region Destructor
@@ -103,7 +110,7 @@ List<T> &List<T>::operator=(List<T>&& l) noexcept
     clear();
     head = l.head;
     tail = l.tail;
-    l.clean();
+    l.clear();
     return *this;
 }
 
@@ -198,6 +205,26 @@ void List<T>::insert_after(Iterator<T> &pos, const C &cont)
         insert_after(pos, el);
         pos++;
     }
+}
+
+template<ListType T>
+template<Convertible<T> U>
+List<T> List<T>::merge(const List<U>& l) const
+{
+    List<T> res(*this);
+    for (auto el : l)
+        res.push_back(el);
+    return res;
+}
+
+template<ListType T>
+template<ConvertibleContainer<T> C>
+List<T> List<T>::merge(const C& cont) const
+{
+    List<T> res(*this);
+    for (auto el : cont)
+        res.push_back(el);
+    return res;
 }
 
 #pragma endregion

@@ -1,16 +1,16 @@
-#ifndef BASE_CONTAINER_H__
+#ifndef BASE_LIST_H__
 
-#define BASE_CONTAINER_H__
+#define BASE_LIST_H__
 
 #include <cstddef>
 
-class BaseContainer
+class BaseList
 {
     public:
         virtual bool empty() const noexcept = 0;
         virtual void clear() noexcept = 0;
         virtual size_t size() const noexcept = 0;
-        virtual ~BaseContainer() = default;    
+        virtual ~BaseList() = default;    
     
     protected:
         size_t _size = 0;
