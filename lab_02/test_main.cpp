@@ -220,15 +220,15 @@ TEST(Operators, add_operators)
 
     l1 = {1,2,3,4,5,6,7,8,9};
 
-    // l5.clear();
-    // l5 = l1 + 10;
-    // ASSERT_EQ(l5, l2);
-    // l5.clear();
-    // l5 = l1 + l3;
-    // ASSERT_EQ(l5, l4);
-    // l5.clear();
-    // l5 = l1 + vec;
-    // ASSERT_EQ(l5, l4);
+    l5.clear();
+    l5 = l1 + 10;
+    ASSERT_EQ(l5, l2);
+    l5.clear();
+    l5 = l1 + l3;
+    ASSERT_EQ(l5, l4);
+    l5.clear();
+    l5 = l1 + vec;
+    ASSERT_EQ(l5, l4);
 }
 
 int main(int argc, char **argv)

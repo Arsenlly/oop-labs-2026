@@ -253,6 +253,20 @@ std::ostream &operator<<(std::ostream &os, const List<T> &l);
 
 #pragma endregion
 
+#pragma region Merge
+
+template<ListType T, Convertible<T> U>
+requires (!std::same_as<U, List<T>>) 
+List<T> operator+(const U& el, const List<T> &l);
+
+template<ListType T, ConvertibleContainer<T> C>
+List<T> operator+(const C& cont, const List<T> &l);
+
+template<ListType T, ConvertibleRange<T> R>
+List<T> operator+(const R& range, const List<T> &l);
+
+#pragma endregion
+
 #include "list.hpp"
 #include "node.hpp"
 

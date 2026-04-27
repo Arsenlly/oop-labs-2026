@@ -119,6 +119,7 @@ List<T> &List<T>::operator=(List<T>&& l) noexcept
     clear();
     head = l.head;
     tail = l.tail;
+    _size = l.size();
     l.clear();
     return *this;
 }
@@ -579,6 +580,35 @@ std::ostream &operator<<(std::ostream &os, const List<T> &l)
 
     os << ']';
     return os;
+}
+
+#pragma endregion
+
+#pragma region Merge
+
+template<ListType T, Convertible<T> U>
+requires (!std::same_as<U, List<T>>) 
+List<T> operator+(const U& el, const List<T> &l)
+{
+    List<T> res(l);
+    res.push_front(el);
+    return res;
+}
+
+template<ListType T, ConvertibleContainer<T> C>
+List<T> operator+(const C& cont, const List<T> &l)
+{
+    List<T> res(cont);
+    res += l;
+    return res;
+}
+
+template<ListType T, ConvertibleRange<T> R>
+List<T> operator+(const R& range, const List<T> &l)
+{
+    List<T> res(range);
+    res += l;
+    return res;
 }
 
 #pragma endregion
