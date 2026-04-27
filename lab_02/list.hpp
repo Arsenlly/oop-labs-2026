@@ -208,6 +208,13 @@ void List<T>::insert_after(Iterator<T> &pos, const C &cont)
 }
 
 template<ListType T>
+template<ConvertibleIterator<T> It, Sentinel<It> S>
+void List<T>::insert_after(iterator &pos, const It& beg_it, const S& end_it)
+{
+    std::ranges::for_each(beg_it, end_it, [this, &pos](const T& el){this->insert_after(pos, el); pos++;});
+}
+
+template<ListType T>
 template<Convertible<T> U>
 List<T>& List<T>::operator+=(const U& el)
 {

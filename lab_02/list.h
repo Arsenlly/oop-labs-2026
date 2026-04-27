@@ -95,13 +95,16 @@ class List:public BaseList
         void push_front(const U& value);
 
         template<Convertible<value_type> U>
-        void insert_after(Iterator<value_type> &pos, const U& value);
+        void insert_after(iterator &pos, const U& value);
 
         template<Convertible<value_type> U>
-        void insert_after(Iterator<value_type> &pos, const List<U> &l);
+        void insert_after(iterator &pos, const List<U> &l);
 
         template<ConvertibleContainer<value_type> C>
-        void insert_after(Iterator<value_type> &pos, const C &cont);
+        void insert_after(iterator &pos, const C &cont);
+
+        template<ConvertibleIterator<value_type> It, Sentinel<It> S>
+        void insert_after(iterator &pos, const It& beg_it, const S& end_it);
 
         template<Convertible<value_type> U>
         List<value_type>& operator+=(const U& el);
