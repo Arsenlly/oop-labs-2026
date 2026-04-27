@@ -59,6 +59,9 @@ class List:public BaseList
         template<Convertible<value_type> U>
         List(const size_type n, const U& el);
 
+        template<ConvertibleRange<value_type> R>
+        explicit List(const R &range);
+
     #pragma endregion
 
     #pragma region Destructor
@@ -84,6 +87,9 @@ class List:public BaseList
     template<Convertible<value_type> U>
     List<value_type> &operator=(std::initializer_list<U> l);
 
+    template<ConvertibleRange<value_type> R>
+    List<value_type> &operator=(const R &range);
+
     #pragma endregion
 
     #pragma region Add
@@ -106,6 +112,9 @@ class List:public BaseList
         template<ConvertibleIterator<value_type> It, Sentinel<It> S>
         void insert_after(iterator &pos, const It& beg_it, const S& end_it);
 
+        template<ConvertibleRange<value_type> R>
+        void insert_after(iterator &pos, const R &range);
+
         template<Convertible<value_type> U>
         List<value_type>& operator+=(const U& el);
 
@@ -114,6 +123,9 @@ class List:public BaseList
     
         template<ConvertibleContainer<value_type> C>
         List<value_type>& operator+=(const C& cont);
+
+        template<ConvertibleRange<value_type> R>
+        List<value_type>& operator+=(const R& range);
 
     #pragma endregion
 
@@ -125,6 +137,9 @@ class List:public BaseList
     template<ConvertibleContainer<value_type> C>
     List<value_type> merge(const C& cont) const;
 
+    template<ConvertibleRange<value_type> R>
+    List<value_type> merge(const R& range) const;
+
     template<ConvertibleContainer<value_type> C>
     List<value_type> operator+(const C& cont) const;
 
@@ -133,6 +148,9 @@ class List:public BaseList
     
     template<Convertible<value_type> U>
     List<value_type> operator+(const List<U>& l) const;
+
+    template<ConvertibleRange<value_type> R>
+    List<value_type> operator+(const R& range) const;
 
     #pragma endregion
 
@@ -159,7 +177,10 @@ class List:public BaseList
 
         value_type pop_back();
         value_type pop_front();
-        void remove(const_reference value);
+
+        template<Convertible<T> U>
+        requires EqualTo<T, U>
+        void remove(const U &value);
 
         void remove_after(Iterator<value_type> &pos);
 
@@ -169,7 +190,9 @@ class List:public BaseList
 
     #pragma region Comparate
 
-    bool operator==(const List<value_type>& l) const;
+    template<Convertible<value_type> U>
+    requires EqualTo<T, U>
+    bool operator==(const List<U>& l) const;
 
     #pragma endregion
 

@@ -4,6 +4,8 @@
 
 #include "list.h"
 
+#include <iostream>
+
 #pragma region Constructors
 
 template<ListType T>
@@ -82,6 +84,13 @@ List<T>::List(const size_t n, const U& el)
         push_back(el);
 }
 
+template<ListType T>
+template<ConvertibleRange<T> R>
+List<T>::List(const R &range)
+{
+    std::ranges::for_each(range, [this](const auto &el){this->push_back(el);});
+}
+
 #pragma endregion
 
 #pragma region Destructor
@@ -129,6 +138,15 @@ List<T> &List<T>::operator=(std::initializer_list<U> l)
 {
     clear();
     std::ranges::for_each(l, [this](const U& el){this->push_back(el);});
+    return *this;
+}
+
+template<ListType T>
+template<ConvertibleRange<T> R>
+List<T> &List<T>::operator=(const R &range)
+{
+    clear();
+    std::ranges::for_each(range, [this](const auto &el){this->push_back(el);});
     return *this;
 }
 
@@ -215,6 +233,13 @@ void List<T>::insert_after(iterator &pos, const It& beg_it, const S& end_it)
 }
 
 template<ListType T>
+template<ConvertibleRange<T> R>
+void List<T>::insert_after(iterator &pos, const R &range)
+{
+    std::ranges::for_each(range, [this, &pos](const auto& el){this->insert_after(pos, el); pos++;});
+}
+
+template<ListType T>
 template<Convertible<T> U>
 List<T>& List<T>::operator+=(const U& el)
 {
@@ -240,6 +265,14 @@ List<T>& List<T>::operator+=(const C& cont)
     return *this;
 }
 
+template<ListType T>
+template<ConvertibleRange<T> R>
+List<T> &List<T>::operator+=(const R& range)
+{
+    std::ranges::for_each(range, [this](const auto &el){this->push_back(el);});
+    return *this;
+}
+
 #pragma endregion
 
 #pragma region Merge
@@ -261,6 +294,15 @@ List<T> List<T>::merge(const C& cont) const
     List<T> res(*this);
     for (auto el : cont)
         res.push_back(el);
+    return res;
+}
+
+template<ListType T>
+template<ConvertibleRange<T> R>
+List<T> List<T>::merge(const R& range) const
+{
+    List<T> res(*this);
+    std::ranges::for_each(range, [this](const auto &el){this->push_back(el);});
     return res;
 }
 
@@ -290,6 +332,15 @@ List<T> List<T>::operator+(const List<U>& l) const
     List<T> res(*this);
     for (auto el : l)
         res.push_back(el);
+    return res;
+}
+
+template<ListType T>
+template<ConvertibleRange<T> R>
+List<T> List<T>::operator+(const R& range) const
+{
+    List<T> res(*this);
+    std::ranges::for_each(range, [this](const auto &el){this->push_back(el);});
     return res;
 }
 
@@ -358,7 +409,9 @@ T List<T>::pop_front()
 }
 
 template<ListType T>
-void List<T>::remove(const T& value)
+template<Convertible<T> U>
+requires EqualTo<T, U>
+void List<T>::remove(const U& value)
 {
     if (empty())
         throw ListIsEmptyError(__FILE__, typeid(*this).name(), __LINE__, "List is empty");
@@ -484,7 +537,9 @@ List<T>::operator bool() const noexcept
 #pragma region Comparate
 
 template<ListType T>
-bool List<T>::operator==(const List<T>& l) const
+template<Convertible<T> U>
+    requires EqualTo<T, U>
+bool List<T>::operator==(const List<U>& l) const
 {
     if (_size != l.size())
     {

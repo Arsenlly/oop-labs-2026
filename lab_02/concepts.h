@@ -21,7 +21,7 @@ concept Assignable = requires(T t1, T t2)
 };
 
 template<typename T>
-concept ListType = EqualTo<T, T> && Assignable<T>;
+concept ListType = Assignable<T>;
 
 template<typename From, typename To>
 concept Convertible = std::same_as<From, To> || std::convertible_to<From, To>;
@@ -60,5 +60,9 @@ concept ConvertibleIterator = std::input_iterator<It> && Convertible<typename It
 
 template<typename S, typename It>
 concept Sentinel = std::sentinel_for<S, It>;
+
+template<typename R, typename T>
+concept ConvertibleRange = 
+    !IsList<R> && std::ranges::input_range<R> && Convertible<std::ranges::range_value_t<R>, T> && !Container<R>;
 
 #endif
