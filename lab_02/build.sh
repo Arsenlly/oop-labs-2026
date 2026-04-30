@@ -1,0 +1,1 @@
+g++ -std=c++20 -Wpedantic -Wall -Werror test_main.cpp -lgtest -lgtest_main -pthread -o app.exe
