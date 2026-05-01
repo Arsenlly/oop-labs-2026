@@ -40,6 +40,14 @@ else()
             ${PROJECT_SOURCES}
             scenefacade.h scenefacade.cpp
             basecommand.h
+            drawmanager.h
+            loadmanager.h
+            transformmanager.h
+            basecommand.cpp
+            basemodelcommand.h basemodelcommand.cpp
+            movemodelcommand.h movemodelcommand.cpp
+            scalemodelcommand.h scalemodelcommand.cpp
+            rotatemodelcommand.h rotatemodelcommand.cpp
         )
     endif()
 endif()
