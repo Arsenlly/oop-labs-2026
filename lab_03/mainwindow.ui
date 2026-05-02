@@ -234,13 +234,13 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_7"/>
+               <widget class="QDoubleSpinBox" name="rotate_x_spin"/>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_8"/>
+               <widget class="QDoubleSpinBox" name="rotate_y_spin"/>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_9"/>
+               <widget class="QDoubleSpinBox" name="rotate_z_spin"/>
               </item>
              </layout>
             </item>
@@ -254,7 +254,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="scale_everything_button_2">
+               <widget class="QPushButton" name="rotate_everything_button">
                 <property name="text">
                  <string>Rotate everything</string>
                 </property>

@@ -48,6 +48,16 @@ else()
             movemodelcommand.h movemodelcommand.cpp
             scalemodelcommand.h scalemodelcommand.cpp
             rotatemodelcommand.h rotatemodelcommand.cpp
+            object.h object.cpp
+            visibleobject.h visibleobject.cpp
+            invisibleobject.h invisibleobject.cpp
+            basemodel.h basemodel.cpp
+            skeletonmodel.h skeletonmodel.cpp
+            modelstructure.h modelstructure.cpp
+            point.h point.cpp
+            edge.h edge.cpp
+            listmodelstructure.h listmodelstructure.cpp
+            matrixmodelstructure.h matrixmodelstructure.cpp
         )
     endif()
 endif()
