@@ -11,6 +11,10 @@ public:
 
     virtual void addPoint(const Point &point) = 0;
     virtual void addEdge(const Edge &edge) = 0;
+    const Point& getCenter();
+
+protected:
+    Point _center;
 };
 
 #endif // MODELSTRUCTURE_H

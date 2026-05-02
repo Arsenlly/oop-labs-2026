@@ -61,6 +61,18 @@ else()
             SceneManager/scenemanager.h SceneManager/scenemanager.cpp
             TransformManager/transformmanager.cpp
             Object/VisibleObject/visibleobject.cpp
+            Scene/scene.h Scene/scene.cpp
+            LoadManager/loadmanager.cpp
+            Reader/ReaderSolution/readersolution.h Reader/ReaderSolution/readersolution.cpp
+            Reader/ReaderCreator/basereadercreator.h Reader/ReaderCreator/basereadercreator.cpp
+
+
+            Reader/basereader.h Reader/basereader.cpp
+            Reader/ModelReader/modelreader.h Reader/ModelReader/modelreader.cpp
+            Reader/ModelReader/TxtModelReader/txtmodelreader.h Reader/ModelReader/TxtModelReader/txtmodelreader.cpp
+            Reader/ModelReader/CsvModelReader/csvmodelreader.h Reader/ModelReader/CsvModelReader/csvmodelreader.cpp
+            Reader/ReaderCreator/concretereadercreator.h Reader/ReaderCreator/concretereadercreator.hpp
+
         )
     endif()
 endif()
@@ -69,21 +81,17 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/Facade
     ${CMAKE_CURRENT_SOURCE_DIR}/Command
-    ${CMAKE_CURRENT_SOURCE_DIR}/Command/ModelCommand
     ${CMAKE_CURRENT_SOURCE_DIR}/DrawManager
     ${CMAKE_CURRENT_SOURCE_DIR}/LoadManager
     ${CMAKE_CURRENT_SOURCE_DIR}/TransformManager
     ${CMAKE_CURRENT_SOURCE_DIR}/Object
-    ${CMAKE_CURRENT_SOURCE_DIR}/Object/VisibleObject
-    ${CMAKE_CURRENT_SOURCE_DIR}/Object/InvisibleObject
-    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model
-    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel
-    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure
-    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/ListStructure
-    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/MatrixStructure
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Point
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Edge
     ${CMAKE_CURRENT_SOURCE_DIR}/SceneManager
+    ${CMAKE_CURRENT_SOURCE_DIR}/Scene
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reader
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ReaderCreator
+
 )
 
 target_link_libraries(lab_03 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

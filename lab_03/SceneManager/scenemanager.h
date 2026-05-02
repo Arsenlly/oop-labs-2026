@@ -5,6 +5,9 @@ class SceneManager
 {
 public:
     SceneManager();
+
+
+
 };
 
 #endif // SCENEMANAGER_H
