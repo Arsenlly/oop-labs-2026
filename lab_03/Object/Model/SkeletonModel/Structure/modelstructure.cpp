@@ -2,7 +2,7 @@
 
 ModelStructure::ModelStructure() {}
 
-ModelStructure::getCenter()
+const Point& ModelStructure::getCenter()
 {
     return _center;
 }

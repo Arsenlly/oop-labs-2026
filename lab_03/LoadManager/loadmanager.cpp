@@ -1,6 +1,6 @@
 #include "loadmanager.h"
 
-void LoadManager::load(std::string &filename)
+void LoadManager::load(const std::string &filename)
 {
 
 }

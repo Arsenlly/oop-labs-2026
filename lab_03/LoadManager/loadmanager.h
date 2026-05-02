@@ -6,7 +6,7 @@
 class LoadManager
 {
     public:
-        LoadManager();
+        LoadManager() = default;
 
         void load(const std::string &filename);
 };

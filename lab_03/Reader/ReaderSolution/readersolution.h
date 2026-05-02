@@ -19,7 +19,7 @@ public:
     std::shared_ptr<ModelReader> create(const std::string &filename);
 
 private:
-    std::map<std::string, std::shared_ptr<BaseReaderCreator> _creators;
+    std::map<std::string, std::shared_ptr<BaseReaderCreator>> _creators;
 };
 
 #endif // READERSOLUTION_H

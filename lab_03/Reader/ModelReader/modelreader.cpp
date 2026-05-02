@@ -1,3 +1,3 @@
 #include "modelreader.h"
 
-ModelReader::ModelReader(const std::string &filename): _model_file(filename) {}
+ModelReader::ModelReader(const std::string &filename): model_file(filename) {}

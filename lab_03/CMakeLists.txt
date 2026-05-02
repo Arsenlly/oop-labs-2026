@@ -72,6 +72,7 @@ else()
             Reader/ModelReader/TxtModelReader/txtmodelreader.h Reader/ModelReader/TxtModelReader/txtmodelreader.cpp
             Reader/ModelReader/CsvModelReader/csvmodelreader.h Reader/ModelReader/CsvModelReader/csvmodelreader.cpp
             Reader/ReaderCreator/concretereadercreator.h Reader/ReaderCreator/concretereadercreator.hpp
+            Exception/baseexception.h Exception/baseexception.cpp
 
         )
     endif()
@@ -81,17 +82,28 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/Facade
     ${CMAKE_CURRENT_SOURCE_DIR}/Command
+    ${CMAKE_CURRENT_SOURCE_DIR}/Command/ModelCommand
     ${CMAKE_CURRENT_SOURCE_DIR}/DrawManager
     ${CMAKE_CURRENT_SOURCE_DIR}/LoadManager
     ${CMAKE_CURRENT_SOURCE_DIR}/TransformManager
     ${CMAKE_CURRENT_SOURCE_DIR}/Object
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/VisibleObject
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/InvisibleObject
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/ListStructure
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/MatrixStructure
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Point
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Edge
     ${CMAKE_CURRENT_SOURCE_DIR}/SceneManager
     ${CMAKE_CURRENT_SOURCE_DIR}/Scene
-    ${CMAKE_CURRENT_SOURCE_DIR}/Reader
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ReaderSolution
     ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ReaderCreator
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ModelReader
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ModelReader/TxtModelReader
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ModelReader/CsvModelReader
+    ${CMAKE_CURRENT_SOURCE_DIR}/Reader
 )
 
 target_link_libraries(lab_03 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
