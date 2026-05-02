@@ -38,29 +38,53 @@ else()
     else()
         add_executable(lab_03
             ${PROJECT_SOURCES}
-            scenefacade.h scenefacade.cpp
-            basecommand.h
-            drawmanager.h
-            loadmanager.h
-            transformmanager.h
-            basecommand.cpp
-            basemodelcommand.h basemodelcommand.cpp
-            movemodelcommand.h movemodelcommand.cpp
-            scalemodelcommand.h scalemodelcommand.cpp
-            rotatemodelcommand.h rotatemodelcommand.cpp
-            object.h object.cpp
-            visibleobject.h visibleobject.cpp
-            invisibleobject.h invisibleobject.cpp
-            basemodel.h basemodel.cpp
-            skeletonmodel.h skeletonmodel.cpp
-            modelstructure.h modelstructure.cpp
-            point.h point.cpp
-            edge.h edge.cpp
-            listmodelstructure.h listmodelstructure.cpp
-            matrixmodelstructure.h matrixmodelstructure.cpp
+            Facade/scenefacade.h Facade/scenefacade.cpp
+            Command/basecommand.h
+            DrawManager/drawmanager.h
+            LoadManager/loadmanager.h
+            TransformManager/transformmanager.h
+            Command/basecommand.cpp
+            Command/ModelCommand/basemodelcommand.h Command/ModelCommand/basemodelcommand.cpp
+            Command/ModelCommand/movemodelcommand.h Command/ModelCommand/movemodelcommand.cpp
+            Command/ModelCommand/scalemodelcommand.h Command/ModelCommand/scalemodelcommand.cpp
+            Command/ModelCommand/rotatemodelcommand.h Command/ModelCommand/rotatemodelcommand.cpp
+            Object/object.h Object/object.cpp
+            Object/VisibleObject/visibleobject.h
+            Object/InvisibleObject/invisibleobject.h Object/InvisibleObject/invisibleobject.cpp
+            Object/Model/basemodel.h Object/Model/basemodel.cpp
+            Object/Model/SkeletonModel/skeletonmodel.h Object/Model/SkeletonModel/skeletonmodel.cpp
+            Object/Model/SkeletonModel/Structure/modelstructure.h Object/Model/SkeletonModel/Structure/modelstructure.cpp
+            Object/Point/point.h Object/Point/point.cpp
+            Object/Edge/edge.h Object/Edge/edge.cpp
+            Object/Model/SkeletonModel/Structure/ListStructure/listmodelstructure.h Object/Model/SkeletonModel/Structure/ListStructure/listmodelstructure.cpp
+            Object/Model/SkeletonModel/Structure/MatrixStructure/matrixmodelstructure.h Object/Model/SkeletonModel/Structure/MatrixStructure/matrixmodelstructure.cpp
+            SceneManager/scenemanager.h SceneManager/scenemanager.cpp
+            TransformManager/transformmanager.cpp
+            Object/VisibleObject/visibleobject.cpp
         )
     endif()
 endif()
+
+target_include_directories(lab_03 PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Facade
+    ${CMAKE_CURRENT_SOURCE_DIR}/Command
+    ${CMAKE_CURRENT_SOURCE_DIR}/Command/ModelCommand
+    ${CMAKE_CURRENT_SOURCE_DIR}/DrawManager
+    ${CMAKE_CURRENT_SOURCE_DIR}/LoadManager
+    ${CMAKE_CURRENT_SOURCE_DIR}/TransformManager
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/VisibleObject
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/InvisibleObject
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/ListStructure
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/MatrixStructure
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Point
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Edge
+    ${CMAKE_CURRENT_SOURCE_DIR}/SceneManager
+)
 
 target_link_libraries(lab_03 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 

@@ -3,7 +3,7 @@
 Edge::Edge(const std::size_t start, const std::size_t end)
 {
     _start = start;
-    _ebd = end;
+    _end = end;
 }
 
 std::size_t Edge::getStart()

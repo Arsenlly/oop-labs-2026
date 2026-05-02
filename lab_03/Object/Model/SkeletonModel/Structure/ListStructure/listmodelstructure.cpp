@@ -2,7 +2,7 @@
 
 ListModelStructure::ListModelStructure() {}
 
-void ListModelStructure::addPoint(const Point &point) override
+void ListModelStructure::addPoint(const Point &point)
 {
     _points.push_back(point);
 }

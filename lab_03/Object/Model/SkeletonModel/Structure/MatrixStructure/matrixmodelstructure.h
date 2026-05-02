@@ -7,7 +7,7 @@
 
 #include <vector>
 
-class MatrixModelStructure
+class MatrixModelStructure: public ModelStructure
 {
 public:
     MatrixModelStructure();

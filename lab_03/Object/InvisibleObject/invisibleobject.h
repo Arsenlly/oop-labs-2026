@@ -1,7 +1,9 @@
 #ifndef INVISIBLEOBJECT_H
 #define INVISIBLEOBJECT_H
 
-class InVisibleObject
+#include "object.h"
+
+class InVisibleObject: public Object
 {
 public:
     InVisibleObject() = default;

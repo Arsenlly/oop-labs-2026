@@ -70,7 +70,7 @@ void MainWindow::on_scale_everything_button_clicked()
 void MainWindow::on_rotate_model_button_clicked()
 {
     // TODO перевод в радианы
-    double x_angle = ui->rotte_x_spin->value();
+    double x_angle = ui->rotate_x_spin->value();
     double y_angle = ui->rotate_y_spin->value();
     double z_angle = ui->rotate_z_spin->value();
 

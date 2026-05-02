@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "scenefacade.h"
+#include "./Facade/scenefacade.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

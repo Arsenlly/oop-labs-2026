@@ -1,9 +1,9 @@
 #ifndef BASECOMMAND_H
 #define BASECOMMAND_H
 
-#include "transformmanager.h"
-#include "drawmanager.h"
-#include "loadmanager.h"
+#include "./TransformManager/transformmanager.h"
+#include "./DrawManager/drawmanager.h"
+#include "./LoadManager/loadmanager.h"
 
 #include <memory>
 

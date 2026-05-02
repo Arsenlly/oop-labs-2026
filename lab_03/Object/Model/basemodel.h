@@ -10,7 +10,7 @@ class BaseModel: public VisibleObject
 {
 public:
     BaseModel();
-    //virtual ~BaseModel override = default;
+    virtual ~BaseModel() = 0;
 
 protected:
     std::shared_ptr<ModelStructure> structure;

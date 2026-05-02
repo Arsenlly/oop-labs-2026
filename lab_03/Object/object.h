@@ -3,8 +3,9 @@
 
 class Object
 {
-    Object() = default;
-    virtual ~Object() = 0;
+    public:
+        Object() = default;
+        virtual ~Object() = 0;
 };
 
 #endif // OBJECT_H
