@@ -73,6 +73,9 @@ else()
             Reader/ModelReader/CsvModelReader/csvmodelreader.h Reader/ModelReader/CsvModelReader/csvmodelreader.cpp
             Reader/ReaderCreator/concretereadercreator.h Reader/ReaderCreator/concretereadercreator.hpp
             Exception/baseexception.h Exception/baseexception.cpp
+            Builder/basemodelbuilder.h Builder/basemodelbuilder.cpp
+            Builder/MatrixBuilder/matrixmodelbuilder.h Builder/MatrixBuilder/matrixmodelbuilder.cpp
+            Builder/ListBuilder/listmodelbuilder.h Builder/ListBuilder/listmodelbuilder.cpp
 
         )
     endif()
@@ -104,6 +107,9 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ModelReader/TxtModelReader
     ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ModelReader/CsvModelReader
     ${CMAKE_CURRENT_SOURCE_DIR}/Reader
+    ${CMAKE_CURRENT_SOURCE_DIR}/Builder
+    ${CMAKE_CURRENT_SOURCE_DIR}/Builder/ListBuilder
+    ${CMAKE_CURRENT_SOURCE_DIR}/Builder/MatrixBuilder
 )
 
 target_link_libraries(lab_03 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
