@@ -4,8 +4,10 @@
 #include "visitor.h"
 #include "object.h"
 #include "transformaction.h"
+#include "point.h"
 
 #include <memory>
+#include <vector>
 
 class TransformVisitor: public Visitor
 {

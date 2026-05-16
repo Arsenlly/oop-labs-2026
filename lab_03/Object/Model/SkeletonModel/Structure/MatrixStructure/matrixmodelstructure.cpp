@@ -21,3 +21,8 @@ const std::vector<Edge>& MatrixModelStructure::getEdges()
 {
 
 }
+
+void MatrixModelStructure::setPoints(std::vector<Point> points)
+{
+
+}

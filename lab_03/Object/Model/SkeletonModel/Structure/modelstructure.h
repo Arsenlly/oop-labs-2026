@@ -17,7 +17,10 @@ public:
     virtual const std::vector<Point>& getPoints() = 0;
     virtual const std::vector<Edge>& getEdges() = 0;
 
+    virtual void setPoints(std::vector<Point> points) = 0;
+
     const Point& getCenter();
+    void setCenter(const Point &center);
 
 protected:
     Point _center;

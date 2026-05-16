@@ -23,3 +23,8 @@ const std::vector<Edge>& ListModelStructure::getEdges()
 {
     return _edges;
 }
+
+void ListModelStructure::setPoints(std::vector<Point> points)
+{
+    _points = points;
+}

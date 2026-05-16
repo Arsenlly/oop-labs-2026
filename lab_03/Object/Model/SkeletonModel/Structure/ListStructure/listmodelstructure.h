@@ -16,6 +16,9 @@ public:
     virtual const std::vector<Point>& getPoints() override;
     virtual const std::vector<Edge>& getEdges() override;
 
+    virtual void setPoints(std::vector<Point> points) override;
+
+
 private:
     std::vector<Edge> _edges;
     std::vector<Point> _points;

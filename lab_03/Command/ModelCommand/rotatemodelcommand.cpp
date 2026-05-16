@@ -10,6 +10,6 @@ RotateModelCommand::RotateModelCommand(std::size_t id, double x_angle, double y_
 
 void RotateModelCommand::execute()
 {
-    // std::shared_ptr<Object> object = _sceneManager->getObject(_id);
-    // _transformManager->RotateObject(object, _x_angle, _y_angle, _z_angle);
+    std::shared_ptr<Object> object = _sceneManager->getObject(_id);
+    _transformManager->RotateObject(object, _x_angle, _y_angle, _z_angle);
 }

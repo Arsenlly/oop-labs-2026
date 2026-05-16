@@ -17,6 +17,7 @@
 #include <QGraphicsScene>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QtMath>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -117,10 +118,9 @@ void MainWindow::on_scale_button_clicked()
 
 void MainWindow::on_rotate_button_clicked()
 {
-    // TODO перевод в радианы
-    double x_angle = ui->rotate_x_spin->value();
-    double y_angle = ui->rotate_y_spin->value();
-    double z_angle = ui->rotate_z_spin->value();
+    double x_angle = qDegreesToRadians(ui->rotate_x_spin->value());
+    double y_angle = qDegreesToRadians(ui->rotate_y_spin->value());
+    double z_angle = qDegreesToRadians(ui->rotate_z_spin->value());
 
     getSelectedObjects();
 

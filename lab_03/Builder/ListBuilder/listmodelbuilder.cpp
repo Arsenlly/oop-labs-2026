@@ -27,7 +27,20 @@ void ListModelBuilder::buildEdges()
 
 void ListModelBuilder::buildCenter()
 {
+    std::vector<Point> points = _model->getStructure()->getPoints();
 
+    double x;
+    double y;
+    double z;
+
+    for (auto &p : points)
+    {
+        x += p.getX();
+        y += p.getY();
+        z += p.getZ();
+    }
+
+    _model->getStructure()->setCenter(Point(x / points.size(), y / points.size(), z / points.size()));
 }
 
 std::shared_ptr<BaseModel> ListModelBuilder::getResult()
