@@ -7,17 +7,17 @@ Point::Point(const double x, const double y, const double z)
     _z = z;
 }
 
-double Point::getX()
+double Point::getX() const
 {
     return _x;
 }
 
-double Point::getY()
+double Point::getY() const
 {
     return _y;
 }
 
-double Point::getZ()
+double Point::getZ() const
 {
     return _z;
 }

@@ -4,6 +4,7 @@
 #define ERR_MSG_SIZE 512
 
 #include <exception>
+#include <cstdio>
 
 class BaseException: public std::exception
 {

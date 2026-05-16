@@ -15,6 +15,9 @@ public:
     virtual void addPoint(const Point &point) override;
     virtual void addEdge(const Edge &edge) override;
 
+    virtual const std::vector<Point>& getPoints() override;
+    virtual const std::vector<Edge>& getEdges() override;
+
 private:
     std::vector<Point> _points;
     std::vector<std::vector<bool>> _link_matrix;

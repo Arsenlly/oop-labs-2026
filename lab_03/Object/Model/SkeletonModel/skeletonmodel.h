@@ -6,7 +6,11 @@
 class SkeletonModel final: public BaseModel
 {
 public:
-    SkeletonModel();
+    SkeletonModel() = default;
+    explicit SkeletonModel(std::shared_ptr<ModelStructure> structure);
+
+    virtual void accept(const Visitor &visitor) override;
+
 };
 
 #endif // SKELETONMODEL_H

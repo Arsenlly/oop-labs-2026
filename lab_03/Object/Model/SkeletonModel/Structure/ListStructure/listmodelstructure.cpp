@@ -1,5 +1,7 @@
 #include "listmodelstructure.h"
 
+#include <iostream>
+
 ListModelStructure::ListModelStructure() {}
 
 void ListModelStructure::addPoint(const Point &point)
@@ -10,4 +12,14 @@ void ListModelStructure::addPoint(const Point &point)
 void ListModelStructure::addEdge(const Edge &edge)
 {
     _edges.push_back(edge);
+}
+
+const std::vector<Point>& ListModelStructure::getPoints()
+{
+    return _points;
+}
+
+const std::vector<Edge>& ListModelStructure::getEdges()
+{
+    return _edges;
 }

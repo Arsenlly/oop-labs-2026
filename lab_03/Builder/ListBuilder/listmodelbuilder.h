@@ -2,6 +2,12 @@
 #define LISTMODELBUILDER_H
 
 #include "basemodelbuilder.h"
+#include "modelstructure.h"
+#include "listmodelstructure.h"
+
+#include <memory>
+#include <ranges>
+#include <algorithm>
 
 class ListModelBuilder: public BaseModelBuilder
 {
@@ -12,9 +18,13 @@ public:
 
     virtual ~ListModelBuilder() override = default;
 
-    virtual void buildPOint() override;
-    virtual void buildEdge() override;
+    virtual void reset() override;
+
+    virtual void buildPoints() override;
+    virtual void buildEdges() override;
     virtual void buildCenter() override;
+
+    virtual std::shared_ptr<BaseModel> getResult() override;
 };
 
 #endif // LISTMODELBUILDER_H

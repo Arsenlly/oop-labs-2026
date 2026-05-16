@@ -11,7 +11,7 @@ public:
     ConcreteReaderCreator() = default;
     virtual ~ConcreteReaderCreator() override = default;
 
-    virtual std::shared_ptr<ModelReader> create() override;
+    virtual std::shared_ptr<ModelReader> create(const std::string &filename) override;
 };
 
 #include "concretereadercreator.hpp"

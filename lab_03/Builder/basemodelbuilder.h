@@ -1,8 +1,9 @@
 #ifndef BASEMODELBUILDER_H
 #define BASEMODELBUILDER_H
 
+#include "basemodel.h"
 #include "modelreader.h"
-#include "basemodel.h".h"
+#include "skeletonmodel.h"
 
 #include <memory>
 
@@ -14,13 +15,17 @@ public:
 
     virtual ~BaseModelBuilder() = 0;
 
-    virtual void buildPOint() = 0;
-    virtual void buildEdge() = 0;
+    virtual void reset() = 0;
+
+    virtual void buildPoints() = 0;
+    virtual void buildEdges() = 0;
     virtual void buildCenter() = 0;
+
+    virtual std::shared_ptr<BaseModel> getResult() = 0;
 
 protected:
     std::shared_ptr<ModelReader> _reader;
-    std::shared_ptr<BaseModel> _object;
+    std::shared_ptr<SkeletonModel> _model;
 };
 
 #endif // BASEMODELBUILDER_H

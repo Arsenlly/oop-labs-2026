@@ -11,3 +11,13 @@ void MatrixModelStructure::addEdge(const Edge &edge)
 {
 
 }
+
+const std::vector<Point>& MatrixModelStructure::getPoints()
+{
+
+}
+
+const std::vector<Edge>& MatrixModelStructure::getEdges()
+{
+
+}

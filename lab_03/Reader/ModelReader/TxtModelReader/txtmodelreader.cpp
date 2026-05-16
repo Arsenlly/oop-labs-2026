@@ -1,5 +1,7 @@
 #include "txtmodelreader.h"
 
+#include <iostream>
+
 TxtModelReader::TxtModelReader(const std::string &filename): ModelReader(filename) {}
 
 std::shared_ptr<std::vector<Point>> TxtModelReader::readPoints()
@@ -9,12 +11,12 @@ std::shared_ptr<std::vector<Point>> TxtModelReader::readPoints()
     size_t n_points;
     if (!(model_file >> n_points))
     {
-        // TODO кинуть исключение
+        throw InvalidQuanPointInFileError("Incorrect quantity of points in the file");
     }
 
     if (n_points <= 0)
     {
-        // TODO кинуть исключение
+        throw InvalidQuanPointInFileError("Incorrect quantity of points in the file");
     }
 
     std::vector<Point> points(n_points);
@@ -24,7 +26,7 @@ std::shared_ptr<std::vector<Point>> TxtModelReader::readPoints()
     {
         if (!(model_file >> x >> y >> z))
         {
-            // TODO кинуть исключение
+            throw InvalidPointInFileError("Incorrect points in the file");
         }
         points[i] = Point(x, y, z);
     }
@@ -37,12 +39,14 @@ std::shared_ptr<std::vector<Edge>> TxtModelReader::readEdges()
     size_t n_edges;
     if (!(model_file >> n_edges))
     {
-        // TODO кинуть исключение
+        std::cout << "error1\n";
+        throw InvalidQuanEdgeInFileError("Incorrect quantity of edges in the file");
     }
 
     if (n_edges <= 0)
     {
-        // TODO кинуть исключение
+        std::cout << "error2\n";
+        throw InvalidQuanEdgeInFileError("Incorrect quantity of edges in the file");
     }
 
     std::vector<Edge> edges(n_edges);
@@ -52,7 +56,7 @@ std::shared_ptr<std::vector<Edge>> TxtModelReader::readEdges()
     {
         if (!(model_file >> start >> end))
         {
-            // TODO кинуть исключение
+            throw InvalidEdgeInFileError("Incorrect edges in the file");
         }
         edges[i] = Edge(start, end);
     }

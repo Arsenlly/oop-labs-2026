@@ -13,6 +13,9 @@ public:
     virtual void addPoint(const Point &point) override;
     virtual void addEdge(const Edge &edge) override;
 
+    virtual const std::vector<Point>& getPoints() override;
+    virtual const std::vector<Edge>& getEdges() override;
+
 private:
     std::vector<Edge> _edges;
     std::vector<Point> _points;

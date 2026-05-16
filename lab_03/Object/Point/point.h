@@ -7,9 +7,9 @@ public:
     Point() = default;
     Point(const double x, const double y, const double z);
 
-    double getX();
-    double getY();
-    double getZ();
+    double getX() const;
+    double getY() const;
+    double getZ() const;
 
     void setX(const double x);
     void setY(const double y);

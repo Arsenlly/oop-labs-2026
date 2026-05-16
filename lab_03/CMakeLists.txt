@@ -6,7 +6,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
@@ -76,6 +76,26 @@ else()
             Builder/basemodelbuilder.h Builder/basemodelbuilder.cpp
             Builder/MatrixBuilder/matrixmodelbuilder.h Builder/MatrixBuilder/matrixmodelbuilder.cpp
             Builder/ListBuilder/listmodelbuilder.h Builder/ListBuilder/listmodelbuilder.cpp
+            Command/ModelCommand/loadmodelcommand.h Command/ModelCommand/loadmodelcommand.cpp
+            Exception/ModelException/modelexception.cpp
+            Exception/ModelException/modelexception.h
+            Director/basedirector.h Director/basedirector.cpp
+            Director/ModelDirector/skeletonmodeldirector.h Director/ModelDirector/skeletonmodeldirector.cpp
+            Object/Camera/camera.h Object/Camera/camera.cpp
+            Visitor/visitor.h Visitor/visitor.cpp
+            Drawer/basedrawer.h Drawer/basedrawer.cpp
+            Drawer/QtDrawer/qtdrawer.h Drawer/QtDrawer/qtdrawer.cpp
+            Command/DrawCommand/basedrawcommand.h Command/DrawCommand/basedrawcommand.cpp
+            Command/DrawCommand/drawqtcommand.h Command/DrawCommand/drawqtcommand.cpp
+            DrawManager/drawmanager.hpp
+            Drawer/DrawerFactory/basedrawerfactory.h Drawer/DrawerFactory/basedrawerfactory.cpp
+            Drawer/DrawerFactory/qtdrawerfactory.h Drawer/DrawerFactory/qtdrawerfactory.cpp
+            Concepts/concepts.h
+            Visitor/DrawVisitor/drawvisitor.h Visitor/DrawVisitor/drawvisitor.cpp
+            ids.h
+            Builder/BuilderSolution/buildersolution.h Builder/BuilderSolution/buildersolution.cpp
+            Builder/BuilderCreator/basebuildercreator.h Builder/BuilderCreator/basebuildercreator.cpp
+            Builder/BuilderCreator/concretebuildercreator.h Builder/BuilderCreator/concretebuildercreator.hpp
 
         )
     endif()
@@ -85,6 +105,7 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/Facade
     ${CMAKE_CURRENT_SOURCE_DIR}/Command
+    ${CMAKE_CURRENT_SOURCE_DIR}/Command/DrawCommand
     ${CMAKE_CURRENT_SOURCE_DIR}/Command/ModelCommand
     ${CMAKE_CURRENT_SOURCE_DIR}/DrawManager
     ${CMAKE_CURRENT_SOURCE_DIR}/LoadManager
@@ -95,10 +116,9 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure
-    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/ListStructure
-    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/MatrixStructure
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Point
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Edge
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Camera
     ${CMAKE_CURRENT_SOURCE_DIR}/SceneManager
     ${CMAKE_CURRENT_SOURCE_DIR}/Scene
     ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ReaderSolution
@@ -108,8 +128,22 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ModelReader/CsvModelReader
     ${CMAKE_CURRENT_SOURCE_DIR}/Reader
     ${CMAKE_CURRENT_SOURCE_DIR}/Builder
-    ${CMAKE_CURRENT_SOURCE_DIR}/Builder/ListBuilder
     ${CMAKE_CURRENT_SOURCE_DIR}/Builder/MatrixBuilder
+    ${CMAKE_CURRENT_SOURCE_DIR}/Builder/BuilderSolution
+    ${CMAKE_CURRENT_SOURCE_DIR}/Builder/BuilderCreator
+    ${CMAKE_CURRENT_SOURCE_DIR}/Builder/ListBuilder
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/ListStructure
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/MatrixStructure
+    ${CMAKE_CURRENT_SOURCE_DIR}/Exception
+    ${CMAKE_CURRENT_SOURCE_DIR}/Exception/ModelException
+    ${CMAKE_CURRENT_SOURCE_DIR}/Director/ModelDirector
+    ${CMAKE_CURRENT_SOURCE_DIR}/Director
+    ${CMAKE_CURRENT_SOURCE_DIR}/Visitor
+    ${CMAKE_CURRENT_SOURCE_DIR}/Visitor/DrawVisitor
+    ${CMAKE_CURRENT_SOURCE_DIR}/Drawer
+    ${CMAKE_CURRENT_SOURCE_DIR}/Drawer/QtDrawer
+    ${CMAKE_CURRENT_SOURCE_DIR}/Drawer/DrawerFactory
+    ${CMAKE_CURRENT_SOURCE_DIR}/Concepts
 )
 
 target_link_libraries(lab_03 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

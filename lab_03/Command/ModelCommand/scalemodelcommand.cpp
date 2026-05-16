@@ -10,5 +10,6 @@ ScaleModelCommand::ScaleModelCommand(std::size_t id, double kx, double ky, doubl
 
 void ScaleModelCommand::execute()
 {
-
+    //std::shared_ptr<Object> object = _sceneManager->getObject(_id);
+    //_transformManager->ScaleObject(object, _kx, _ky, _kz);
 }

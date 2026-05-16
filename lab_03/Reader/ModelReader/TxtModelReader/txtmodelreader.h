@@ -4,6 +4,7 @@
 #include "modelreader.h"
 #include "point.h"
 #include "edge.h"
+#include "modelexception.h"
 
 #include <memory>
 #include <vector>
