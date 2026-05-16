@@ -16,6 +16,7 @@ public:
     std::shared_ptr<Camera> getCurCamera();
 
     void addObject(std::shared_ptr<Object> obj);
+    std::shared_ptr<Object> getObject(size_t id);
 
 private:
     std::shared_ptr<Scene> _scene;

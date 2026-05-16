@@ -19,3 +19,8 @@ void SceneManager::addObject(std::shared_ptr<Object> obj)
 {
     _scene->addObject(obj);
 }
+
+std::shared_ptr<Object> SceneManager::getObject(size_t id)
+{
+    return _scene->getObject(id);
+}

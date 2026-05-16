@@ -14,6 +14,6 @@ void DrawManager::DrawScene(std::shared_ptr<Scene> scene, std::shared_ptr<Camera
 
     for (auto it = scene->begin();it != scene->end();it++)
     {
-        (*it)->accept(visitor);
+        it->second->accept(visitor);
     }
 }

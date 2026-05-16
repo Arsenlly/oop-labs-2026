@@ -7,12 +7,12 @@ std::shared_ptr<Object> Scene::getObject(std::size_t id)
 
 void Scene::addObject(std::shared_ptr<Object> object)
 {
-    _objects.push_back(object);
+    _objects[cur_id++] = object;
 }
 
 void Scene::removeObject(size_t id)
 {
-    _objects.erase(_objects.begin() + id);
+    _objects.erase(id);
 }
 
 Scene::iterator Scene::begin()

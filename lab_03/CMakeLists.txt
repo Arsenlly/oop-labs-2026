@@ -96,6 +96,11 @@ else()
             Builder/BuilderSolution/buildersolution.h Builder/BuilderSolution/buildersolution.cpp
             Builder/BuilderCreator/basebuildercreator.h Builder/BuilderCreator/basebuildercreator.cpp
             Builder/BuilderCreator/concretebuildercreator.h Builder/BuilderCreator/concretebuildercreator.hpp
+            Visitor/TransformVisitor/transformvisitor.h Visitor/TransformVisitor/transformvisitor.cpp
+            Transformation/transformaction.h Transformation/transformaction.cpp
+            Transformation/scaleaction.h Transformation/scaleaction.cpp
+            Transformation/moveaction.h Transformation/moveaction.cpp
+            Transformation/rotateaction.h Transformation/rotateaction.cpp
 
         )
     endif()
@@ -140,10 +145,12 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Director
     ${CMAKE_CURRENT_SOURCE_DIR}/Visitor
     ${CMAKE_CURRENT_SOURCE_DIR}/Visitor/DrawVisitor
+    ${CMAKE_CURRENT_SOURCE_DIR}/Visitor/TransformVisitor
     ${CMAKE_CURRENT_SOURCE_DIR}/Drawer
     ${CMAKE_CURRENT_SOURCE_DIR}/Drawer/QtDrawer
     ${CMAKE_CURRENT_SOURCE_DIR}/Drawer/DrawerFactory
     ${CMAKE_CURRENT_SOURCE_DIR}/Concepts
+    ${CMAKE_CURRENT_SOURCE_DIR}/Transformation
 )
 
 target_link_libraries(lab_03 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

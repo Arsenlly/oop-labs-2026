@@ -2,6 +2,10 @@
 #define TRANSFORMMANAGER_H
 
 #include "object.h"
+#include "transformvisitor.h"
+#include "scaleaction.h"
+#include "moveaction.h"
+#include "rotateaction.h"
 
 #include <memory>
 

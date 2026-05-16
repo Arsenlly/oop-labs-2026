@@ -41,5 +41,6 @@ private:
     SceneFacade _facade;
 
     std::vector<size_t> selected_obj;
+    size_t cur_id = 0;
 };
 #endif // MAINWINDOW_H

@@ -1,7 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <vector>
+#include <map>
 #include <memory>
 #include <cstddef>
 
@@ -10,9 +10,9 @@
 class Scene
 {
 public:
-    using iterator = std::vector<std::shared_ptr<Object>>::iterator;
-    using const_iterator = std::vector<std::shared_ptr<Object>>::const_iterator;
-    using size_type = std::vector<std::shared_ptr<Object>>::size_type;
+    using iterator = std::map<size_t, std::shared_ptr<Object>>::iterator;
+    using const_iterator = std::map<size_t, std::shared_ptr<Object>>::const_iterator;
+    using size_type = std::map<size_t, std::shared_ptr<Object>>::size_type;
 public:
     Scene() = default;
     ~Scene() = default;
@@ -31,7 +31,8 @@ public:
     const_iterator cend() const;
 
 private:
-    std::vector<std::shared_ptr<Object>> _objects;
+    std::map<size_t, std::shared_ptr<Object>> _objects;
+    size_t cur_id = 0;
 };
 
 

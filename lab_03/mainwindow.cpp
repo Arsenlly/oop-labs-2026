@@ -150,7 +150,7 @@ void MainWindow::on_load_model_button_clicked()
         _facade.execute(command);
 
         // TODO
-        insertRowInObjTable(0, std::filesystem::path(filename).filename(), Point(0,0,0));
+        insertRowInObjTable(cur_id++, std::filesystem::path(filename).filename(), Point(0,0,0));
 
         drawScene();
     }
