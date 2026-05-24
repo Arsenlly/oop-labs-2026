@@ -1,4 +1,4 @@
-#include "rotatemodelcommand.h"
+#include "rotateobjectcommand.h"
 
 RotateModelCommand::RotateModelCommand(std::size_t id, double x_angle, double y_angle, double z_angle)
 {

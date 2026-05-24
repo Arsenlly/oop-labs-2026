@@ -33,4 +33,10 @@ public:
     InvalidEdgeInFileError(const char *err_info) noexcept;
 };
 
+class InvalidInternalReprId: public BaseException
+{
+public:
+    InvalidInternalReprId(const char *err_info) noexcept;
+};
+
 #endif // MODELEXCEPTION_H

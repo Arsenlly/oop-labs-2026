@@ -15,6 +15,11 @@ std::shared_ptr<Camera> SceneManager::getCurCamera()
     return _camera;
 }
 
+void SceneManager::setCurCamera(size_t id)
+{
+    _camera = std::dynamic_pointer_cast<Camera>(_scene->getObject(id));
+}
+
 void SceneManager::addObject(std::shared_ptr<Object> obj)
 {
     _scene->addObject(obj);
@@ -23,4 +28,11 @@ void SceneManager::addObject(std::shared_ptr<Object> obj)
 std::shared_ptr<Object> SceneManager::getObject(size_t id)
 {
     return _scene->getObject(id);
+}
+
+void SceneManager::removeObject(size_t id)
+{
+    if (_camera == _scene->getObject(id))
+        throw TryDeleteActiveCameraError("The active camera cannot be deleted!");
+    return _scene->removeObject(id);
 }

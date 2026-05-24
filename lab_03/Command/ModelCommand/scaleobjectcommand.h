@@ -1,7 +1,7 @@
-#ifndef SCALEMODELCOMMAND_H
-#define SCALEMODELCOMMAND_H
+#ifndef SCALEOBJECTCOMMAND_H
+#define SCALEOBJECTCOMMAND_H
 
-#include "basemodelcommand.h"
+#include "baseobjectcommand.h"
 
 #include <cstddef>
 
@@ -21,4 +21,4 @@ private:
     double _kz;
 };
 
-#endif // SCALEMODELCOMMAND_H
+#endif // SCALEOBJECTCOMMAND_H

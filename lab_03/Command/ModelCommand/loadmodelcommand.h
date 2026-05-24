@@ -1,7 +1,7 @@
 #ifndef LOADMODELCOMMAND_H
 #define LOADMODELCOMMAND_H
 
-#include "basemodelcommand.h"
+#include "baseobjectcommand.h"
 #include "ids.h"
 
 #include <string>

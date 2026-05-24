@@ -5,6 +5,7 @@
 #include "object.h"
 #include "transformaction.h"
 #include "point.h"
+#include "camera.h"
 
 #include <memory>
 #include <vector>

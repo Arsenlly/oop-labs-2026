@@ -1,9 +1,9 @@
-#ifndef MOVEMODELCOMMAND_H
-#define MOVEMODELCOMMAND_H
+#ifndef MOVEOBJECTCOMMAND_H
+#define MOVEOBJECTCOMMAND_H
 
 #include <cstddef>
 
-#include "basemodelcommand.h"
+#include "baseobjectcommand.h"
 
 class MoveModelCommand: public BaseModelCommand
 {
@@ -21,4 +21,4 @@ private:
     double _dz;
 };
 
-#endif // MOVEMODELCOMMAND_H
+#endif // MOVEOBJECTCOMMAND_H

@@ -22,15 +22,15 @@ RotateAction::RotateAction(double x_angle, double y_angle, double z_angle)
 
 RotateAction::RotateAction(const Point &center, double x_angle, double y_angle, double z_angle)
 {
-    MoveAction moveToCenter(-center.getX(), -center.getY(), -center.getZ());
+    MoveAction moveFromCenter(center.getX(), center.getY(), center.getZ());
 
-    transform_matrix = moveToCenter.getMatrix();
+    transform_matrix = moveFromCenter.getMatrix();
 
     RotateAction rotate(x_angle, y_angle, z_angle);
 
     transform_matrix *= rotate.getMatrix();
 
-    MoveAction moveFromCenter(center.getX(), center.getY(), center.getZ());
+    MoveAction moveToCenter(-center.getX(), -center.getY(), -center.getZ());
 
-    transform_matrix *= moveFromCenter.getMatrix();
+    transform_matrix *= moveToCenter.getMatrix();
 }

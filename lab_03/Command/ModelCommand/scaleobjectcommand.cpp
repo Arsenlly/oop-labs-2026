@@ -1,4 +1,4 @@
-#include "scalemodelcommand.h"
+#include "scaleobjectcommand.h"
 
 ScaleModelCommand::ScaleModelCommand(std::size_t id, double kx, double ky, double kz)
 {

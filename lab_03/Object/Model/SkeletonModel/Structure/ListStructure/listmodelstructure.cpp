@@ -14,12 +14,12 @@ void ListModelStructure::addEdge(const Edge &edge)
     _edges.push_back(edge);
 }
 
-const std::vector<Point>& ListModelStructure::getPoints()
+std::vector<Point> ListModelStructure::getPoints()
 {
     return _points;
 }
 
-const std::vector<Edge>& ListModelStructure::getEdges()
+std::vector<Edge> ListModelStructure::getEdges()
 {
     return _edges;
 }

@@ -9,8 +9,8 @@ public:
     Edge() = default;
     Edge(const std::size_t start, const std::size_t end);
 
-    std::size_t getStart();
-    std::size_t getEnd();
+    std::size_t getStart() const;
+    std::size_t getEnd() const;
 
     void setStart(const std::size_t start);
     void setEnd(const std::size_t end);

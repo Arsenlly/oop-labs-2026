@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+#define FOCUS 500.0
+#define R (1 / FOCUS)
+
 DrawVisitor::DrawVisitor(std::shared_ptr<BaseDrawer> drawer, std::shared_ptr<Camera> camera)
 {
     _drawer = drawer;
@@ -10,34 +13,43 @@ DrawVisitor::DrawVisitor(std::shared_ptr<BaseDrawer> drawer, std::shared_ptr<Cam
 
 void DrawVisitor::visit(std::shared_ptr<ModelStructure> model) const
 {
-    std::cout << "visit\n";
     auto points = model->getPoints();
     auto edges = model->getEdges();
 
+    ProjectionCameraAction proj_action(_camera);
+
+    for (auto &edge : edges)
+    {
+        Point start = points[edge.getStart()];
+        Point end = points[edge.getEnd()];
+
+        proj_action.transformPoint(start);
+        proj_action.transformPoint(end);
+
+        // end.setX((end.getX() / end.getZ()) * 500 + 400);
+        // end.setY(300 - (end.getY() / end.getZ()) * 500);
+
+        // start.setX((start.getX() / start.getZ()) * 500 + 400);
+        // start.setY(300 - (start.getY() / start.getZ()) * 500);
+
+        start.setX(start.getX() * (1 / (R * start.getZ())));
+        start.setY(start.getY() * (1 / (R * start.getZ())));
+
+        end.setX(end.getX() * (1 / (R * end.getZ())));
+        end.setY(end.getY() * (1 / (R * end.getZ())));
+
+        if (start.getZ() > 0 && end.getZ() > 0)
+            _drawer->drawLine(start, end);
+    }
+
+    // TODO нормально сделать отрисовку
     // for (auto &edge : edges)
     // {
     //     Point &start = points[edge.getStart()];
     //     Point &end = points[edge.getEnd()];
 
-    //     Point proj_start(start.getX() - _camera->getPos.getX(),
-    //                      start.getY() - _camera->getPos.getY(),
-    //                      start.getZ() - _camera->getPos.getZ());
-
-    //     Point proj_end(end.getX() - _camera->getPos.getX(),
-    //                    end.getY() - _camera->getPos.getY(),
-    //                    end.getZ() - _camera->getPos.getZ());
-
-
+    //     _drawer->drawLine(start, end);
     // }
-
-    // TODO нормально сделать отрисовку
-    for (auto &edge : edges)
-    {
-        Point &start = points[edge.getStart()];
-        Point &end = points[edge.getEnd()];
-
-        _drawer->drawLine(start, end);
-    }
 }
 
 void DrawVisitor::visit(Camera &camera) const

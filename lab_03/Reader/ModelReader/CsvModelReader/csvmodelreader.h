@@ -2,6 +2,7 @@
 #define CSVMODELREADER_H
 
 #include "modelreader.h"
+#include "modelexception.h"
 
 class CsvModelReader: public ModelReader
 {

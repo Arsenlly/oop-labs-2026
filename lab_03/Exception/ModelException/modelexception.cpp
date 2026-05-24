@@ -14,3 +14,6 @@ InvalidQuanEdgeInFileError::InvalidQuanEdgeInFileError(const char *err_info) noe
 
 InvalidEdgeInFileError::InvalidEdgeInFileError(const char *err_info) noexcept:
     BaseException(err_info) {}
+
+InvalidInternalReprId::InvalidInternalReprId(const char *err_info) noexcept:
+    BaseException(err_info) {}

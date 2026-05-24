@@ -4,6 +4,7 @@
 #include "visitor.h"
 #include "basedrawer.h"
 #include "camera.h"
+#include "projectioncameraaction.h"
 
 #include <memory>
 

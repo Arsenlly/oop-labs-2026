@@ -9,11 +9,12 @@ const Eigen::Matrix4d &TransformAction::getMatrix()
 
 void TransformAction::transformPoint(Point &p)
 {
-    Eigen::Vector4d vec(p.getX(), p.getY(), p.getZ(), 1.0);
+    Eigen::Vector4d vec(p.getX(), p.getY(), p.getZ(), p.getW());
 
     Eigen::Vector4d res = transform_matrix * vec;
 
     p.setX(res(0));
     p.setY(res(1));
     p.setZ(res(2));
+    p.setW(res(3));
 }

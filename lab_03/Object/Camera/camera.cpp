@@ -3,17 +3,17 @@
 Camera::Camera()
 {
     _pos = Point(0, 0, 0);
-    _forward = Point(0, 0, 1);
-    _up = Point(0, 1, 0);
-    _right = Point(1, 0, 0);
+    _forward = Point(0, 0, 1, 0);
+    _up = Point(0, 1, 0, 0);
+    _right = Point(1, 0, 0, 0);
 }
 
 Camera::Camera(const Point &p)
 {
     _pos = p;
-    _forward = Point(0, 0, 1);
-    _up = Point(0, 1, 0);
-    _right = Point(1, 0, 0);
+    _forward = Point(0, 0, 1, 0);
+    _up = Point(0, 1, 0, 0);
+    _right = Point(1, 0, 0, 0);
 }
 
 Camera::Camera(const Camera &c)
@@ -24,7 +24,7 @@ Camera::Camera(const Camera &c)
     this->_right = c._right;
 }
 
-const Point& Camera::getPos()
+const Point& Camera::getCenter()
 {
     return _pos;
 }
@@ -44,7 +44,7 @@ const Point& Camera::getRight()
     return _right;
 }
 
-void Camera::setPos(const Point &pos)
+void Camera::setCenter(const Point &pos)
 {
     _pos = pos;
 }

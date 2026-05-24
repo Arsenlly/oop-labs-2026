@@ -1,3 +1,3 @@
-#include "basemodelcommand.h"
+#include "baseobjectcommand.h"
 
 BaseModelCommand::~BaseModelCommand() {}

@@ -6,12 +6,12 @@ Edge::Edge(const std::size_t start, const std::size_t end)
     _end = end;
 }
 
-std::size_t Edge::getStart()
+std::size_t Edge::getStart() const
 {
     return _start;
 }
 
-std::size_t Edge::getEnd()
+std::size_t Edge::getEnd() const
 {
     return _end;
 }

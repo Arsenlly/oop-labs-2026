@@ -1,5 +1,5 @@
-#ifndef BASEMODELCOMMAND_H
-#define BASEMODELCOMMAND_H
+#ifndef BASEOBJECTCOMMAND_H
+#define BASEOBJECTCOMMAND_H
 
 #include "basecommand.h"
 
@@ -10,4 +10,4 @@ public:
     virtual ~BaseModelCommand() = 0;
 };
 
-#endif // BASEMODELCOMMAND_H
+#endif // BASEOBJECTCOMMAND_H

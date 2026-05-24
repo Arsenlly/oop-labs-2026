@@ -11,3 +11,8 @@ std::shared_ptr<ModelStructure> BaseModel::getStructure()
 {
     return _structure;
 }
+
+const Point &BaseModel::getCenter()
+{
+    return _structure->getCenter();
+}

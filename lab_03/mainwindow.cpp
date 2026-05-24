@@ -3,11 +3,16 @@
 
 #include "drawqtcommand.h"
 
-#include "movemodelcommand.h"
-#include "scalemodelcommand.h"
-#include "rotatemodelcommand.h"
+#include "moveobjectcommand.h"
+#include "scaleobjectcommand.h"
+#include "rotateobjectcommand.h"
 
 #include "loadmodelcommand.h"
+
+#include "removeobjectcommand.h"
+
+#include "addcameracommand.h"
+#include "setactivecameracommand.h"
 
 #include "ids.h"
 
@@ -33,6 +38,22 @@ MainWindow::MainWindow(QWidget *parent)
 
     QGraphicsScene *scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    int w = ui->graphicsView->width();
+    int h = ui->graphicsView->height();
+
+    scene->setSceneRect(-w/2, -h/2, w, h);
+
+
+    AddCameraCommand add_camera_command(Point(0, 0, -10));
+
+    _facade.execute(add_camera_command);
+    insertRowInObjTable(cur_id++, "Camera");
+
+    SetActiveCameraCommand set_active_cam_command(cur_id - 1);
+
+    _facade.execute(set_active_cam_command);
 }
 
 MainWindow::~MainWindow()
@@ -50,12 +71,13 @@ void MainWindow::getSelectedObjects()
     {
         if (el->column() == 0)
         {
-            selected_obj.push_back(el->row());
+            size_t id = ui->objectsTable->item(el->row(), 0)->text().toULong();
+            selected_obj.push_back(id);
         }
     }
 }
 
-void MainWindow::insertRowInObjTable(size_t id, const std::string &name, const Point &center)
+void MainWindow::insertRowInObjTable(size_t id, const std::string &name)
 {
     ui->objectsTable->insertRow(ui->objectsTable->rowCount());
 
@@ -64,11 +86,6 @@ void MainWindow::insertRowInObjTable(size_t id, const std::string &name, const P
 
     ui->objectsTable->setItem(ui->objectsTable->rowCount() - 1, 1,
                              new QTableWidgetItem{ QString(name.c_str()) });
-
-    ui->objectsTable->setItem(ui->objectsTable->rowCount() - 1, 2,
-                             new QTableWidgetItem{ "(" + QString::number(center.getX()) + "; "
-                                                  + QString::number(center.getY()) + "; "
-                                                  + QString::number(center.getZ()) + ")" });
 }
 
 void MainWindow::drawScene()
@@ -95,8 +112,6 @@ void MainWindow::on_move_button_clicked()
 
     drawScene();
 }
-
-
 
 void MainWindow::on_scale_button_clicked()
 {
@@ -149,8 +164,7 @@ void MainWindow::on_load_model_button_clicked()
         LoadModelCommand command(repr, filename);
         _facade.execute(command);
 
-        // TODO
-        insertRowInObjTable(cur_id++, std::filesystem::path(filename).filename(), Point(0,0,0));
+        insertRowInObjTable(cur_id++, std::filesystem::path(filename).filename());
 
         drawScene();
     }
@@ -166,10 +180,63 @@ void MainWindow::on_load_model_button_clicked()
 
 void MainWindow::on_add_camera_button_clicked()
 {
+    AddCameraCommand add_camera_command(Point(0, 0, -10));
 
+    _facade.execute(add_camera_command);
+
+    insertRowInObjTable(cur_id++, "Camera");
 }
 
 void MainWindow::on_set_camera_button_clicked()
 {
+    getSelectedObjects();
 
+    if (selected_obj.size() != 1)
+        QMessageBox::critical(this, "Error!", "Select 1 camera!");
+    else
+    {
+        SetActiveCameraCommand command(selected_obj[0]);
+        _facade.execute(command);
+
+        drawScene();
+    }
+}
+
+void MainWindow::on_delete_object_button_clicked()
+{
+    getSelectedObjects();
+
+    try
+    {
+        for (auto id : selected_obj)
+        {
+            RemoveObjectCommand remove_command(id);
+
+            _facade.execute(remove_command);
+
+            int row = -1;
+            for (int i = 0; i < ui->objectsTable->rowCount(); ++i)
+            {
+                size_t tableId = ui->objectsTable->item(i, 0)->text().toULong();
+                if (tableId == id)
+                {
+                    row = i;
+                    break;
+                }
+            }
+
+            if (row != -1)
+                ui->objectsTable->removeRow(row);
+        }
+    }
+    catch(const BaseException &ex)
+    {
+        QMessageBox::critical(this, "Error!", ex.what());
+    }
+    catch(const std::exception &ex)
+    {
+        QMessageBox::critical(this, "Unknown error!", ex.what());
+    }
+
+    drawScene();
 }

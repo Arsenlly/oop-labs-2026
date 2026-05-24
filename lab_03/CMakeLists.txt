@@ -44,10 +44,10 @@ else()
             LoadManager/loadmanager.h
             TransformManager/transformmanager.h
             Command/basecommand.cpp
-            Command/ModelCommand/basemodelcommand.h Command/ModelCommand/basemodelcommand.cpp
-            Command/ModelCommand/movemodelcommand.h Command/ModelCommand/movemodelcommand.cpp
-            Command/ModelCommand/scalemodelcommand.h Command/ModelCommand/scalemodelcommand.cpp
-            Command/ModelCommand/rotatemodelcommand.h Command/ModelCommand/rotatemodelcommand.cpp
+            Command/ModelCommand/baseobjectcommand.h Command/ModelCommand/baseobjectcommand.cpp
+            Command/ModelCommand/moveobjectcommand.h Command/ModelCommand/moveobjectcommand.cpp
+            Command/ModelCommand/scaleobjectcommand.h Command/ModelCommand/scaleobjectcommand.cpp
+            Command/ModelCommand/rotateobjectcommand.h Command/ModelCommand/rotateobjectcommand.cpp
             Object/object.h Object/object.cpp
             Object/VisibleObject/visibleobject.h
             Object/InvisibleObject/invisibleobject.h Object/InvisibleObject/invisibleobject.cpp
@@ -101,6 +101,12 @@ else()
             Transformation/scaleaction.h Transformation/scaleaction.cpp
             Transformation/moveaction.h Transformation/moveaction.cpp
             Transformation/rotateaction.h Transformation/rotateaction.cpp
+            Command/ModelCommand/removeobjectcommand.h Command/ModelCommand/removeobjectcommand.cpp
+            Command/CameraCommand/basecameracommand.h Command/CameraCommand/basecameracommand.cpp
+            Command/CameraCommand/addcameracommand.h Command/CameraCommand/addcameracommand.cpp
+            Command/CameraCommand/setactivecameracommand.h Command/CameraCommand/setactivecameracommand.cpp
+            Transformation/projectioncameraaction.h Transformation/projectioncameraaction.cpp
+            Exception/SceneException/sceneexception.h Exception/SceneException/sceneexception.cpp
 
         )
     endif()
@@ -112,6 +118,7 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Command
     ${CMAKE_CURRENT_SOURCE_DIR}/Command/DrawCommand
     ${CMAKE_CURRENT_SOURCE_DIR}/Command/ModelCommand
+    ${CMAKE_CURRENT_SOURCE_DIR}/Command/CameraCommand
     ${CMAKE_CURRENT_SOURCE_DIR}/DrawManager
     ${CMAKE_CURRENT_SOURCE_DIR}/LoadManager
     ${CMAKE_CURRENT_SOURCE_DIR}/TransformManager
@@ -141,6 +148,7 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Model/SkeletonModel/Structure/MatrixStructure
     ${CMAKE_CURRENT_SOURCE_DIR}/Exception
     ${CMAKE_CURRENT_SOURCE_DIR}/Exception/ModelException
+    ${CMAKE_CURRENT_SOURCE_DIR}/Exception/SceneException
     ${CMAKE_CURRENT_SOURCE_DIR}/Director/ModelDirector
     ${CMAKE_CURRENT_SOURCE_DIR}/Director
     ${CMAKE_CURRENT_SOURCE_DIR}/Visitor

@@ -1,7 +1,7 @@
-#ifndef ROTATEMODELCOMMAND_H
-#define ROTATEMODELCOMMAND_H
+#ifndef ROTATEOBJECTCOMMAND_H
+#define ROTATEOBJECTCOMMAND_H
 
-#include "basemodelcommand.h"
+#include "baseobjectcommand.h"
 
 class RotateModelCommand: public BaseModelCommand
 {
@@ -19,4 +19,4 @@ private:
     double _z_angle;
 };
 
-#endif // ROTATEMODELCOMMAND_H
+#endif // ROTATEOBJECTCOMMAND_H

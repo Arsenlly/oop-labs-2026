@@ -2,6 +2,12 @@
 #define MATRIXMODELBUILDER_H
 
 #include "basemodelbuilder.h"
+#include "matrixmodelstructure.h"
+#include "modelstructure.h"
+
+#include <memory>
+#include <ranges>
+#include <algorithm>
 
 class MatrixModelBuilder: public BaseModelBuilder
 {

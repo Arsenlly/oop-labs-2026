@@ -14,8 +14,8 @@ public:
     virtual void addPoint(const Point &point) = 0;
     virtual void addEdge(const Edge &edge) = 0;
 
-    virtual const std::vector<Point>& getPoints() = 0;
-    virtual const std::vector<Edge>& getEdges() = 0;
+    virtual std::vector<Point> getPoints() = 0;
+    virtual std::vector<Edge> getEdges() = 0;
 
     virtual void setPoints(std::vector<Point> points) = 0;
 

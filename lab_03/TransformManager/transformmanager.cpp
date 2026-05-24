@@ -2,7 +2,7 @@
 
 void TransformManager::ScaleObject(std::shared_ptr<Object> object, double kx, double ky, double kz)
 {
-    ScaleAction action(kx, ky, kz);
+    ScaleAction action(object->getCenter(), kx, ky, kz);
 
     TransformVisitor visitor(action);
 
@@ -20,7 +20,7 @@ void TransformManager::MoveObject(std::shared_ptr<Object> object, double dx, dou
 
 void TransformManager::RotateObject(std::shared_ptr<Object> object, double x_angle, double y_angle, double z_angle)
 {
-    RotateAction action(x_angle, y_angle, z_angle);
+    RotateAction action(object->getCenter(), x_angle, y_angle, z_angle);
 
     TransformVisitor visitor(action);
 

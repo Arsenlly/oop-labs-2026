@@ -9,6 +9,8 @@ class Object
         Object() = default;
         virtual ~Object() = 0;
 
+        virtual const Point &getCenter() = 0;
+
         virtual void accept(const Visitor &visitor) = 0;
 };
 

@@ -2,10 +2,7 @@
 
 #include <iostream>
 
-ListModelBuilder::ListModelBuilder(std::shared_ptr<ModelReader> reader): BaseModelBuilder(reader)
-{
-    std::cout << "list\n";
-}
+ListModelBuilder::ListModelBuilder(std::shared_ptr<ModelReader> reader): BaseModelBuilder(reader) {}
 
 void ListModelBuilder::reset()
 {

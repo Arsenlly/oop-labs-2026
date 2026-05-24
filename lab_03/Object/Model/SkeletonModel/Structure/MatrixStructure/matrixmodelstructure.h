@@ -15,10 +15,12 @@ public:
     virtual void addPoint(const Point &point) override;
     virtual void addEdge(const Edge &edge) override;
 
-    virtual const std::vector<Point>& getPoints() override;
-    virtual const std::vector<Edge>& getEdges() override;
+    virtual std::vector<Point> getPoints() override;
+    virtual std::vector<Edge> getEdges() override;
 
     virtual void setPoints(std::vector<Point> points) override;
+
+    void resizeMatrix(size_t size);
 
 private:
     std::vector<Point> _points;

@@ -13,12 +13,12 @@ public:
 
     ~Camera() = default;
 
-    const Point& getPos();
+    virtual const Point &getCenter() override;
     const Point& getForward();
     const Point& getUp();
     const Point& getRight();
 
-    void setPos(const Point &pos);
+    void setCenter(const Point &pos);
     void setForward(const Point &forward);
     void setUp(const Point &up);
     void setRight(const Point &right);

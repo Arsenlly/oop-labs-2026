@@ -17,7 +17,7 @@ std::shared_ptr<BaseModelBuilder> BuilderSolution::create(InternalReprId repr_id
 
     if (it == _creators.end())
     {
-        // TODO кинуть исключение
+        throw InvalidInternalReprId("Invalid internal representation id!");
     }
     return it->second->create(reader);
 }

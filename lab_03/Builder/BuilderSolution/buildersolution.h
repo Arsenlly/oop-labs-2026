@@ -8,6 +8,7 @@
 #include "concretebuildercreator.h"
 #include "listmodelbuilder.h"
 #include "matrixmodelbuilder.h"
+#include "modelexception.h"
 
 #include <memory>
 #include <map>

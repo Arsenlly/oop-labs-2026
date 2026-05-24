@@ -32,8 +32,11 @@ private slots:
 
     void on_set_camera_button_clicked();
 
+    void on_delete_object_button_clicked();
+
+private:
     void getSelectedObjects();
-    void insertRowInObjTable(size_t id, const std::string &name, const Point &center);
+    void insertRowInObjTable(size_t id, const std::string &name );
 
 
 private:

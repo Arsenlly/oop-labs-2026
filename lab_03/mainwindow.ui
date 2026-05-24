@@ -24,12 +24,12 @@
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>1340</x>
       <y>10</y>
-      <width>264</width>
+      <width>306</width>
       <height>795</height>
      </rect>
     </property>
@@ -50,11 +50,6 @@
              <column>
               <property name="text">
                <string>Name</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Center</string>
               </property>
              </column>
             </widget>
@@ -102,13 +97,34 @@
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout">
                       <item>
-                       <widget class="QDoubleSpinBox" name="move_x_spin"/>
+                       <widget class="QDoubleSpinBox" name="move_x_spin">
+                        <property name="minimum">
+                         <double>-1000.000000000000000</double>
+                        </property>
+                        <property name="maximum">
+                         <double>1000.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                       <item>
-                       <widget class="QDoubleSpinBox" name="move_y_spin"/>
+                       <widget class="QDoubleSpinBox" name="move_y_spin">
+                        <property name="minimum">
+                         <double>-1000.000000000000000</double>
+                        </property>
+                        <property name="maximum">
+                         <double>1000.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                       <item>
-                       <widget class="QDoubleSpinBox" name="move_z_spin"/>
+                       <widget class="QDoubleSpinBox" name="move_z_spin">
+                        <property name="minimum">
+                         <double>-1000.000000000000000</double>
+                        </property>
+                        <property name="maximum">
+                         <double>1000.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </item>
@@ -171,13 +187,31 @@
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_2">
                       <item>
-                       <widget class="QDoubleSpinBox" name="scale_x_spin"/>
+                       <widget class="QDoubleSpinBox" name="scale_x_spin">
+                        <property name="minimum">
+                         <double>-1000.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                       <item>
-                       <widget class="QDoubleSpinBox" name="scale_y_spin"/>
+                       <widget class="QDoubleSpinBox" name="scale_y_spin">
+                        <property name="minimum">
+                         <double>-1000.000000000000000</double>
+                        </property>
+                        <property name="maximum">
+                         <double>1000.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                       <item>
-                       <widget class="QDoubleSpinBox" name="scale_z_spin"/>
+                       <widget class="QDoubleSpinBox" name="scale_z_spin">
+                        <property name="minimum">
+                         <double>-1000.000000000000000</double>
+                        </property>
+                        <property name="maximum">
+                         <double>1000.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </item>
@@ -240,13 +274,34 @@
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_3">
                       <item>
-                       <widget class="QDoubleSpinBox" name="rotate_x_spin"/>
+                       <widget class="QDoubleSpinBox" name="rotate_x_spin">
+                        <property name="minimum">
+                         <double>-1000.000000000000000</double>
+                        </property>
+                        <property name="maximum">
+                         <double>1000.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                       <item>
-                       <widget class="QDoubleSpinBox" name="rotate_y_spin"/>
+                       <widget class="QDoubleSpinBox" name="rotate_y_spin">
+                        <property name="minimum">
+                         <double>-1000.000000000000000</double>
+                        </property>
+                        <property name="maximum">
+                         <double>1000.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                       <item>
-                       <widget class="QDoubleSpinBox" name="rotate_z_spin"/>
+                       <widget class="QDoubleSpinBox" name="rotate_z_spin">
+                        <property name="maximum">
+                         <double>1000.000000000000000</double>
+                        </property>
+                        <property name="singleStep">
+                         <double>1.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </item>
