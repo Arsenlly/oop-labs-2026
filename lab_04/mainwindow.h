@@ -22,7 +22,8 @@ public:
 
 public slots:
     void floor_button_change_slot(size_t n_floor, dir_t dir, bool active_fl);
-    void cabin_button_change_slot(size_t id_cabin, size_t n_floor, bool active_fl);
+    void cabin_button_change_slot(size_t n_floor, bool active_fl);
+    void cabin_pos_change_slot(size_t n_floor);
 
 private:
     Ui::MainWindow *ui;

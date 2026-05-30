@@ -5,6 +5,8 @@
 #include "defines.h"
 
 #include <QObject>
+#include <QTimer>
+#include <QDebug>
 
 class Cabin: public QObject
 {
@@ -14,17 +16,37 @@ public:
     Cabin(QObject *parent = nullptr);
 
 signals:
-    void open_doors_signal();
-    void close_doors_signal();
+    void cabin_arrived_floor_signal(size_t floor);
+    void cabin_ready_to_move_signal(size_t floor);
+
+    void cabin_open_doors_signal();
 
 public slots:
-    void doors_is_opened_slot();
-    void doors_is_closed_slot();
+    void cabin_move_up_slot();
+    void cabin_move_down_slot();
+    void cabin_arrived_floor_slot();
+    void cabin_start_boarding_slot();
+
+private slots:
+    void cabin_doors_closed_slot();
 
 private:
-    Doors cabin_doors;
+    enum cabin_state_t
+    {
+        CABIN_READY_TO_MOVE = 0,
+        CABIN_BOARDING,
+        CABIN_ARRIVED,
+        CABIN_MOVE_UP,
+        CABIN_MOVE_DOWN
+    };
 
     cabin_state_t state;
+
+    Doors cabin_doors;
+
+    size_t cur_floor;
+
+    QTimer moving_timer;
 };
 
 #endif // CABIN_H

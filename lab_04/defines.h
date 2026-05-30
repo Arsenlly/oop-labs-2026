@@ -2,35 +2,27 @@
 #define DEFINES_H
 
 #define N_FLOOR 12
-#define N_ELEVATOR 2
+#define N_ELEVATOR 1
 
 #define OPEN_DOORS_TIME 1000
 #define CLOSE_DOORS_TIME 1000
+#define WAIT_DOORS_TIME 1000
 
-#define BOARDING_TIME 2000
-
+#define MOVING_TIME 1000
 
 enum dir_t
 {
-    DIR_DOWN = -1,
-    DIR_STAND = 0,
-    DIR_UP = 1
+    DIR_DOWN = 0,
+    DIR_STAND,
+    DIR_UP
 };
 
-enum cabin_state_t
+enum floor_order_t
 {
-    CABIN_FREE = 0,
-    CABIN_MOVE,
-    CABIN_START_BOARDING,
-    CABIN_FINISH_BOARDING
-};
-
-enum doors_state_t
-{
-    DOORS_OPENING = 0,
-    DOORS_OPENED,
-    DOORS_CLOSING,
-    DOORS_CLOSED
+    FLOOR_ORDER_UP = 0,
+    FLOOR_ORDER_DOWN,
+    FLOOR_ORDER_BOTH,
+    FLOOR_ORDER_NONE
 };
 
 #endif // DEFINES_H
