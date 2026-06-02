@@ -3,17 +3,16 @@
 
 #include "invisibleobject.h"
 #include "visitor.h"
+#include "defaultcamerastructure.h"
 
 class Camera: public InVisibleObject
 {
 public:
     Camera();
-    Camera(const Point &p);
-    Camera(const Camera &c);
 
     ~Camera() = default;
 
-    virtual const Point &getCenter() override;
+    //virtual const Point &getCenter() override;
     const Point& getForward();
     const Point& getUp();
     const Point& getRight();
@@ -30,6 +29,8 @@ private:
     Point _forward;
     Point _up;
     Point _right;
+
+    std::shared_ptr<DefaultCameraStructure> _structure;
 };
 
 #endif // CAMERA_H

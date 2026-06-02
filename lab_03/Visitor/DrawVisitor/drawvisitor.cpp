@@ -5,16 +5,16 @@
 #define FOCUS 500.0
 #define R (1 / FOCUS)
 
-DrawVisitor::DrawVisitor(std::shared_ptr<BaseDrawer> drawer, std::shared_ptr<Camera> camera)
+DrawVisitor::DrawVisitor(std::shared_ptr<BaseDrawer> drawer, std::shared_ptr<BaseCamera> camera)
 {
     _drawer = drawer;
     _camera = camera;
 }
 
-void DrawVisitor::visit(std::shared_ptr<ModelStructure> model) const
+void DrawVisitor::visit(std::shared_ptr<ModelStructure> model_structure) const
 {
-    auto points = model->getPoints();
-    auto edges = model->getEdges();
+    auto points = model_structure->getPoints();
+    auto edges = model_structure->getEdges();
 
     ProjectionCameraAction proj_action(_camera);
 
@@ -26,12 +26,6 @@ void DrawVisitor::visit(std::shared_ptr<ModelStructure> model) const
         proj_action.transformPoint(start);
         proj_action.transformPoint(end);
 
-        // end.setX((end.getX() / end.getZ()) * 500 + 400);
-        // end.setY(300 - (end.getY() / end.getZ()) * 500);
-
-        // start.setX((start.getX() / start.getZ()) * 500 + 400);
-        // start.setY(300 - (start.getY() / start.getZ()) * 500);
-
         start.setX(start.getX() * (1 / (R * start.getZ())));
         start.setY(start.getY() * (1 / (R * start.getZ())));
 
@@ -41,18 +35,9 @@ void DrawVisitor::visit(std::shared_ptr<ModelStructure> model) const
         if (start.getZ() > 0 && end.getZ() > 0)
             _drawer->drawLine(start, end);
     }
-
-    // TODO нормально сделать отрисовку
-    // for (auto &edge : edges)
-    // {
-    //     Point &start = points[edge.getStart()];
-    //     Point &end = points[edge.getEnd()];
-
-    //     _drawer->drawLine(start, end);
-    // }
 }
 
-void DrawVisitor::visit(Camera &camera) const
+void DrawVisitor::visit(std::shared_ptr<BaseCameraStructure> camera_structure) const
 {
-    (void) camera;
+    (void) camera_structure;
 }

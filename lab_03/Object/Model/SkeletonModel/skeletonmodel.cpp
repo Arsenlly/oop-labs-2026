@@ -4,5 +4,5 @@ SkeletonModel::SkeletonModel(std::shared_ptr<ModelStructure> structure): BaseMod
 
 void SkeletonModel::accept(const Visitor &visitor)
 {
-    visitor.visit(this->getStructure());
+    visitor.visit(_structure);
 }

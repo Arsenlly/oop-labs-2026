@@ -1,16 +1,20 @@
 #include "transformmanager.h"
 
-void TransformManager::ScaleObject(std::shared_ptr<Object> object, double kx, double ky, double kz)
+void TransformManager::ScaleObject(std::shared_ptr<SceneManager> scene_manager, size_t id, Point &center, double kx, double ky, double kz)
 {
-    ScaleAction action(object->getCenter(), kx, ky, kz);
+    std::shared_ptr<Object> object = scene_manager->getObject(id);
+
+    ScaleAction action(center, kx, ky, kz);
 
     TransformVisitor visitor(action);
 
     object->accept(visitor);
 }
 
-void TransformManager::MoveObject(std::shared_ptr<Object> object, double dx, double dy, double dz)
+void TransformManager::MoveObject(std::shared_ptr<SceneManager> scene_manager, size_t id, double dx, double dy, double dz)
 {
+    std::shared_ptr<Object> object = scene_manager->getObject(id);
+
     MoveAction action(dx, dy, dz);
 
     TransformVisitor visitor(action);
@@ -18,9 +22,11 @@ void TransformManager::MoveObject(std::shared_ptr<Object> object, double dx, dou
     object->accept(visitor);
 }
 
-void TransformManager::RotateObject(std::shared_ptr<Object> object, double x_angle, double y_angle, double z_angle)
+void TransformManager::RotateObject(std::shared_ptr<SceneManager> scene_manager, size_t id, Point &center, double x_angle, double y_angle, double z_angle)
 {
-    RotateAction action(object->getCenter(), x_angle, y_angle, z_angle);
+    std::shared_ptr<Object> object = scene_manager->getObject(id);
+
+    RotateAction action(center, x_angle, y_angle, z_angle);
 
     TransformVisitor visitor(action);
 

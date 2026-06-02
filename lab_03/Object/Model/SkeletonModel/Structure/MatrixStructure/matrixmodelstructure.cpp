@@ -47,3 +47,13 @@ void MatrixModelStructure::resizeMatrix(size_t size)
     while(_link_matrix.size() < size)
         _link_matrix.emplace_back(size, 0);
 }
+
+void MatrixModelStructure::transform(TransformAction &action)
+{
+    for (auto &p: _points)
+    {
+        action.transformPoint(p);
+    }
+
+    action.transformPoint(_center);
+}

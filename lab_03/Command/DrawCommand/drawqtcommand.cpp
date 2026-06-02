@@ -7,7 +7,5 @@ DRawQtCommand::DRawQtCommand(QGraphicsScene* scene)
 
 void DRawQtCommand::execute()
 {
-    auto scene = _sceneManager->getScene();
-    auto camera = _sceneManager->getCurCamera();
-    _drawManager->DrawScene<QtDrawerFactory, QGraphicsScene*>(scene, camera, _scene);
+    _drawManager->DrawScene<QtDrawerFactory, QGraphicsScene*>(_sceneManager, _scene);
 }

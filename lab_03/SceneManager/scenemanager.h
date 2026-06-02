@@ -2,8 +2,9 @@
 #define SCENEMANAGER_H
 
 #include "scene.h"
-#include "camera.h"
+#include "basecamera.h"
 #include "sceneexception.h"
+#include "caretaker.h"
 
 #include <memory>
 
@@ -14,7 +15,7 @@ public:
     ~SceneManager() = default;
 
     std::shared_ptr<Scene> getScene();
-    std::shared_ptr<Camera> getCurCamera();
+    std::shared_ptr<BaseCamera> getCurCamera();
 
     void setCurCamera(size_t id);
 
@@ -25,7 +26,7 @@ public:
 
 private:
     std::shared_ptr<Scene> _scene;
-    std::shared_ptr<Camera> _camera;
+    std::shared_ptr<BaseCamera> _camera;
 };
 
 #endif // SCENEMANAGER_H

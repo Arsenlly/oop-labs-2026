@@ -1,8 +1,9 @@
 #include "scaleobjectcommand.h"
 
-ScaleModelCommand::ScaleModelCommand(std::size_t id, double kx, double ky, double kz)
+ScaleModelCommand::ScaleModelCommand(std::size_t id, Point &center, double kx, double ky, double kz)
 {
     _id = id;
+    _center = center;
     _kx = kx;
     _ky = ky;
     _kz = kz;
@@ -10,6 +11,5 @@ ScaleModelCommand::ScaleModelCommand(std::size_t id, double kx, double ky, doubl
 
 void ScaleModelCommand::execute()
 {
-    std::shared_ptr<Object> object = _sceneManager->getObject(_id);
-    _transformManager->ScaleObject(object, _kx, _ky, _kz);
+    _transformManager->ScaleObject(_sceneManager, _id, _center, _kx, _ky, _kz);
 }

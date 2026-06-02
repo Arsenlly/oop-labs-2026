@@ -15,10 +15,6 @@ public:
 
     virtual ~BaseModel() = 0;
 
-    virtual const Point &getCenter() override;
-
-    std::shared_ptr<ModelStructure> getStructure();
-
 protected:
     std::shared_ptr<ModelStructure> _structure;
 };

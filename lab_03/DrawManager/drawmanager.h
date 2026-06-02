@@ -6,6 +6,7 @@
 #include "concepts.h"
 #include "basedrawerfactory.h"
 #include "drawvisitor.h"
+#include "scenemanager.h"
 
 #include <memory>
 
@@ -18,7 +19,7 @@ class DrawManager
 
         template<typename DrawerFactory, typename... Args>
         requires NotAbstract<DrawerFactory> && Derivative<DrawerFactory, BaseDrawerFactory> && Constructible<DrawerFactory, Args...>
-        void DrawScene(std::shared_ptr<Scene> scene, std::shared_ptr<Camera> camera, Args... args);
+        void DrawScene(std::shared_ptr<SceneManager> scene_manager, Args... args);
 };
 
 #include "drawmanager.hpp"

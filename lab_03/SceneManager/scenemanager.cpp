@@ -10,14 +10,14 @@ std::shared_ptr<Scene> SceneManager::getScene()
     return _scene;
 }
 
-std::shared_ptr<Camera> SceneManager::getCurCamera()
+std::shared_ptr<BaseCamera> SceneManager::getCurCamera()
 {
     return _camera;
 }
 
 void SceneManager::setCurCamera(size_t id)
 {
-    _camera = std::dynamic_pointer_cast<Camera>(_scene->getObject(id));
+    _camera = std::dynamic_pointer_cast<BaseCamera>(_scene->getObject(id));
 }
 
 void SceneManager::addObject(std::shared_ptr<Object> obj)

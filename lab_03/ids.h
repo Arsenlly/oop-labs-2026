@@ -9,4 +9,9 @@ enum InternalReprId: std::size_t
     MatrixRepr
 };
 
+enum ModelDirectorId: std::size_t
+{
+    SkeletonModelDirectorId = 0
+};
+
 #endif // IDS_H

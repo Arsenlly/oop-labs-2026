@@ -6,25 +6,24 @@ ListModelBuilder::ListModelBuilder(std::shared_ptr<ModelReader> reader): BaseMod
 
 void ListModelBuilder::reset()
 {
-    std::shared_ptr<ModelStructure> structure = std::make_shared<ListModelStructure>();
-    _model = std::make_shared<SkeletonModel>(structure);
+    _model = std::make_shared<ListModelStructure>();
 }
 
 void ListModelBuilder::buildPoints()
 {
     std::shared_ptr<std::vector<Point>> points = _reader->readPoints();
-    std::ranges::for_each(*points, [this](const Point &p){this->_model->getStructure()->addPoint(p);});
+    std::ranges::for_each(*points, [this](const Point &p){this->_model->addPoint(p);});
 }
 
 void ListModelBuilder::buildEdges()
 {
     std::shared_ptr<std::vector<Edge>> edges = _reader->readEdges();
-    std::ranges::for_each(*edges, [this](const Edge &e){this->_model->getStructure()->addEdge(e);});
+    std::ranges::for_each(*edges, [this](const Edge &e){this->_model->addEdge(e);});
 }
 
 void ListModelBuilder::buildCenter()
 {
-    std::vector<Point> points = _model->getStructure()->getPoints();
+    std::vector<Point> points = _model->getPoints();
 
     double x;
     double y;
@@ -37,10 +36,10 @@ void ListModelBuilder::buildCenter()
         z += p.getZ();
     }
 
-    _model->getStructure()->setCenter(Point(x / points.size(), y / points.size(), z / points.size()));
+    _model->setCenter(Point(x / points.size(), y / points.size(), z / points.size()));
 }
 
-std::shared_ptr<BaseModel> ListModelBuilder::getResult()
+std::shared_ptr<ModelStructure> ListModelBuilder::getResult()
 {
     return _model;
 }

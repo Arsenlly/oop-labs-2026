@@ -38,6 +38,9 @@ else()
     else()
         add_executable(lab_03
             ${PROJECT_SOURCES}
+            Director/basedirector.h Director/basedirector.cpp
+            Director/ModelDirector/skeletonmodeldirector.h Director/ModelDirector/skeletonmodeldirector.cpp
+
             Facade/scenefacade.h Facade/scenefacade.cpp
             Command/basecommand.h
             DrawManager/drawmanager.h
@@ -79,9 +82,7 @@ else()
             Command/ModelCommand/loadmodelcommand.h Command/ModelCommand/loadmodelcommand.cpp
             Exception/ModelException/modelexception.cpp
             Exception/ModelException/modelexception.h
-            Director/basedirector.h Director/basedirector.cpp
-            Director/ModelDirector/skeletonmodeldirector.h Director/ModelDirector/skeletonmodeldirector.cpp
-            Object/Camera/camera.h Object/Camera/camera.cpp
+
             Visitor/visitor.h Visitor/visitor.cpp
             Drawer/basedrawer.h Drawer/basedrawer.cpp
             Drawer/QtDrawer/qtdrawer.h Drawer/QtDrawer/qtdrawer.cpp
@@ -107,13 +108,25 @@ else()
             Command/CameraCommand/setactivecameracommand.h Command/CameraCommand/setactivecameracommand.cpp
             Transformation/projectioncameraaction.h Transformation/projectioncameraaction.cpp
             Exception/SceneException/sceneexception.h Exception/SceneException/sceneexception.cpp
-
+            Object/Composite/composite.h Object/Composite/composite.cpp
+            Object/Camera/CameraStructure/basecamerastructure.h Object/Camera/CameraStructure/basecamerastructure.cpp
+            Object/Camera/CameraStructure/DefaultCameraStructure/defaultcamerastructure.h Object/Camera/CameraStructure/DefaultCameraStructure/defaultcamerastructure.cpp
+            Object/Camera/basecamera.h Object/Camera/basecamera.cpp
+            Object/Camera/defaultcamera.h Object/Camera/defaultcamera.cpp
+            CameraAdapter/cameraviewadapter.h CameraAdapter/cameraviewadapter.cpp
+            Director/DirectorSolution/directorsolution.h Director/DirectorSolution/directorsolution.cpp
+            Director/DirectorCreator/basedirectorcreator.h Director/DirectorCreator/basedirectorcreator.cpp
+            Director/DirectorCreator/concretedirectorcreator.h
+            Director/DirectorCreator/concretedirectorcreator.hpp
+            History/memento.h History/memento.cpp
+            History/caretaker.h History/caretaker.cpp
         )
     endif()
 endif()
 
 target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/CameraAdapter
     ${CMAKE_CURRENT_SOURCE_DIR}/Facade
     ${CMAKE_CURRENT_SOURCE_DIR}/Command
     ${CMAKE_CURRENT_SOURCE_DIR}/Command/DrawCommand
@@ -131,6 +144,9 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Point
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Edge
     ${CMAKE_CURRENT_SOURCE_DIR}/Object/Camera
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Camera/CameraStructure
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Camera/CameraStructure/DefaultCameraStructure
+    ${CMAKE_CURRENT_SOURCE_DIR}/Object/Composite
     ${CMAKE_CURRENT_SOURCE_DIR}/SceneManager
     ${CMAKE_CURRENT_SOURCE_DIR}/Scene
     ${CMAKE_CURRENT_SOURCE_DIR}/Reader/ReaderSolution
@@ -151,6 +167,8 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Exception/SceneException
     ${CMAKE_CURRENT_SOURCE_DIR}/Director/ModelDirector
     ${CMAKE_CURRENT_SOURCE_DIR}/Director
+    ${CMAKE_CURRENT_SOURCE_DIR}/Director/DirectorCreator
+    ${CMAKE_CURRENT_SOURCE_DIR}/Director/DirectorSolution
     ${CMAKE_CURRENT_SOURCE_DIR}/Visitor
     ${CMAKE_CURRENT_SOURCE_DIR}/Visitor/DrawVisitor
     ${CMAKE_CURRENT_SOURCE_DIR}/Visitor/TransformVisitor
@@ -159,6 +177,7 @@ target_include_directories(lab_03 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Drawer/DrawerFactory
     ${CMAKE_CURRENT_SOURCE_DIR}/Concepts
     ${CMAKE_CURRENT_SOURCE_DIR}/Transformation
+    ${CMAKE_CURRENT_SOURCE_DIR}/History
 )
 
 target_link_libraries(lab_03 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

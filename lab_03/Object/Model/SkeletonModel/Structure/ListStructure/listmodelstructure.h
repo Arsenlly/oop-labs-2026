@@ -18,6 +18,7 @@ public:
 
     virtual void setPoints(std::vector<Point> points) override;
 
+    virtual void transform(TransformAction &action) override;
 
 private:
     std::vector<Edge> _edges;

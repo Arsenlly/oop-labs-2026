@@ -4,6 +4,8 @@
 
 #include "list.h"
 
+#include <iostream>
+
 #pragma region Constructors
 
 template<ListType T>
@@ -18,7 +20,7 @@ template<ListType T>
 template<Convertible<T> U>
 List<T>::List(const List<U>& l)
 {
-    std::ranges::for_each(l, [this](const T& el){this->push_back(el);});
+    std::ranges::transform(l, std::back_inserter(*this), [](const U& el){ return static_cast<T>(el);});
 }
 
 template<ListType T>
@@ -50,36 +52,38 @@ template<ListType T>
 template<Convertible<T> U>
 List<T>::List(std::initializer_list<U> l)
 {
-    std::ranges::for_each(l, [this](const U& el){this->push_back(el);});
+    std::ranges::transform(l, std::back_inserter(*this), [](const U& el){ return static_cast<T>(el);});
 }
 
 template<ListType T>
 template<ConvertibleContainer<T> C>
 List<T>::List(const C& cont)
 {
-    std::ranges::for_each(cont, [this](const T& el){push_back(el);});
+    std::ranges::transform(cont, std::back_inserter(*this),
+        [](const C::value_type& el){ return static_cast<T>(el);});
 }
 
 template<ListType T>
 template<Convertible<T> U>
 List<T>::List(const size_t size, const U *array)
 {
-    std::ranges::for_each(array, array + size, [this](const T& el){this->push_back(el);});
+    std::ranges::transform(array, array + size, std::back_inserter(*this),
+        [](const U& el){return static_cast<T>(el);});
 }
 
 template<ListType T>
 template<ConvertibleIterator<T> It, Sentinel<It> S>
 List<T>::List(const It& beg_it, const S& end_it)
 {
-    std::ranges::for_each(beg_it, end_it, [this](const T& el){push_back(el);});
+    std::ranges::transform(beg_it, end_it, std::back_inserter(*this),
+        [](const It::value_type& el){return static_cast<T>(el);});
 }
 
 template<ListType T>
 template<Convertible<T> U>
 List<T>::List(const size_t n, const U& el)
 {
-    for (size_t i = 0;i < n;i++)
-        push_back(el);
+    std::ranges::fill_n(std::back_inserter(*this), n, static_cast<T>(el));
 }
 
 #pragma endregion
@@ -119,7 +123,8 @@ template<ConvertibleContainer<T> C>
 List<T> &List<T>::operator=(const C& cont)
 {
     clear();
-    std::ranges::for_each(cont, [this](const T& el){push_back(el);});
+    std::ranges::transform(cont, std::back_inserter(*this),
+        [](const C::value_type& el){ return static_cast<T>(el);});
     return *this;
 }
 
@@ -128,7 +133,8 @@ template<Convertible<T> U>
 List<T> &List<T>::operator=(std::initializer_list<U> l)
 {
     clear();
-    std::ranges::for_each(l, [this](const U& el){this->push_back(el);});
+    std::ranges::transform(l, std::back_inserter(*this),
+        [](const U& el){ return static_cast<T>(el);});
     return *this;
 }
 
@@ -189,22 +195,16 @@ template<ListType T>
 template<Convertible<T> U>
 void List<T>::insert_after(Iterator<T> &pos, const List<U> &l)
 {
-    for(const auto& el : l)
-    {
-        insert_after(pos, el);
-        pos++;
-    }
+    auto view = l | std::views::transform([](const U& el){return static_cast<T>(el);});
+    std::ranges::for_each(view, [this, &pos](const T& el){insert_after(pos, el);++pos;});
 }
 
 template<ListType T>
 template<ConvertibleContainer<T> C>
 void List<T>::insert_after(Iterator<T> &pos, const C &cont)
 {
-    for(const auto& el : cont)
-    {
-        insert_after(pos, el);
-        pos++;
-    }
+    auto view = cont | std::views::transform([](const C::value_type& el){return static_cast<T>(el);});
+    std::ranges::for_each(view, [this, &pos](const T& el){insert_after(pos, el);++pos;});
 }
 
 template<ListType T>
@@ -219,8 +219,7 @@ template<ListType T>
 template<Convertible<T> U>
 List<T>& List<T>::operator+=(const List<U>& l)
 {
-    for(auto el : l)
-        this->push_back(el);
+    std::ranges::transform(l, std::back_inserter(*this), [](const U& el){ return static_cast<T>(el);});
     return *this;
 }
 
@@ -228,8 +227,8 @@ template<ListType T>
 template<ConvertibleContainer<T> C>
 List<T>& List<T>::operator+=(const C& cont)
 {
-    for(auto el : cont)
-        this->push_back(el);
+    std::ranges::transform(cont, std::back_inserter(*this), 
+        [](const C::value_type& el){ return static_cast<T>(el);});
     return *this;
 }
 
@@ -242,8 +241,7 @@ template<Convertible<T> U>
 List<T> List<T>::merge(const List<U>& l) const
 {
     List<T> res(*this);
-    for (auto el : l)
-        res.push_back(el);
+    std::ranges::transform(l, std::back_inserter(res), [](const U& el){ return static_cast<T>(el);});
     return res;
 }
 
@@ -252,8 +250,8 @@ template<ConvertibleContainer<T> C>
 List<T> List<T>::merge(const C& cont) const
 {
     List<T> res(*this);
-    for (auto el : cont)
-        res.push_back(el);
+    std::ranges::transform(cont, std::back_inserter(res), 
+        [](const C::value_type& el){ return static_cast<T>(el);});
     return res;
 }
 
@@ -262,8 +260,8 @@ template<ConvertibleContainer<T> C>
 List<T> List<T>::operator+(const C& cont) const
 {
     List<T> res(*this);
-    for (auto el : cont)
-        res.push_back(el);
+    std::ranges::transform(cont, std::back_inserter(res), 
+        [](const C::value_type& el){ return static_cast<T>(el);});
     return res;
 }
 
@@ -281,8 +279,8 @@ template<Convertible<T> U>
 List<T> List<T>::operator+(const List<U>& l) const
 {
     List<T> res(*this);
-    for (auto el : l)
-        res.push_back(el);
+    std::ranges::transform(l, std::back_inserter(res), 
+        [](const U& el){ return static_cast<T>(el);});
     return res;
 }
 
@@ -479,22 +477,7 @@ List<T>::operator bool() const noexcept
 template<ListType T>
 bool List<T>::operator==(const List<T>& l) const
 {
-    if (_size != l.size())
-    {
-        return false;
-    }
-    else
-    {
-        auto it_beg_this = cbegin();
-        auto it_end_this = cend();
-        auto it_beg_l = l.cbegin();
-        for(;it_beg_this != it_end_this;it_beg_l++, it_beg_this++)
-        {
-            if (*it_beg_l != *it_beg_this)
-                return false;
-        }
-    }
-    return true;
+    return _size == l.size() && std::ranges::equal(*this, l);
 }
 
 #pragma endregion

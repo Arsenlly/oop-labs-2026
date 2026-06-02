@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     scene->setSceneRect(-w/2, -h/2, w, h);
 
 
-    AddCameraCommand add_camera_command(Point(0, 0, -10));
+    AddCameraCommand add_camera_command(Point(0,0,-10));
 
     _facade.execute(add_camera_command);
     insertRowInObjTable(cur_id++, "Camera");
@@ -119,11 +119,17 @@ void MainWindow::on_scale_button_clicked()
     double ky = ui->scale_y_spin->value();
     double kz = ui->scale_z_spin->value();
 
+    double cx = ui->center_x_spin->value();
+    double cy = ui->center_x_spin->value();
+    double cz = ui->center_x_spin->value();
+
+    Point center(cx, cy, cz);
+
     getSelectedObjects();
 
     for (auto id : selected_obj)
     {
-        ScaleModelCommand scale_command(id, kx, ky, kz);
+        ScaleModelCommand scale_command(id, center, kx, ky, kz);
 
         _facade.execute(scale_command);
     }
@@ -137,11 +143,17 @@ void MainWindow::on_rotate_button_clicked()
     double y_angle = qDegreesToRadians(ui->rotate_y_spin->value());
     double z_angle = qDegreesToRadians(ui->rotate_z_spin->value());
 
+    double cx = ui->center_x_spin->value();
+    double cy = ui->center_x_spin->value();
+    double cz = ui->center_x_spin->value();
+
+    Point center(cx, cy, cz);
+
     getSelectedObjects();
 
     for (auto id : selected_obj)
     {
-        RotateModelCommand rotate_command(id, x_angle, y_angle, z_angle);
+        RotateModelCommand rotate_command(id, center, x_angle, y_angle, z_angle);
 
         _facade.execute(rotate_command);
     }
@@ -180,7 +192,7 @@ void MainWindow::on_load_model_button_clicked()
 
 void MainWindow::on_add_camera_button_clicked()
 {
-    AddCameraCommand add_camera_command(Point(0, 0, -10));
+    AddCameraCommand add_camera_command(Point(0,0,-10));
 
     _facade.execute(add_camera_command);
 

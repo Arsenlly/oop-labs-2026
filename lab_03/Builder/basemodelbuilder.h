@@ -4,6 +4,7 @@
 #include "basemodel.h"
 #include "modelreader.h"
 #include "skeletonmodel.h"
+#include "modelstructure.h"
 
 #include <memory>
 
@@ -21,11 +22,11 @@ public:
     virtual void buildEdges() = 0;
     virtual void buildCenter() = 0;
 
-    virtual std::shared_ptr<BaseModel> getResult() = 0;
+    virtual std::shared_ptr<ModelStructure> getResult() = 0;
 
 protected:
     std::shared_ptr<ModelReader> _reader;
-    std::shared_ptr<SkeletonModel> _model;
+    std::shared_ptr<ModelStructure> _model;
 };
 
 #endif // BASEMODELBUILDER_H

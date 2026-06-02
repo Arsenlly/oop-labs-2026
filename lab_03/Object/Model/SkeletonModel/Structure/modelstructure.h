@@ -3,8 +3,10 @@
 
 #include "point.h"
 #include "edge.h"
+#include "transformaction.h"
 
 #include <vector>
+#include <memory>
 
 class ModelStructure
 {
@@ -21,6 +23,8 @@ public:
 
     const Point& getCenter();
     void setCenter(const Point &center);
+
+    virtual void transform(TransformAction &action) = 0;
 
 protected:
     Point _center;

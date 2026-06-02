@@ -7,6 +7,8 @@
 #include "skeletonmodeldirector.h"
 #include "ids.h"
 #include "buildersolution.h"
+#include "directorsolution.h"
+#include "scenemanager.h"
 
 #include <string>
 #include <memory>
@@ -16,10 +18,11 @@ class LoadManager
     public:
         LoadManager();
 
-        std::shared_ptr<Object> load(InternalReprId repr_id, const std::string &filename);
+        void load(std::shared_ptr<SceneManager> scene_manager, InternalReprId repr_id, const std::string &filename);
 
     private:
         std::shared_ptr<ReaderSolution> rsol;
+        std::shared_ptr<DirectorSolution> dsol;
         std::shared_ptr<BuilderSolution> bsol;
 };
 

@@ -1,18 +1,21 @@
 #include "loadmanager.h"
 
+#include "skeletonmodeldirector.h"
+static_assert(sizeof(SkeletonModelDirector) > 0, "type is visible");
+
 LoadManager::LoadManager()
 {
     rsol = std::make_shared<ReaderSolution>();
-    bsol = std::make_shared<BuilderSolution>();
+    dsol = std::make_shared<DirectorSolution>();
 }
 
-std::shared_ptr<Object> LoadManager::load(InternalReprId repr_id, const std::string &filename)
+void LoadManager::load(std::shared_ptr<SceneManager> scene_manager, InternalReprId repr_id, const std::string &filename)
 {
     std::shared_ptr<ModelReader> reader = rsol->create(filename);
 
-    std::shared_ptr<BaseModelBuilder> builder = bsol->create(repr_id, reader);
+    std::shared_ptr<BaseDirector> mdir = dsol->create(SkeletonModelDirectorId, reader, repr_id);
 
-    SkeletonModelDirector mdir;
+    std::shared_ptr<Object> obj = mdir->create();
 
-    return mdir.create(builder);
+    scene_manager->addObject(obj);
 }

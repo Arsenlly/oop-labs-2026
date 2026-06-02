@@ -8,7 +8,5 @@ LoadModelCommand::LoadModelCommand(const InternalReprId repr_id, const std::stri
 
 void LoadModelCommand::execute()
 {
-    std::shared_ptr<Object> obj = _loadManager->load(_repr, _filename);
-
-    _sceneManager->addObject(obj);
+    _loadManager->load(_sceneManager, _repr, _filename);
 }

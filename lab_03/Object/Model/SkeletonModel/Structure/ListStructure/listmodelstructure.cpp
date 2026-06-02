@@ -28,3 +28,13 @@ void ListModelStructure::setPoints(std::vector<Point> points)
 {
     _points = points;
 }
+
+void ListModelStructure::transform(TransformAction &action)
+{
+    for (auto &p: _points)
+    {
+        action.transformPoint(p);
+    }
+
+    action.transformPoint(_center);
+}

@@ -20,6 +20,9 @@ public:
 
     virtual void setPoints(std::vector<Point> points) override;
 
+    virtual void transform(TransformAction &action) override;
+
+private:
     void resizeMatrix(size_t size);
 
 private:

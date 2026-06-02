@@ -5,7 +5,7 @@
 #include "object.h"
 #include "transformaction.h"
 #include "point.h"
-#include "camera.h"
+#include "basecamerastructure.h"
 
 #include <memory>
 #include <vector>
@@ -18,8 +18,8 @@ public:
 
     virtual ~TransformVisitor() override = default;
 
-    virtual void visit(std::shared_ptr<ModelStructure> model) const override;
-    virtual void visit(Camera &camera) const override;
+    virtual void visit(std::shared_ptr<ModelStructure> model_structure) const override;
+    virtual void visit(std::shared_ptr<BaseCameraStructure> camera_structure) const override;
 
 protected:
     TransformAction &_action;

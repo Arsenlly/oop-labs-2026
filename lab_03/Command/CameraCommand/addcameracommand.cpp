@@ -7,7 +7,5 @@ AddCameraCommand::AddCameraCommand(const Point &pos)
 
 void AddCameraCommand::execute()
 {
-    std::shared_ptr<Camera> camera = std::make_shared<Camera>(_pos);
-
-    _sceneManager->addObject(camera);
+    _sceneManager->addObject(std::make_shared<DefaultCamera>());
 }

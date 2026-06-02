@@ -24,7 +24,7 @@ public:
     virtual void buildEdges() override;
     virtual void buildCenter() override;
 
-    virtual std::shared_ptr<BaseModel> getResult() override;
+    virtual std::shared_ptr<ModelStructure> getResult() override;
 };
 
 #endif // MATRIXMODELBUILDER_H

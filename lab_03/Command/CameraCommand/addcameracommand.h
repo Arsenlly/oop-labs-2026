@@ -2,7 +2,7 @@
 #define ADDCAMERACOMMAND_H
 
 #include "basecameracommand.h"
-#include "camera.h"
+#include "defaultcamera.h"
 
 #include <memory>
 

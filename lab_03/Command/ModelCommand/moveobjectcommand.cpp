@@ -10,6 +10,5 @@ MoveModelCommand::MoveModelCommand(std::size_t id, double dx, double dy, double 
 
 void MoveModelCommand::execute()
 {
-    std::shared_ptr<Object> object = _sceneManager->getObject(_id);
-    _transformManager->MoveObject(object, _dx, _dy, _dz);
+    _transformManager->MoveObject(_sceneManager, _id, _dx, _dy, _dz);
 }

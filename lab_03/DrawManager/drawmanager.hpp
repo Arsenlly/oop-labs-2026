@@ -4,8 +4,11 @@
 
 template<typename DrawerFactory, typename... Args>
 requires NotAbstract<DrawerFactory> && Derivative<DrawerFactory, BaseDrawerFactory> && Constructible<DrawerFactory, Args...>
-void DrawManager::DrawScene(std::shared_ptr<Scene> scene, std::shared_ptr<Camera> camera, Args... args)
+void DrawManager::DrawScene(std::shared_ptr<SceneManager> scene_manager, Args... args)
 {
+    auto scene = scene_manager->getScene();
+    auto camera = scene_manager->getCurCamera();
+
     DrawerFactory drawerFactory(args...);
 
     std::shared_ptr<BaseDrawer> drawer = drawerFactory.createDrawer();
